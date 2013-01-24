@@ -1,15 +1,13 @@
 var tableau= [];
+var i;
 
-function f(x)
+function CoupJoueur(x)
 {
-    x.innerHTML = "a";
+    x.innerHTML="X";
 }
 
-var i;
 for(i = 1; i < 10; i++)
 {
     tableau[i] = document.getElementById("case"+i);
-    tableau[i].addEventListener("click",f,false);
-}
-
-alert("marche");
+    tableau[i].addEventListener("click",CoupJoueur.bind(this, tableau[i]),false);
+} 
