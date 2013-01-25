@@ -12,18 +12,14 @@ function vider()
 
 function gagne(y)
 {
-    /* ||
-       tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[4].innerHTML == tableau[5].innerHTML && tableau[3].innerHTML != "") ||
-       tableau[7].innerHTML != "" && (tableau[7].innerHTML == tableau[8].innerHTML == tableau[9].innerHTML && tableau[7].innerHTML != "") ||
-       tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[3].innerHTML == tableau[7].innerHTML && tableau[1].innerHTML != "") ||
-       tableau[2].innerHTML != "" && (tableau[2].innerHTML == tableau[4].innerHTML == tableau[8].innerHTML && tableau[2].innerHTML != "") ||
-       tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[5].innerHTML == tableau[9].innerHTML && tableau[3].innerHTML != "") ||
-       tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[5].innerHTML == tableau[9].innerHTML && tableau[1].innerHTML != "") ||
-       tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[5].innerHTML == tableau[7].innerHTML && tableau[3].innerHTML != "")
-       )
-    */
-    
     if( tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[2].innerHTML && tableau[1].innerHTML == tableau[3].innerHTML ) ||
+	tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[4].innerHTML && tableau[5].innerHTML == tableau[3].innerHTML ) ||
+	tableau[7].innerHTML != "" && (tableau[7].innerHTML == tableau[8].innerHTML && tableau[7].innerHTML == tableau[9].innerHTML ) ||
+	tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[4].innerHTML && tableau[1].innerHTML == tableau[7].innerHTML ) ||
+	tableau[2].innerHTML != "" && (tableau[2].innerHTML == tableau[5].innerHTML && tableau[2].innerHTML == tableau[8].innerHTML ) ||
+	tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[6].innerHTML && tableau[3].innerHTML == tableau[9].innerHTML ) ||
+	tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[5].innerHTML && tableau[5].innerHTML == tableau[9].innerHTML ) ||
+	tableau[5].innerHTML != "" && (tableau[3].innerHTML == tableau[5].innerHTML && tableau[3].innerHTML == tableau[7].innerHTML ) 
       )
     {
 	if(joueur == false)
