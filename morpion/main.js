@@ -24,11 +24,11 @@ function gagne(y)
     {
 	if(joueur == false)
 	{
-	    alert("le joueur 1 a gagné");
+	    alert("le joueur 1 gagne");
 	}
 	    else
 	{
-	    alert("le joueur 2 a gagné");
+	    alert("le joueur 2 gagne");
 	}
 	vider();
     }
