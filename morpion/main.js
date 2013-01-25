@@ -53,8 +53,26 @@ for(i = 1; i < 10; i++)
     tableau[i] = document.getElementById("case"+i);
     tableau[i].addEventListener("click",CoupJoueur.bind(this, tableau[i],i),false);
 } 
-
+document.write("
+    <table>
+<tr>
+<td id=\"case1\" ></td>
+<td id=\"case2\" ></td>
+<td id=\"case3\" ></td>
+</tr>
+<tr>
+<td id=\"case4\"></td>
+<td id=\"case5\"></td>
+<td id=\"case6\"></td>
+</tr>
+<tr>
+<td id=\"case7\"></td>
+<td id=\"case8\"></td>
+<td id=\"case9\"></td>
+</tr></table>
+");
 alert("syntaxe correcte");
+
 /*
 1 2 3
 4 5 6 
