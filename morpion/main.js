@@ -50,29 +50,34 @@ function CoupJoueur(x,y)
     }
 }
 
-
-function afficheria()
+function f(x)
 {
+    document.getElementById("choixdujeu").style.display = "none";
+    if(x == true)
+    {
+	document.getElementById("jeu").style.display = "block";
+    }
+    else
+    {
+	document.getElementById("construction").style.display = "block";
+    }
 }
 
-function afficherjeu()
+for(i = 1; i < 10; i++)
 {
-    for(i = 1; i < 10; i++)
-    {
-	tableau[i] = document.getElementById("case"+i);
-	tableau[i].addEventListener("click",CoupJoueur.bind(this, tableau[i],i),false);
-    }
-    document.getElementById("jeu").innerHTML = "<div><a id=\"choix1\" href=\"\">Jouer contre l'ordi</a><a id=\"choix2\" href=\"\">2 Joueurs</a></div>";
+    tableau[i] = document.getElementById("case"+i);
+    tableau[i].addEventListener("click",CoupJoueur.bind(this, tableau[i],i),false);
 }
 
 choix1 = document.getElementById("choix1");
 choix2 = document.getElementById("choix2");
-choix1.addEventListener("click", afficherjeu,false);
-choix2.addEventListener("click", afficheria, false);
+choix1.addEventListener("click", f.bind(this, true), false);
+choix2.addEventListener("click", f.bind(this, false), false);
 
-alert("syntaxe correcte");
+//alert("syntaxe correcte");
+
 /*
-  1 2 3
+1 2 3
 4 5 6 
 7 8 9
 */
