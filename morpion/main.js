@@ -2,18 +2,10 @@ var tableau= [];
 var joueur = true;
 var i;
 
-function vider()
-{
-    for(i = 0;i < 10; i++)
-    {
-	document.getElementById("case"+i).innerHTML = "";
-    }
-}
-
 function gagne(y)
 {
     if( tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[2].innerHTML && tableau[1].innerHTML == tableau[3].innerHTML ) ||
-	tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[4].innerHTML && tableau[5].innerHTML == tableau[3].innerHTML ) ||
+	tableau[4].innerHTML != "" && (tableau[4].innerHTML == tableau[5].innerHTML && tableau[4].innerHTML == tableau[6].innerHTML ) ||
 	tableau[7].innerHTML != "" && (tableau[7].innerHTML == tableau[8].innerHTML && tableau[7].innerHTML == tableau[9].innerHTML ) ||
 	tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[4].innerHTML && tableau[1].innerHTML == tableau[7].innerHTML ) ||
 	tableau[2].innerHTML != "" && (tableau[2].innerHTML == tableau[5].innerHTML && tableau[2].innerHTML == tableau[8].innerHTML ) ||
@@ -30,7 +22,10 @@ function gagne(y)
 	{
 	    alert("le joueur 2 gagne");
 	}
-	vider();
+	for(i = 1;i < 10; i++)
+	{
+	    document.getElementById("case"+i).innerHTML = "";
+	}
     }
 }
 
