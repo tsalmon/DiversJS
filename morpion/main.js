@@ -1,7 +1,8 @@
-document.write("<table><tr><td id=\"case1\" ></td><td id=\"case2\" ></td><td id=\"case3\" ></td></tr><tr><td id=\"case4\"></td><td id=\"case5\"></t><td id=\"case6\"></td></tr><tr><td id=\"case7\"></td><td id=\"case8\"></td><td id=\"case9\"></td></tr></table>");
 var tableau= [];
 var joueur = true;
 var i;
+var choix1;
+var choix2;
 
 function gagne(y)
 {
@@ -48,6 +49,11 @@ function CoupJoueur(x,y)
 	gagne(y);
     }
 }
+
+document.getElementById("jeu").innerHTML = "<div><a id=\"choix1\" href=\"\">Jouer contre l'ordi</a><a id=\"choix2\" href=\"\">2 Joueurs</a></div>";
+
+choix1.addEventListener("click",,false);
+choix2.addEventListener("click",function(){document.getElementById("jeu").innerHTML = "<table><tr><td id=\"case1\" ></td><td id=\"case2\" ></td><td id=\"case3\" ></td></tr><tr><td id=\"case4\"></td><td id=\"case5\"></t><td id=\"case6\"></td></tr><tr><td id=\"case7\"></td><td id=\"case8\"></td><td id=\"case9\"></td></tr></table>"}, false);
 
 for(i = 1; i < 10; i++)
 {
