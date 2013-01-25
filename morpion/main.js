@@ -53,12 +53,10 @@ function CoupJoueur(x,y)
 
 function afficheria()
 {
-    document.getElementById("jeu").innerHTML = "En cours de construction";
 }
 
 function afficherjeu()
 {
-    document.getElementById("jeu").innerHTML = "<table><tr><td id=\"case1\" ></td><td id=\"case2\" ></td><td id=\"case3\" ></td></tr><tr><td id=\"case4\"></td><td id=\"case5\"></t><td id=\"case6\"></td></tr><tr><td id=\"case7\"></td><td id=\"case8\"></td><td id=\"case9\"></td></tr></table>";
     for(i = 1; i < 10; i++)
     {
 	tableau[i] = document.getElementById("case"+i);
