@@ -2,28 +2,42 @@ var tableau= [];
 var joueur = true;
 var i;
 
-function gagne(y)
+function vider()
 {
-    if(tableau[y].innerHTML != "")
+    for(i = 0;i < 10; i++)
     {
-	var aux = tableau[y].innerHTML;
-	if(aux == tableau[y+1].innerHTML && aux == tableau[y-1].innerHTML 
-	   || aux == tableau[y+3] && aux == tableau[y-3] 
-	   || aux == tableau[1].innerHTML && y == 5 && tableau[9].innerHTML
-	   || aux == tableau[3].innerHTML && y == 5 && tableau[7].innerHTML
-	  )
-	{
-	    if(joueur == false)
-	    {
-		alert("le joueur 1 a gagné");
-	    }
-	    else
-	    {
-		alert("le joueur 2 a gagné");
-	    }
-	}
+	document.getElementById("case"+i).innerHTML = "";
     }
 }
+
+function gagne(y)
+{
+    /* ||
+       tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[4].innerHTML == tableau[5].innerHTML && tableau[3].innerHTML != "") ||
+       tableau[7].innerHTML != "" && (tableau[7].innerHTML == tableau[8].innerHTML == tableau[9].innerHTML && tableau[7].innerHTML != "") ||
+       tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[3].innerHTML == tableau[7].innerHTML && tableau[1].innerHTML != "") ||
+       tableau[2].innerHTML != "" && (tableau[2].innerHTML == tableau[4].innerHTML == tableau[8].innerHTML && tableau[2].innerHTML != "") ||
+       tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[5].innerHTML == tableau[9].innerHTML && tableau[3].innerHTML != "") ||
+       tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[5].innerHTML == tableau[9].innerHTML && tableau[1].innerHTML != "") ||
+       tableau[3].innerHTML != "" && (tableau[3].innerHTML == tableau[5].innerHTML == tableau[7].innerHTML && tableau[3].innerHTML != "")
+       )
+    */
+    
+    if( tableau[1].innerHTML != "" && (tableau[1].innerHTML == tableau[2].innerHTML && tableau[1].innerHTML == tableau[3].innerHTML ) ||
+      )
+    {
+	if(joueur == false)
+	{
+	    alert("le joueur 1 a gagné");
+	}
+	    else
+	{
+	    alert("le joueur 2 a gagné");
+	}
+	vider();
+    }
+}
+
 
 function CoupJoueur(x,y)
 {
