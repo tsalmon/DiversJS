@@ -1,17 +1,21 @@
 var tableau= [];
+var joueur = true;
 var i;
-
-function CoupPC()
-{
-    
-}
 
 function CoupJoueur(x)
 {
     if(x.innerHTML == "")	
     {
-	x.innerHTML="X";
-	CoupPC();
+	if(joueur == true)
+	{
+	    x.innerHTML = "X";
+	    joueur = false;
+	}
+	else
+	{
+	    x.innerHTML = "O";
+	    joueur = true;
+	}
     }
 }
 
