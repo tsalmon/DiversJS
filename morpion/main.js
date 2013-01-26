@@ -51,16 +51,15 @@ function CoupJoueur(x,y)
 
 function f(x)
 {
-    document.getElementById("choixdujeu").style.visibility = "hidden";
+    document.getElementById("choixdujeu").style.display = "none";
     if(x == true)
     {
-	document.getElementById("jeu").style.visibility = "visible";
+	document.getElementById("jeu").style.display = "block";
     }
     else
     {
-	document.getElementById("construction").style.display = "visibility";
+	document.getElementById("construction").style.display = "block";
     }
-    return ;
 }
 
 for(i = 1; i < 10; i++)
@@ -75,9 +74,3 @@ choix1.addEventListener("click", f.bind(this, true), false);
 choix2.addEventListener("click", f.bind(this, false), false);
 
 alert("syntaxe correcte");
-
-/******
-*1 2 3*
-*4 5 6*
-*7 8 9*
-******/
