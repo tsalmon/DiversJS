@@ -20,7 +20,7 @@ function gagne(y)
 	{
 	    alert("le joueur 1 gagne");
 	}
-	    else
+	else
 	{
 	    alert("le joueur 2 gagne");
 	}
@@ -30,7 +30,6 @@ function gagne(y)
 	}
     }
 }
-
 
 function CoupJoueur(x,y)
 {
@@ -52,14 +51,14 @@ function CoupJoueur(x,y)
 
 function f(x)
 {
-    document.getElementById("choixdujeu").style.display = "none";
+    document.getElementById("choixdujeu").style.visibility = "hidden";
     if(x == true)
     {
-	document.getElementById("jeu").style.display = "block";
+	document.getElementById("jeu").style.visibility = "visible";
     }
     else
     {
-	document.getElementById("construction").style.display = "block";
+	document.getElementById("construction").style.display = "visibility";
     }
 }
 
@@ -74,10 +73,10 @@ choix2 = document.getElementById("choix2");
 choix1.addEventListener("click", f.bind(this, true), false);
 choix2.addEventListener("click", f.bind(this, false), false);
 
-//alert("syntaxe correcte");
+alert("syntaxe correcte");
 
-/*
-1 2 3
-4 5 6 
-7 8 9
-*/
+/******
+*1 2 3*
+*4 5 6*
+*7 8 9*
+******/
