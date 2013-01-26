@@ -60,6 +60,7 @@ function f(x)
     {
 	document.getElementById("construction").style.display = "visibility";
     }
+    return ;
 }
 
 for(i = 1; i < 10; i++)
