@@ -1,9 +1,17 @@
 var cases = document.getElementsByClassName("case");
 var joueur = true;
 
+function vider()
+{
+    for(i = 0; i < cases.length; i++)
+    {
+	cases[i].innerHTML = "&nbsp";
+    }
+}
+
 function estdanstable(x)
 {
-    return (x > 48 || x < 0);
+    return (x <= 48 || x >= 0);
 }
 
 function memecouleur(x,y)
@@ -19,47 +27,44 @@ function gagne(x)
     d = true; 
     g = true;
     bg = true;
-    gd = true;
+    bd = true;
     bb = true;
     for(i = 1; i < 4; i++)
     {
-	if(hd == true && estdanstable(x-8*i) && memecouleur(x,x-8*i))
+	if(hd == true && (!estdanstable(x-6*i) || !memecouleur(x,x-6*i)))
 	{
 	    hd = false;
 	}
-	if(hh == true && estdanstable(x-7*i) && memecouleur(x,x-7*i))
+	if(hh == true && (!estdanstable(x-7*i) || !memecouleur(x,x-7*i)))
 	{
 	    hh = false;
 	}
-	if(hg == true && estdanstable(x-6*i) && memecouleur(x,x-6*i))
+	if(hg == true && (!estdanstable(x-8*i) || !memecouleur(x,x-8*i)))
 	{
 	    hg = false;
 	}
-	if(d == true && estdanstable(x+i) && memecouleur(x,x+i))
+	if(d == true && ( !estdanstable(x+i) || !memecouleur(x,x+i)))
 	{
 	    d = false;
 	}
-	if(g == true && estdanstable(x-i) && memecouleur(x,x-i))
+	if(g == true && (!estdanstable(x-i) || !memecouleur(x,x-i)))
 	{
 	    g = false;
 	}
-	if(bg == true && estdanstable(x+6*i) && memecouleur(x,x+6*i))
+	if(bg == true && (!estdanstable(x+6*i) || !memecouleur(x,x+6*i)))
 	{
 	    bg = false;
 	}
-	if(gd == true && estdanstable(x+8*i) && memecouleur(x,x+8*i))
+	if(bd == true && (!estdanstable(x+8*i) || !memecouleur(x,x+8*i)))
 	{
-	    gd = false;
+	    bd = false;
 	}
-	if(bb == true && estdanstable(x+7*i) && memecouleur(x,x+7*i))
+	if(bb == true && ( !estdanstable(x+7*i) || !memecouleur(x,x+7*i)))
 	{
-	    alert(bb);
 	    bb = false;
 	}
-
     }
-    alert(bb);
-    return (hd | hh | hg | d | g | bg | gd | bb );
+    return (hd | hh | hg | d | g | bg | bd | bb );
 }
 
 function f(x)
@@ -94,6 +99,7 @@ function f(x)
 	{
 	    alert("Le joueur 2 a gagne");
 	}
+	vider();
     }
 }
 
