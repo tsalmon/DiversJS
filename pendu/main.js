@@ -1,4 +1,4 @@
-var pina_colada = [ "rhum blanc", "jus ananas","creme de coco", "creme fraiche"];
+var pina_colada = [ "rhum blanc", "jus ananas","crême de coco", "creme fraiche"];
 var mot = pina_colada[Math.floor(Math.random()*pina_colada.length)];
 var choix;
 var pile = "";
@@ -22,8 +22,11 @@ function f(x)
 		chaine = chaine + mot.charAt(i);
 	    }
 	}
-	document.getElelementById("ecran").innerHTML = chaine;
-	alert(chaine);
+	document.getElementById("ecran").innerHTML = chaine;
+	if(chaine == mot)
+	{
+	    alert("vous avez gagné");
+	}
     }
 }
 for(i = 0; i < mot.length; i++)
