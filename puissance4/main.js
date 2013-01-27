@@ -1,9 +1,8 @@
 var cases = document.getElementsByClassName("case");
 var joueur = true;
 
-function descendre(x)
+function gagne()
 {
-    
 }
 
 function f(x)
