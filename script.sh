@@ -9,6 +9,7 @@ fi
 if [ -e "$1" ]
 then
     echo "Le fichier $1 existe deja dans le repertoire courant"
+    exit 1;
 fi
 
 mkdir "$1"
