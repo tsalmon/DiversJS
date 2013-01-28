@@ -33,20 +33,20 @@ function ajouter_case(x)
     {
 	return ;
     }
-    tableau = tableau.push(decoupe());
+    resultat = decoupe();
+    resultat[1] = parseInt(resultat[1],10);
+    tableau.push(resultat);
     tableau = tableau.sort(
-	function(a,b)
-	{
-	    return (a[1] < b[1] ? -1 : (a[1] > b[1] ? -1: 0)) 
-	}
-    );
+	function(b,c) 
+	{ 
+	    var i=b[1], j=c[1]; if (i===j)return 0; return i<j ? -1 : 1; 
+	});
     str = "";
     
     for(i = 0; i < tableau.length ; i++)
     {
 	str = str + "<tr><td> " +  tableau[i][0] + "</td><td>" + tableau[i][1] + "</td><td></td></tr>";
     }
-    
     document.getElementById("tableau").innerHTML = "<table><tr><th>Pseudo</th><th>VH</th><th></th></tr>" + str + "</table>";
 }
 
