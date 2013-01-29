@@ -118,6 +118,10 @@ function affiche()
 /* ajouter le champs dans tableau */
 function ajouter_case(x)
 {
+    if(x.keyCode != 13)
+    {
+	return ;
+    }
     var resultat = decoupe();
     resultat[1] = parseInt(resultat[1],10);
     if(pseudo_existe(resultat[0]) == true || resultat[1] == NaN)
