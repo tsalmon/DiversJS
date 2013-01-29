@@ -16,7 +16,7 @@
 */
 var max ;
 var champs;
-var tableau = new Array();
+var tableau = new Array(["a",1], ["b",2], ["c",3],["d",4]);
 var places = [35, 10, 15, 5.5, 15, 10, 1, 2, 0.75, 1.75, 1.5, 1, 1, 0.5]; 
 function genere_pseudo(i)
 {
@@ -85,23 +85,9 @@ function arrondir(n)
 /* afficher tableau dans la page */
 function affiche()
 {  
-    /*
-    var rank = 14;
-    var nb_elems = tableau.length;
-    var str = "";
-    str = afficher_r14_r13_r12();
-    if(tableau.length > 15)
-    {
-	for(i = tableau.length -1; i>0 ; i--)
-	{
-	    str = str + "<tr><td> " +  tableau[i][0] + "</td><td>" + tableau[i][1] + "</td><td><img src=\"images/rank"+11+".gif\"/></td></tr>";
-	}
-    }
-    document.getElementById("tableau").innerHTML = "<table><tr><th>Pseudo</th><th>VH</th><th></th></tr>" + str + "</table>";
-    */
     var k = 0;
     var str = "";
-    
+    var dernier_rang = -1;
     for(i = 0; i < places.length; i++)
     {
 	var place = arrondir(tableau.length*places[i]/100);
@@ -109,9 +95,20 @@ function affiche()
 	{
 	    str = str + "<tr><td> " +  tableau[k+j][0] + "</td><td>" + tableau[k+j][1] + "</td><td><img src=\"images/rank"+(i+1)+".gif\"/></td></tr>";	    
 	}
-	
+	if(place == 0 && dernier_rang == -1)
+	{
+	    dernier_rang = i;
+	}
 	k += place;
     }
+    
+    /*gestion de l'erreur d'arrondi*/
+    while(k < tableau.length)
+    {
+	str = str + "<tr><td> " +  tableau[k][0] + "</td><td>" + tableau[k][1] + "</td><td><img src=\"images/rank"+(dernier_rang+1)+".gif\"/></td></tr>";
+	k++;
+    }
+    //alert(k + ", " + tableau.length);
     document.getElementById("tableau").innerHTML = "<table><tr><th>Pseudo</th><th>VH</th><th></th></tr>" + str + "</table>";
 }
 
