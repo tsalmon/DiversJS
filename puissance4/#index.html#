@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Puissance 4</title>
+    <link rel="stylesheet" href="index.css" media="all">
+  </head>
+  <body>
+    <table>
+      <tr>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+      </tr>
+      <tr>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case">&nbsp;</td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+      </tr>
+      <tr>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+      </tr>
+      <tr>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+      </tr>
+      <tr>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+      </tr>
+      <tr>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+      </tr>
+      <tr>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+	<td class="case"></td>
+      </tr>
+    </table>
+    <script src="main.js"></script>
+  </body>
+</html>

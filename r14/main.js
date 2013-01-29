@@ -9,6 +9,26 @@ var max ;
 var champs;
 var tableau = new Array();
 
+function genere_pseudo(i)
+{
+    return "random"
+}
+
+function genere_VH()
+{
+    
+}
+
+/* Genere n cases pour tableau */
+function genere(x)
+{
+    if(x != 13)
+    {
+	return;
+    }
+    
+}
+
 /*Supprimer espaces de fin de chaine*/
 function del_esp_str(x)
 {
@@ -39,14 +59,43 @@ function pseudo_existe(x)
     return (false);
 }
 
+function afficher_r14_r13_r12()
+{
+    var str = "";
+    var k = 0;
+    for(i = tableau.length-1; i >= 0  && k++ < 15; i--)
+    {
+	str = str + "<tr><td>" + tableau[i][0] + "</td><td>" + tableau[i][1] + "</td><td><img src=\"images/rank"; 
+	if(k-1 == 0)
+	{
+	    str = str + "14";
+	}
+	else if(k-1 > 0 && k-1 < 5)
+	{
+	    str = str + "13";
+	}
+	else
+	{
+	    str = str + "12";
+	}
+	str = str + ".gif\"/></td></tr>";
+    }
+    return str;
+}
+
 /* afficher tableau dans la page */
 function affiche()
 {  
-    max = tableau[tableau.length-1][1];
-    str = "";
-    for(i = 0; i < tableau.length ; i++)
+    var rank = 14;
+    var nb_elems = tableau.length;
+    var str = "";
+    str = afficher_r14_r13_r12();
+    if(tableau.length > 15)
     {
-	str = str + "<tr><td> " +  tableau[i][0] + "</td><td>" + tableau[i][1] + "</td><td>"+i+"</td></tr>";
+	for(i = tableau.length -1; i>0 ; i--)
+	{
+	    str = str + "<tr><td> " +  tableau[i][0] + "</td><td>" + tableau[i][1] + "</td><td><img src=\"images/rank"+11+".gif\"/></td></tr>";
+	}
     }
     document.getElementById("tableau").innerHTML = "<table><tr><th>Pseudo</th><th>VH</th><th></th></tr>" + str + "</table>";
 }
@@ -54,10 +103,6 @@ function affiche()
 /* ajouter le champs dans tableau */
 function ajouter_case(x)
 {
-    if(x.keyCode != 13)
-    {
-	return ;
-    }
     var resultat = decoupe();
     resultat[1] = parseInt(resultat[1],10);
     if(pseudo_existe(resultat[0]) == true || resultat[1] == NaN)
