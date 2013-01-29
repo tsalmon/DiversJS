@@ -1,14 +1,23 @@
 /*
-  a = nb - 14
-  R14 = 1ere place
-  R13 = 2e - 5e places
-  R12 = 6e - 14e places
-  R11 = ... R1 = 1/11 
+  R14 = 0.5
+  R13 = 1
+  R12 = 1
+  R11 = 1.5
+  R10 = 1.75
+  R09 = 0.75
+  R08 = 2
+  R07 = 1
+  R06 = 10
+  R05 = 15
+  R04 = 5.5
+  R03 = 15
+  R02 = 10
+  R01 = 35
 */
 var max ;
 var champs;
 var tableau = new Array();
-
+var places = [35, 10, 15, 5.5, 15, 10, 1, 2, 0.75, 1.75, 1.5, 1, 1, 0.5]; 
 function genere_pseudo(i)
 {
     return "random"
@@ -18,6 +27,8 @@ function genere_VH()
 {
     
 }
+
+
 
 /* Genere n cases pour tableau */
 function genere(x)
@@ -59,33 +70,22 @@ function pseudo_existe(x)
     return (false);
 }
 
-function afficher_r14_r13_r12()
+function arrondir(n)
 {
-    var str = "";
-    var k = 0;
-    for(i = tableau.length-1; i >= 0  && k++ < 15; i--)
+    if(n % 1 < 0.5)
     {
-	str = str + "<tr><td>" + tableau[i][0] + "</td><td>" + tableau[i][1] + "</td><td><img src=\"images/rank"; 
-	if(k-1 == 0)
-	{
-	    str = str + "14";
-	}
-	else if(k-1 > 0 && k-1 < 5)
-	{
-	    str = str + "13";
-	}
-	else
-	{
-	    str = str + "12";
-	}
-	str = str + ".gif\"/></td></tr>";
+	return Math.floor(n);
     }
-    return str;
+    else
+    {
+	return Math.ceil(n);
+    }
 }
 
 /* afficher tableau dans la page */
 function affiche()
 {  
+    /*
     var rank = 14;
     var nb_elems = tableau.length;
     var str = "";
@@ -96,6 +96,21 @@ function affiche()
 	{
 	    str = str + "<tr><td> " +  tableau[i][0] + "</td><td>" + tableau[i][1] + "</td><td><img src=\"images/rank"+11+".gif\"/></td></tr>";
 	}
+    }
+    document.getElementById("tableau").innerHTML = "<table><tr><th>Pseudo</th><th>VH</th><th></th></tr>" + str + "</table>";
+    */
+    var k = 0;
+    var str = "";
+    
+    for(i = 0; i < places.length; i++)
+    {
+	var place = arrondir(tableau.length*places[i]/100);
+	for(j = 0; j < place; j++)
+	{
+	    str = str + "<tr><td> " +  tableau[k+j][0] + "</td><td>" + tableau[k+j][1] + "</td><td><img src=\"images/rank"+(i+1)+".gif\"/></td></tr>";	    
+	}
+	
+	k += place;
     }
     document.getElementById("tableau").innerHTML = "<table><tr><th>Pseudo</th><th>VH</th><th></th></tr>" + str + "</table>";
 }
