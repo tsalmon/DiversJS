@@ -1,50 +1,7 @@
-/*
-  R14 = 0.5
-  R13 = 1
-  R12 = 1
-  R11 = 1.5
-  R10 = 1.75
-  R09 = 0.75
-  R08 = 2
-  R07 = 1
-  R06 = 10
-  R05 = 15
-  R04 = 5.5
-  R03 = 15
-  R02 = 10
-  R01 = 35
-*/
 var max ;
 var champs;
 var tableau = new Array(["a",1], ["b",2], ["c",3],["d",4]);
 var places = [35, 10, 15, 5.5, 15, 10, 1, 2, 0.75, 1.75, 1.5, 1, 1, 0.5]; 
-function genere_pseudo(i)
-{
-    return "random"
-}
-
-function genere_VH()
-{
-    
-}
-
-
-
-/* Genere n cases pour tableau */
-function genere(x)
-{
-    if(x != 13)
-    {
-	return;
-    }
-    
-}
-
-/*Supprimer espaces de fin de chaine*/
-function del_esp_str(x)
-{
-    return champs.value;
-}
 
 /* w1 ... wn p => ["w1+...+wn", p]*/
 function decoupe()
