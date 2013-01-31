@@ -45,21 +45,17 @@ function affiche()
     var k = 0;
     var str = "";
     var dernier_rang = -1;
-
     for(i = 0; i < places.length; i++)
     {
 	var place = arrondir(tableau.length*places[i]/100);
-	
 	for(j = 0; j < place && k+j < tableau.length; j++)
 	{
 	    str = str + "<tr><td> " +  tableau[k+j][0] + "</td><td>" + tableau[k+j][1] + "</td><td><img src=\"images/rank"+(i+1)+".gif\"/></td></tr>";	    
 	}
-
-	if(place == 0)
+	if(place == 0 && dernier_rang == -1 && i != 3)
 	{
 	    dernier_rang = i;
 	}
-
 	k += place;
     }
     while(k < tableau.length)
