@@ -55,16 +55,17 @@ function affiche()
 	    str = str + "<tr><td> " +  tableau[k+j][0] + "</td><td>" + tableau[k+j][1] + "</td><td><img src=\"images/rank"+(i+1)+".gif\"/></td></tr>";	    
 	}
 
-	if(place == 0 && dernier_rang == -1)
+	if(place == 0)
 	{
 	    dernier_rang = i;
 	}
 
 	k += place;
     }
-    if(k < tableau.length)
+    while(k < tableau.length)
     {
 	str = str + "<tr><td> " +  tableau[k][0] + "</td><td>" + tableau[k][1] + "</td><td><img src=\"images/rank"+(dernier_rang+1)+".gif\"/></td></tr>";
+    	k++;
     }
        
     document.getElementById("tableau").innerHTML = "<table><tr><th>Pseudo</th><th>VH</th><th></th></tr>" + str + "</table>";
