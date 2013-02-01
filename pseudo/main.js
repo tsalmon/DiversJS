@@ -6,22 +6,25 @@ function consonne(longueur, lettre)
     {
 	return "";
     }
-    switch(lettre)
+    switch(lettre.charCodeAt(0))
     {
-    case 'a':
-	alert("a");
+    case 97:
+	
 	break;
-    case 'e':
-	alert("e");
-	break;
-    case 'i':
+    case 101:
 
 	break;
-    case 'o':
+    case 105:
+
 	break;
-    case 'u':
+    case 111:
+
 	break;
-    case 'y'
+    case 117:
+
+	break;
+    case 121:
+
 	break;
     }
     return "";
