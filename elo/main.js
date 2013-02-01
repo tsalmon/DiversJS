@@ -39,7 +39,8 @@ function jouer(x)
     var v = vainqueur(x);
     document.getElementById("resultat").innerHTML = (v) ? "Vous avez gagné!" : "Vous avez perdu!";
     cote = Math.floor(cote + K()*(W(v) - p(x)));
-    document.getElementById("cote") = cote;
+    document.getElementById("cote").innerHTML = cote;
+
     remplir();
 }
 
