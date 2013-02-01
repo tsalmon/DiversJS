@@ -73,10 +73,8 @@ function remplir_proba()
     for(i = 0; i < 3; i++)
     {
 	adv[i][1] = Math.ceil(Math.random()*10);
-	alert("f");
-	document.getElementById("adv"+i+"_proba").innerHTML = adv[i][1];
+	document.getElementById("adv"+(i+1)+"_proba").innerHTML = adv[i][1]+"/"+10;
     }
-    alert("e");
 }
 
 function remplir()
