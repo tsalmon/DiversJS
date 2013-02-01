@@ -4,9 +4,10 @@ var choix3;
 var cote = 1500;
 var adv = [[],[],[]];
 var parties = 0;
+
 function vainqueur(x)
 {
-    var r = Math.random()*5;
+    var r = Math.random();
     return r > (adv[x][1]/10);
 }
 
