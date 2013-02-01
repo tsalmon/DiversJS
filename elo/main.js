@@ -3,13 +3,44 @@ var choix2;
 var choix3;
 var cote = 1500;
 var adv = [[],[],[]];
-
-function jouer(x)
+var parties = 0;
+function vainqueur(x)
 {
-   
+    var r = Math.random()*5;
+    return r > (adv[x][1]/10);
 }
 
+function p(x)
+{
+    return 1/(1+10^(-(cote-adv[x][0])/400));
+}
 
+function K()
+{
+    if(parties < 30)
+    {
+	return 30;
+    }
+    if(cote < 2400)
+    {
+	return 15;
+    }
+    return 10;
+}
+
+function W(v)
+{
+    return (v) ? 1 : 0;
+}
+
+function jouer(x)
+{   
+    var v = vainqueur(x);
+    document.getElementById("resultat").innerHTML = (v) ? "Vous avez gagné!" : "Vous avez perdu!";
+    cote = Math.floor(cote + K()*(W(v) - p(x)));
+    document.getElementById("cote") = cote;
+    remplir();
+}
 
 function remplir_cote_case1()
 {
@@ -84,10 +115,10 @@ function remplir()
 }
 
 choix1 = document.getElementById("adv1");
-choix1.addEventListener("click", jouer.bind(this, 1),false);
+choix1.addEventListener("click", jouer.bind(this, 0),false);
 choix2 = document.getElementById("adv2");
-choix2.addEventListener("click", jouer.bind(this, 2),false);
+choix2.addEventListener("click", jouer.bind(this, 1),false);
 choix3 = document.getElementById("adv3");
-choix3.addEventListener("click", jouer.bind(this, 3),false);
+choix3.addEventListener("click", jouer.bind(this, 2),false);
 remplir();
 alert("syntaxe correcte");
