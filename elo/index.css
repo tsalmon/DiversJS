@@ -1,1 +1,16 @@
+body
+{
+    background: #a44;   
+}
 
+table, td, #resultat, p
+{
+    margin-left:auto;
+    margin-right:auto;
+    font-size:175%;
+}
+
+td
+{
+    border: 1px solid black;  
+}
