@@ -1,6 +1,6 @@
 canvas
 {
-    width: 256px;
-    height: 256px;
-    border: 1px solid black;
+    margin-left:-5px;
+    width: 512px;
+    height: 512px;
 }

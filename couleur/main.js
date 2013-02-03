@@ -1,18 +1,24 @@
-var  c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-var a = 0;
-for(i = 0; i < 256; i+=1)
+function f(canvas,inc)
 {
-    for(j = 0; j < 256; j+=1)
+    var  c = document.getElementById(canvas);
+    var ctx = c.getContext("2d");
+    var a = 0;
+    for(i = 0; i < 256; i++)
     {
-	var e = a.toString(16);
-	while( e.length < 6)
+	for(j = 0; j < 256; j++)
 	{
-	    e = 0 + e;
+	    var e = a.toString(16);
+	    while(e.length < 6)
+	    {
+		e = 0 + e;
+	    }
+	    ctx.fillStyle = "#" + e;
+	    ctx.fillRect(i, j, i+1, j+1);
+	    a = a + inc;
 	}
-	ctx.fillStyle = "#" + e;
-	ctx.fillRect(i, j, i+1, j+1);
-	a = a + 16;
     }
+    alert(a.toString(16)+ "\t" + a);
 }
-alert("syntaxe correcte " + a.toString(16));
+
+f("myCanvas",1);
+f("myCanvas1",256);
