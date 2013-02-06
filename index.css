@@ -1,1 +1,46 @@
 
+.rouge
+{
+    background: red;
+}
+
+.jaune
+{
+    background: yellow;
+}
+.orange
+{
+    background: orange;
+}
+.bleu
+{
+    background: #7093DB;
+}
+
+.bleu_fonce
+{
+    background: DarkBlue;
+}
+
+.violet
+{
+    background: purple;
+}
+
+.violet_claire
+{
+    background: #9F5F9F;
+}
+
+.vert
+{
+    background: green;
+}
+
+#prison
+{
+    text-align: top;
+    margin-botton: "30px";
+    padding: "10px";
+    float:right;
+}
