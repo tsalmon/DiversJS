@@ -1,3 +1,13 @@
+body
+{
+    font-family: "Arial";
+}
+
+td
+{
+    width: 140px;
+    height:130px;
+}
 
 .rouge
 {
@@ -19,7 +29,7 @@
 
 .bleu_fonce
 {
-    background: DarkBlue;
+    background: blue;
 }
 
 .violet
@@ -43,4 +53,9 @@
     margin-botton: "30px";
     padding: "10px";
     float:right;
+}
+
+.caisse
+{
+    background-image:url("caisse.jpg");
 }
