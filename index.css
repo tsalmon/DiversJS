@@ -1,12 +1,11 @@
-body
+.haut, .bas
 {
-    font-family: "Arial";
+    width: 75px;   
 }
 
-td
+.droite, .gauche
 {
-    width: 140px;
-    height:130px;
+    height: 50px;
 }
 
 .rouge
@@ -22,6 +21,7 @@ td
 {
     background: orange;
 }
+
 .bleu
 {
     background: #7093DB;
@@ -50,12 +50,21 @@ td
 #prison
 {
     text-align: top;
-    margin-botton: "30px";
-    padding: "10px";
-    float:right;
 }
 
 .caisse
 {
-    background-image:url("caisse.jpg");
+    background-image: url("caisse.jpeg"), url("fond.jpeg");
+    background-repeat: no-repeat, repeat; 
+}
+
+body
+{
+    font-family: "Arial";
+    font-size:1px;
+}
+
+td
+{
+    border: 5px black solid;
 }
