@@ -65,9 +65,15 @@ table
     font-size:11px;
 }
 
+#jeu
+{
+    font-size:15px;
+}
+
 body
 {
-    margin: -0px;
+    margin-top: -0.5px;
+    margin-left:-0.5px;
 }
 
 td
