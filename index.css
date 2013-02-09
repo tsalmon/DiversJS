@@ -58,10 +58,16 @@
     background-repeat: no-repeat, repeat; 
 }
 
+table
+{
+    text-align:center;
+    font-family: "Arial";
+    font-size:11px;
+}
+
 body
 {
-    font-family: "Arial";
-    font-size:1px;
+    margin: -0px;
 }
 
 td
