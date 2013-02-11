@@ -1,6 +1,5 @@
 var joueurs = new Array();
 var nb_joueurs = 0; 
-var cases = new Array({},);
 
 function erreur_init(message)
 {
