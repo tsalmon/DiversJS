@@ -1,0 +1,45 @@
+Capital de Base :=
+ 150k
+
+Residences :=
+
+loyer :
+terrain  = X
+1 maison = 2X + X/2
+2 maisons= 3X + 2X/3
+3 maisons= 5X + 4X/5
+4 maisons= 8X + 7X/8
+Hôtel    = 12X + 11X/12
+
+Hypotheque :
+ 5X
+
+Coûts :
+maison = Couleur() + X
+hotel = 4maison + Couleur()
+
+
+Couleur()
+{
+	Violet       = 25k
+	Bleu   	     = 50k
+	VioletClaire = 75k	  
+	Orange       = 100k
+	Rouge        = 125k
+	Jaune        = 150k
+	Vert         = 175k
+	BleuFoncé    = 200k
+}
+
+Compagnie := 
+	 
+loyer : 4000 * montant des dés  
+
+
+Gare :=
+    
+loyer : 
+1 Gare  = 2k5
+2 Gares = 5k
+3 Gares = 10k
+4 Gares = 20k
