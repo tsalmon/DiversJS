@@ -1,5 +1,39 @@
 var joueurs = new Array();
 var nb_joueurs = 0; 
+//cette variable permet de savoir quel est le joueur qui est actuellement en train de jouer
+var joueur_actuel = 0;
+
+// source : jonathankowalski.fr/blog/2011/12/supprimer-un-element-dans-un-tableau-javascript
+Array.prototype.unset = function(val)
+{
+    var index = this.indexOf(val)
+    if(index > -1)
+    {
+	this.splice(index, -1)
+    }
+}
+
+function des()
+{
+    return (parseInt(Math.random()*12)+1);
+}
+
+function jouer()
+{
+    alert(joueurs[0].position);
+    if(nb_joueurs == 1)
+    {
+	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + joueurs[joueur_actuel] + " a gagné <p>";
+    }
+    else
+    {
+	
+    }
+}
+
+/****************************
+         lancement du jeu 
+*********************************/
 
 function erreur_init(message)
 {
@@ -41,7 +75,7 @@ function choisir_nom(x)
 	}
 	if(/^\w+$/.test(document.getElementById("j" + i).value))
 	{
-	    joueurs[nb_joueurs] = document.getElementById("j" + i).value;
+	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0};
 	    nb_joueurs = nb_joueurs + 1;
 	}
     }
@@ -51,6 +85,7 @@ function choisir_nom(x)
 	return ;
     }
     alert("inscription validé");
+    jouer();
 }
 
 initialise();
