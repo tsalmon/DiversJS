@@ -13,6 +13,7 @@ Array.prototype.unset = function(val)
     }
 }
 
+// pour un peu d'elegance
 function des()
 {
     return (parseInt(Math.random()*12)+1);
@@ -20,14 +21,22 @@ function des()
 
 function jouer()
 {
-    alert(joueurs[0].position);
+    var d = des();
+    
+    joueurs[joueurs_actuel] = (joueurs[joueur_actuel].position + d) % 39; // % nb de cases
+    
+    
+
+    //condition d'arret et de continuité du jeu
     if(nb_joueurs == 1)
     {
-	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + joueurs[joueur_actuel] + " a gagné <p>";
+	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
+	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + winner + " a gagné <p>";
     }
     else
     {
-	
+	joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
+	jouer();
     }
 }
 
