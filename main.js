@@ -1,6 +1,6 @@
 var joueurs = new Array();
 var nb_joueurs = 0; 
-
+var cases = new Array({},);
 
 function erreur_init(message)
 {
@@ -14,22 +14,20 @@ function initialise()
     for(i = 1; i < 7; i++)
     {
 	joueurs[i-1] = document.getElementById("j"+i);
-	joueurs[i-1].addEventListener("keypress", f, false);
+	joueurs[i-1].addEventListener("keypress", choisir_nom, false);
 	document.getElementById("j" + i).value = "";
     }
 }
 
-function 
-
-function f(x)
-{
-    
+function choisir_nom(x)
+{ 
     if(x.keyCode != 13)
     {
 	return ;
     }
     
     var k = 0; 
+    
     for( i = 1; i < 7; i++)
     {
 	if(joueurs.indexOf(document.getElementById("j" + i).value) != -1)
