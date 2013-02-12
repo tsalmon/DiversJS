@@ -2,6 +2,7 @@ var joueurs = new Array();
 var nb_joueurs = 0; 
 //cette variable permet de savoir quel est le joueur qui est actuellement en train de jouer
 var joueur_actuel = 0;
+var cases = new Array(); // 1 = caisse, 2 = chance, 3 = exam, 4 = SV/Parc/Depart, 5 = Crous, 6 = reste
 
 // source : jonathankowalski.fr/blog/2011/12/supprimer-un-element-dans-un-tableau-javascript
 Array.prototype.unset = function(val)
@@ -85,7 +86,7 @@ function choisir_nom(x)
 	}
 	if(/^\w+$/.test(document.getElementById("j" + i).value))
 	{
-	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0};
+	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false};
 	    nb_joueurs = nb_joueurs + 1;
 	}
     }
@@ -96,6 +97,35 @@ function choisir_nom(x)
     }
     alert("inscription validé");
     jouer();
+}
+
+for(i = 0; i < 39 ; i++)
+{
+    //caisse
+    if(i == 2 || i == 17 || i == 33)
+    {
+	cases[i] = 1;
+    }
+    else if(i == 7 || i == 22 || i == 36)
+    {
+	cases[i] = 2;
+    }
+    else if(i == 4)
+    {
+	cases[i] = 3;
+    }
+    else if(i == 10 || i == 20 || i == 0)
+    {
+	cases[i] = 4;
+    }
+    else if(i == 38)
+    {
+	cases[i] = 5;
+    }
+    else 
+    {
+	cases[i] = 6;
+    }
 }
 
 initialise();
