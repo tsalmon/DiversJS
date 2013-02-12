@@ -20,13 +20,20 @@ function des()
     return (parseInt(Math.random()*12)+1);
 }
 
+//cases du jeu
+function avance()
+{
+    
+}
+
+//deplacement des joueurs
 function jouer()
 {
     var d = des();
     
-    joueurs[joueur_actuel].position = (joueurs[joueur_actuel].position + d) % 39; // % nb de cases
+    joueurs[joueur_actuel].position = (joueurs[joueur_actuel].position + d) % 40; // % nb de cases
     
-    alert(joueurs[joueur_actuel].nom + " " + joueurs[joueur_actuel].position);
+    avance();
     
     //condition d'arret et de continuité du jeu
     if(nb_joueurs == 1)
