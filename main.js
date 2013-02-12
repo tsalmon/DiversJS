@@ -2,7 +2,17 @@ var joueurs = new Array();
 var nb_joueurs = 0; 
 //cette variable permet de savoir quel est le joueur qui est actuellement en train de jouer
 var joueur_actuel = 0;
-var cases = new Array(); // 1 = caisse, 2 = chance, 3 = exam, 4 = SV/Parc/Depart, 5 = Crous, 6 = reste
+var cases = new Array(); 
+/*
+  1 = caisse; 
+  2 = chance; 
+  3 = exam; 
+  4 = SV/Parc/Depart; 
+  5 = Crous; 
+  6 = reste; 
+  {"proprietaire", "prix"=1(terrain)/2(maison)/3(hotel)}
+*/
+
 var detect_passe; // detecter le bouton de passage au joueur suivant
 // source : jonathankowalski.fr/blog/2011/12/supprimer-un-element-dans-un-tableau-javascript
 Array.prototype.unset = function(val)
@@ -26,58 +36,103 @@ function pos_actuelle()
     return (joueurs[joueur_actuel].position);
 }
 
+function prix_1maison(prix)
+{
+    return parseInt(2 * prix + prix/2);
+}
+
+function prix_2maisons(prix)
+{
+    return parseInt(3 * prix + 2 * prix / 3);
+}
+
+function prix_3maisons(prix)
+{
+    return parseInt(5 * prix + 4 * prix / 5);
+}
+
+function prix_4maisons(prix)
+{
+    return parseInt(8 * prix + 7 * prix / 8);
+}
+
+function prix_hotel(prix)
+{
+    return parseInt(12 * prix + 11 * prix / 12);
+}
+
 function bouton_passer()
 {
-    return "<input type=\"button\" id=\"passe\"/>";
+    document.getElementById("jeu").innerHTML += "<p><input type=\"button\" value=\"passe\" id=\"passer\"/></p>";
 }
+
 
 //////////////////////////////////////////////////
 
 function caisse()
 {
-    document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
-    document.getElementById("jeu").innerHTML = "<p>Aller en Prison</p>" + bouton_passer();
-    document.getElementById("jeu").innerHTML = "<p>Aller a la case Départ</p>" + bouton_passer();
-    document.getElementById("jeu").innerHTML = "<p>Tirer une carte chance</p>" + bouton_passer();
-    document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
-    document.getElementById("jeu").innerHTML = "<p></p>" + bouton_passer();
+    document.getElementById("jeu").innerHTML = "case caisse de communaute";
+    /*
+      document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
+      document.getElementById("jeu").innerHTML = "<p>Aller en Prison</p>" + bouton_passer();
+      document.getElementById("jeu").innerHTML = "<p>Aller a la case Départ</p>" + bouton_passer();
+      document.getElementById("jeu").innerHTML = "<p>Tirer une carte chance</p>" + bouton_passer();
+      document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
+      document.getElementById("jeu").innerHTML = "<p></p>" + bouton_passer();
+    */
 }
 
 function chance()
 {
-    
+    document.getElementById("jeu").innerHTML = "case chance";
 }
 
 function examen()
 {
+    document.getElementById("jeu").innerHTML = "case examen";
 }
 
 // parc, simple_visite
 function tranquille()
 {
-    document.getElementById("jeu").innerHTML = "Ici il ne se passe rien<input id=\"passe\" type=\"button\"/>";
-    
+    document.getElementById("jeu").innerHTML = "Ici il ne se passe rien";    
 }
 
 //Palmashow : Quand on est en prison
 function prison()
 {
-    
+    document.getElementById("jeu").innerHTML = "vous etes en prison";
 }
 
 function crous()
 {
-    
+    document.getElementById("jeu").innerHTML = "case du crous";
+}
+
+function rz()
+{
+    alert("ze");
 }
 
 function achat()
 {
+    var prix = document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".","");
+    alert("achat() " + prix);
+    document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><td> terrain </td><td>" + prix + "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison </td><td>" + prix_1maison(prix) + "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maison </td><td>" + prix_2maisons(prix) + "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maison </td><td>" + prix_3maisons(prix) + "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maison </td><td>" + prix_4maisons(prix) + "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>" + prix_hotel(prix) + "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>";
     
+    var c;
+    for(i = 1; i < 7; i++)
+    {
+	c[i-1] = document.getElementById("c" + i);
+	c[i-1].addEventListener("click", rz, false);
+	alert(i);
+    }
+    alert("achat fini");
 }
 
 function payer_loyer()
 {
-    
+    document.getElementById("jeu").innerHTML = "Bienvenue chez " + cases[pos_actuel()].proprietaire;
 }
 
 //cases du jeu
@@ -108,6 +163,22 @@ function avance()
     }
 }
 
+//condition d'arret et de continuité du jeu
+function passer()
+{
+    if(nb_joueurs == 1)
+    {
+	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
+	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + winner + " a gagné <p>";
+    }
+    else
+    {
+	joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
+	jouer();
+    }
+    
+}
+
 //deplacement des joueurs
 function jouer()
 {
@@ -119,21 +190,14 @@ function jouer()
     else
     {
 	var d = des();
+	alert("dés : " + d);
 	joueurs[joueur_actuel].position = (pos_actuelle() + d) % 40; // % nb de cases
 	avance();
     }
-    //condition d'arret et de continuité du jeu
-    if(nb_joueurs == 1)
-    {
-    var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
-	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + winner + " a gagné <p>";
-    }
-    else
-    {
-	joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
-	jouer();
-    }
     
+    bouton_passer();
+    detect_passe = document.getElementById("passer");
+    detect_passe.addEventListener("click", passer, false);
 }
 
 /****************************
