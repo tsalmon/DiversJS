@@ -26,11 +26,11 @@ function jouer()
     joueurs[joueur_actuel].position = (joueurs[joueur_actuel].position + d) % 39; // % nb de cases
     
     alert(joueurs[joueur_actuel].nom + " " + joueurs[joueur_actuel].position);
-    /*
+    
     //condition d'arret et de continuité du jeu
     if(nb_joueurs == 1)
     {
-	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
+    var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
 	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + winner + " a gagné <p>";
     }
     else
@@ -38,7 +38,7 @@ function jouer()
 	joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
 	jouer();
     }
-    */
+    
 }
 
 /****************************
