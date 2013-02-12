@@ -3,7 +3,7 @@ var nb_joueurs = 0;
 //cette variable permet de savoir quel est le joueur qui est actuellement en train de jouer
 var joueur_actuel = 0;
 var cases = new Array(); // 1 = caisse, 2 = chance, 3 = exam, 4 = SV/Parc/Depart, 5 = Crous, 6 = reste
-
+var detect_passe; // detecter le bouton de passage au joueur suivant
 // source : jonathankowalski.fr/blog/2011/12/supprimer-un-element-dans-un-tableau-javascript
 Array.prototype.unset = function(val)
 {
@@ -20,21 +20,108 @@ function des()
     return (parseInt(Math.random()*12)+1);
 }
 
+// meme chose qu'en haut
+function pos_actuelle()
+{
+    return (joueurs[joueur_actuel].position);
+}
+
+function bouton_passer()
+{
+    return "<input type=\"button\" id=\"passe\"/>";
+}
+
+//////////////////////////////////////////////////
+
+function caisse()
+{
+    document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
+    document.getElementById("jeu").innerHTML = "<p>Aller en Prison</p>" + bouton_passer();
+    document.getElementById("jeu").innerHTML = "<p>Aller a la case Départ</p>" + bouton_passer();
+    document.getElementById("jeu").innerHTML = "<p>Tirer une carte chance</p>" + bouton_passer();
+    document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
+    document.getElementById("jeu").innerHTML = "<p></p>" + bouton_passer();
+}
+
+function chance()
+{
+    
+}
+
+function examen()
+{
+}
+
+// parc, simple_visite
+function tranquille()
+{
+    document.getElementById("jeu").innerHTML = "Ici il ne se passe rien<input id=\"passe\" type=\"button\"/>";
+    
+}
+
+//Palmashow : Quand on est en prison
+function prison()
+{
+    
+}
+
+function crous()
+{
+    
+}
+
+function achat()
+{
+    
+}
+
+function payer_loyer()
+{
+    
+}
+
 //cases du jeu
 function avance()
 {
-    
+    switch(cases[pos_actuelle()])
+    {
+    case 1:
+	caisse();
+	break;
+    case 2:
+	chance();
+	break;
+    case 3:
+	examen();
+	break;
+    case 4:
+	tranquille();
+	break;
+    case 5:
+	crous();
+	break;
+    case 6:
+	achat();
+	break;
+    default :
+	payer_loyer();
+    }
 }
 
 //deplacement des joueurs
 function jouer()
 {
-    var d = des();
-    
-    joueurs[joueur_actuel].position = (joueurs[joueur_actuel].position + d) % 40; // % nb de cases
-    
-    avance();
-    
+    // soit le joueur est en prison, soit il peut se deplacer sur le jeu
+    if(joueurs[joueur_actuel].prison == true)
+    {
+	prison();
+    }
+    else
+    {
+	var d = des();
+	joueurs[joueur_actuel].position = (pos_actuelle() + d) % 40; // % nb de cases
+	avance();
+    }
     //condition d'arret et de continuité du jeu
     if(nb_joueurs == 1)
     {
