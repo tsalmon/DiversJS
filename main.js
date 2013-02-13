@@ -1,8 +1,8 @@
-var joueurs = new Array();
+var joueurs = [];
 var nb_joueurs = 0; 
 //cette variable permet de savoir quel est le joueur qui est actuellement en train de jouer
 var joueur_actuel = 0;
-var cases = new Array(); 
+var cases = []; 
 /*
   1 = caisse; 
   2 = chance; 
@@ -71,7 +71,7 @@ function bouton_passer()
 
 function caisse()
 {
-    document.getElementById("jeu").innerHTML = "case caisse de communaute";
+    document.getElementById("jeu").innerHTML = "case caisse de communaute" + bouton_passer();
     /*
       document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
       document.getElementById("jeu").innerHTML = "<p>Aller en Prison</p>" + bouton_passer();
@@ -106,23 +106,34 @@ function prison()
 
 function crous()
 {
-    document.getElementById("jeu").innerHTML = "case du crous";
+    document.getElementById("jeu").innerHTML = "case du crous " + bouton_passer();
 }
 
 function achat()
 {
     var prix = document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".","");
+    prix = [prix, prix_1maison(prix), prix_2maisons(prix), prix_3maisons(prix), prix_4maisons(prix), prix_hotel(prix)];
+    document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><td> terrain </td><td>" + prix[0] + "</td><td><input type=\"button\" id=\"c1\" value=\"commander = c1\" /></td></tr><tr><td> 1 maison </td><td>" + prix[1] + "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>" + prix[2] + "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>" + prix[3] + "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>" + prix[4] + "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>" + prix[5] + "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>" + bouton_passer();
     
-    document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><td> terrain </td><td>" + prix + "</td><td><input type=\"button\" id=\"c1\" value=\"commander = c1\" /></td></tr><tr><td> 1 maison </td><td>" + prix_1maison(prix) + "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>" + prix_2maisons(prix) + "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>" + prix_3maisons(prix) + "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>" + prix_4maisons(prix) + "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>" + prix_hotel(prix) + "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>" + bouton_passer();
-    
-    var c = new Array();
+    var c = [];
     for(i = 1; i < 7; i++)
     {
 	c[i-1] = document.getElementById("c" + i);
-	c[i-1].addEventListener("click", function()
+	c[i-1].addEventListener("click", function(X)
 				{
-				    alert("fc");
-				}, false);
+				    if(joueurs[joueur_actuel].capital > prix[X])
+				    {
+					alert("achat effectué");
+					joueurs[joueurs_actuel].capital -= prix[X];
+					passer();
+				    }
+				    else
+				    {
+					alert(joueurs[joueur_actuel].capital + " < " + prix[X] + " (i = " + i + ")");
+					//alert("pas assez d'argent ");
+				    }
+				    
+				}.bind(this, i-1), false);
     }
 }
 
