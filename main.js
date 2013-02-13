@@ -27,6 +27,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
+    return 1; 
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -121,19 +122,18 @@ function achat()
 	c[i-1] = document.getElementById("c" + i);
 	c[i-1].addEventListener("click", function(X)
 				{
-				    if(joueurs[joueur_actuel].capital > prix[X])
+				    if(joueurs[joueur_actuel].capital > X)
 				    {
-					alert("achat effectué");
-					joueurs[joueurs_actuel].capital -= prix[X];
+					joueurs[joueur_actuel].capital -= X ;
+					alert("Achat effectué");
 					passer();
 				    }
 				    else
 				    {
-					alert(joueurs[joueur_actuel].capital + " < " + prix[X] + " (i = " + i + ")");
-					//alert("pas assez d'argent ");
+					alert("pas assez d'argent ");
 				    }
 				    
-				}.bind(this, i-1), false);
+				}.bind(this, prix[i-1]), false);
     }
 }
 
@@ -173,6 +173,7 @@ function avance()
 //condition d'arret et de continuité du jeu
 function passer()
 {
+    alert("111111");
     if(nb_joueurs == 1)
     {
 	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
