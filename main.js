@@ -37,27 +37,27 @@ function pos_actuelle()
     return (joueurs[joueur_actuel].position);
 }
 
-function prix_1maison(prix)
+function loyer_1maison(prix)
 {
     return parseInt(2 * prix + prix/2);
 }
 
-function prix_2maisons(prix)
+function loyer_2maisons(prix)
 {
     return parseInt(3 * prix + 2 * prix / 3);
 }
 
-function prix_3maisons(prix)
+function loyer_3maisons(prix)
 {
     return parseInt(5 * prix + 4 * prix / 5);
 }
 
-function prix_4maisons(prix)
+function loyer_4maisons(prix)
 {
     return parseInt(8 * prix + 7 * prix / 8);
 }
 
-function prix_hotel(prix)
+function loyer_hotel(prix)
 {
     return parseInt(12 * prix + 11 * prix / 12);
 }
@@ -69,6 +69,45 @@ function bouton_passer()
 
 
 //////////////////////////////////////////////////
+
+// on s'aide des positions des gares
+function couleur()
+{
+    if(pos_actuelle() < 5 )
+    {
+	return 25000; // violet
+    }
+    else if(pos_actuelle() > 5 && pos_actuelle() < 10)
+    {
+	return 50000; // bleu
+    }
+    else if(pos_actuelle() > 10 && pos_actuelle() < 15)
+    {
+	return 75000; // violet claire
+    }
+    else if(pos_actuelle() > 15 && pos_actuelle() < 20)
+    {
+	return 100000; // orange
+    }
+    else if(pos_actuelle() > 20 && pos_actuelle() < 25)
+    {
+	return 125000; // rouge
+    }
+    else if(pos_actuelle() > 25 && pos_actuelle() < 30)
+    {
+	return 150000; // jaune
+    }
+    else if(pos_actuelle() > 30 && pos_actuelle() < 35)
+    {
+	return 175000; // vert
+    }
+    else
+    {
+	return 200000; //bleu foncé
+    }
+
+
+}
 
 function caisse()
 {
@@ -112,34 +151,38 @@ function crous()
 
 function achat()
 {
-    var prix = document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".","");
-    prix = [prix, prix_1maison(prix), prix_2maisons(prix), prix_3maisons(prix), prix_4maisons(prix), prix_hotel(prix)];
-    document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><td> terrain </td><td>" + prix[0] + "</td><td><input type=\"button\" id=\"c1\" value=\"commander = c1\" /></td></tr><tr><td> 1 maison </td><td>" + prix[1] + "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>" + prix[2] + "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>" + prix[3] + "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>" + prix[4] + "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>" + prix[5] + "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>" + bouton_passer();
+    var loyer = parseInt(document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".",""));
+    loyer = [loyer, loyer_1maison(loyer), loyer_2maisons(loyer), loyer_3maisons(loyer), loyer_4maisons(loyer), loyer_hotel(loyer)];
+    var prix = [ loyer[0], loyer[0] + couleur(), 2 * (loyer[0] + couleur()), 3 * ( loyer[0] + couleur()), 4 * (loyer[0] + couleur()), 2 * 3 * 4 * loyer[0] + couleur()]; 
+    
+    document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><th>Choix</th><th>Prix</th><th>Loyer</th></tr><tr><td> terrain   </td><td>"+ prix[0] + "</td><td>" + loyer[0] + "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison  </td><td>"+ prix[1] + "</td><td>" + loyer[1] + "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>"+ prix[2] + "</td><td>" + loyer[2] + "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>"+ prix[3] + "</td><td>" + loyer[3] + "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>"+ prix[4] + "</td><td>" + loyer[4] + "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel     </td><td>"+ prix[5] + "</td><td>" + loyer[5] + "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>" + bouton_passer();
     
     var c = [];
     for(i = 1; i < 7; i++)
     {
 	c[i-1] = document.getElementById("c" + i);
-	c[i-1].addEventListener("click", function(X)
+	c[i-1].addEventListener("click", function(l, p)
 				{
-				    if(joueurs[joueur_actuel].capital > X)
+				    if(joueurs[joueur_actuel].capital > p)
 				    {
-					joueurs[joueur_actuel].capital -= X ;
-					alert("Achat effectué");
+					joueurs[joueur_actuel].capital -= p ;
+					alert("Achat effectué " + p);
+					cases[pos_actuelle()] = {"proprietaire" : joueurs[joueur_actuel].nom, "prix" : l};
 					passer();
 				    }
 				    else
 				    {
-					alert("pas assez d'argent ");
+					alert("pas assez d'argent " + p);
 				    }
 				    
-				}.bind(this, prix[i-1]), false);
+				}.bind(this, loyer[i-1], prix[i-1]), false);
     }
+    return (loyer[0] );
 }
 
 function payer_loyer()
 {
-    document.getElementById("jeu").innerHTML = "Bienvenue chez " + cases[pos_actuel()].proprietaire;
+    document.getElementById("jeu").innerHTML = "Bienvenue chez " + cases[pos_actuelle()].proprietaire + "<p>" + bouton_passer() + "<p>";
 }
 
 //cases du jeu
@@ -173,7 +216,6 @@ function avance()
 //condition d'arret et de continuité du jeu
 function passer()
 {
-    alert("111111");
     if(nb_joueurs == 1)
     {
 	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
@@ -260,7 +302,6 @@ function choisir_nom(x)
 	erreur_init("Pas assez de joueurs");
 	return ;
     }
-    alert("inscription validé");
     jouer();
 }
 
