@@ -73,40 +73,7 @@ function bouton_passer()
 // on s'aide des positions des gares
 function couleur()
 {
-    if(pos_actuelle() < 5 )
-    {
-	return 25000; // violet
-    }
-    else if(pos_actuelle() > 5 && pos_actuelle() < 10)
-    {
-	return 50000; // bleu
-    }
-    else if(pos_actuelle() > 10 && pos_actuelle() < 15)
-    {
-	return 75000; // violet claire
-    }
-    else if(pos_actuelle() > 15 && pos_actuelle() < 20)
-    {
-	return 100000; // orange
-    }
-    else if(pos_actuelle() > 20 && pos_actuelle() < 25)
-    {
-	return 125000; // rouge
-    }
-    else if(pos_actuelle() > 25 && pos_actuelle() < 30)
-    {
-	return 150000; // jaune
-    }
-    else if(pos_actuelle() > 30 && pos_actuelle() < 35)
-    {
-	return 175000; // vert
-    }
-    else
-    {
-	return 200000; //bleu foncé
-    }
-
-
+    return 25000 * (0|pos_actuelle()/5 + 1);
 }
 
 function caisse()
@@ -182,7 +149,7 @@ function achat()
 
 function payer_loyer()
 {
-    document.getElementById("jeu").innerHTML = "Bienvenue chez " + cases[pos_actuelle()].proprietaire + "<p>" + bouton_passer() + "<p>";
+    document.getElementById("jeu").innerHTML = "Bienvenue chez " + cases[pos_actuelle()].proprietaire + "<p style=\"display:none;\">" + bouton_passer() + "</p>";
 }
 
 //cases du jeu
