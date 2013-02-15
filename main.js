@@ -1,5 +1,3 @@
-function monopoly()
-{
     var joueurs = [];
     var nb_joueurs = 0; 
     //cette variable permet de savoir quel est le joueur qui est actuellement en train de jouer
@@ -72,13 +70,13 @@ function monopoly()
 
 
     //////////////////////////////////////////////////
-
+    
     // on s'aide des positions des gares
     function couleur()
     {
 	return 25000 * (0|pos_actuelle()/5 + 1);
     }
-
+    
     function caisse()
     {
 	document.getElementById("jeu").innerHTML = "case caisse de communaute" + bouton_passer();
@@ -121,6 +119,7 @@ function monopoly()
 	document.getElementById("jeu").innerHTML = "case du crous " + bouton_payer();
     }
 
+    // Palmashow : Quand on emmenage 
     function achat()
     {
 	var loyer = parseInt(document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".",""));
@@ -141,8 +140,8 @@ function monopoly()
 					if(joueurs[joueur_actuel].capital > p)
 					{
 					    joueurs[joueur_actuel].capital -= p ;
+					    cases[pos_actuelle()] = {"id":joueur_actuel, "proprietaire":joueurs[joueur_actuel].nom, "prix":l};
 					    alert("Achat effectué " + p);
-					    cases[pos_actuelle()] = {"proprietaire" : joueurs[joueur_actuel].nom, "prix" : l};
 					    passer();
 					}
 					else
@@ -154,12 +153,44 @@ function monopoly()
 	}
 	return (loyer[0] );
     }
-
+    
     function payer_loyer()
     {
-	document.getElementById("jeu").innerHTML = "Bienvenue chez " + cases[pos_actuelle()].proprietaire;
+	if(pos_actuelle() == undefined)
+	{
+	    alert("indefini : " + joueur_actuel);
+	}
+	else if(cases[pos_actuelle()].id == joueur_actuel)
+	{
+	    document.getElementById("jeu").innerHTML = "vous etes chez vous" + bouton_passer();
+	    detect_passe = document.getElementById("passer");
+	    detect_passe.addEventListener("click", passer, false);
+	    
+	}
+	else
+	{
+	    document.getElementById("jeu").innerHTML = "<p>Bienvenue chez " + cases[pos_actuelle()].proprietaire + "</p><p><input type=\"button\" value=\"payer\" id=\"payer\"/></p>";
+	    var p = document.getElementById("payer");
+	    p.addEventListener("click", function(casa)
+			       {
+				   alert(pos_actuelle());
+				   if(joueurs[joueur_actuel].capital > casa.prix)
+				   {
+				       joueurs[joueur_actuel] -= casa.prix;
+				       joueurs[casa.id] += casa.prix;
+				       document.getElementById("jeu").innerHTML = "";
+				       
+				       //passer();
+				       
+				   }
+				   else
+				   {
+				       alert("pas assez d'argent");
+				   }
+				   
+			       }.bind(this, cases[pos_actuelle()]), false);
+	}
     }
-
     //cases du jeu
     function avance()
     {
@@ -199,6 +230,7 @@ function monopoly()
 	else
 	{
 	    joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
+	    
 	    jouer();
 	}
 	
@@ -215,7 +247,6 @@ function monopoly()
 	else
 	{
 	    var d = des();
-	    alert("dés : " + d);
 	    joueurs[joueur_actuel].position = (pos_actuelle() + d) % 40; // % nb de cases
 	    avance();
 	}    
@@ -265,7 +296,7 @@ function monopoly()
 	    }
 	    if(/^\w+$/.test(document.getElementById("j" + i).value))
 	    {
-		joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false};
+		joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs};
 		nb_joueurs = nb_joueurs + 1;
 	    }
 	}
@@ -307,7 +338,3 @@ function monopoly()
     }
 
     initialise();
-}
-
-monopoly();
-alert("syntaxe correcte");
