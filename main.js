@@ -11,6 +11,7 @@ var jeu = document.getElementById("jeu");
   4 = SV/Parc/Depart; 
   5 = Crous; 
   6 = reste; 
+  7 = prison;
   {"proprietaire", "prix"=1(terrain)/2(maison)/3(hotel)}
 */
 
@@ -28,7 +29,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 1; 
+    return 2;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -63,70 +64,39 @@ function loyer_hotel(prix)
     return parseInt(12 * prix + 11 * prix / 12);
 }
 
-function bouton_passer()
-{
-    return "<p><input type=\"button\" value=\"passe\" id=\"passer\"/></p>";
-}
-
-
-//////////////////////////////////////////////////
+/***********************************************/
 
 // on s'aide des positions des gares
 function couleur()
 {
     return 25000 * (0|pos_actuelle()/5 + 1);
 }
+/*
+  Aller en Prison
+  Payer "M" amende
+  aller a la case : x
+  avancer de y cases
+  reculer de z cases
+*/
+function caisse(){}
 
-function caisse()
-{
-    document.getElementById("jeu").innerHTML = "case caisse de communaute" + bouton_passer();
-    detect_passe = document.getElementById("passer");
-    detect_passe.addEventListener("click", passer, false);
-    
-    /*
-      document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
-      document.getElementById("jeu").innerHTML = "<p>Aller en Prison</p>" + bouton_passer();
-      document.getElementById("jeu").innerHTML = "<p>Aller a la case Départ</p>" + bouton_passer();
-      document.getElementById("jeu").innerHTML = "<p>Tirer une carte chance</p>" + bouton_passer();
-      document.getElementById("jeu").innerHTML = "<p>Retourner a Paris Store</p>" + bouton_passer();
-      document.getElementById("jeu").innerHTML = "<p></p>" + bouton_passer();
-    */
-}
+/*
+  Carte anti-Prison
+  Gagner "G" argent
+  Tirer une carte communauté
+  aller a la case depart
+  vous gagnez le terrain de la case C
+*/
+function chance(){}
 
-function chance()
-{
-    document.getElementById("jeu").innerHTML = "case chance" + bouton_passer();
-    detect_passe = document.getElementById("passer");
-    detect_passe.addEventListener("click", passer, false);
-}
+function examen(){}
 
-function examen()
-{
-    document.getElementById("jeu").innerHTML = "case examen" + bouton_passer();
-    detect_passe = document.getElementById("passer");
-    detect_passe.addEventListener("click", passer, false);
-}
+function tranquille(){}   
 
-// parc, simple_visite
-function tranquille()
-{
-    document.getElementById("jeu").innerHTML = "Ici il ne se passe rien" + bouton_passer();    
-    detect_passe = document.getElementById("passer");
-    detect_passe.addEventListener("click", passer, false);
-}
+function prison(){}
 
-//Palmashow : Quand on est en prison
-function prison()
-{
-    document.getElementById("jeu").innerHTML = "vous etes en prison";
-}
-
-function crous()
-{
-    document.getElementById("jeu").innerHTML = "case du crous " + bouton_payer();
-}
-
-// Palmashow : Quand on emmenage 
+function crous(){}
+ 
 function achat()
 {
     var loyer = parseInt(document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".",""));
@@ -134,7 +104,7 @@ function achat()
     var prix = [ loyer[0], loyer[0] + couleur(), 2 * (loyer[0] + couleur()), 3 * ( loyer[0] + couleur()), 4 * (loyer[0] + couleur()), 2 * 3 * 4 * loyer[0] + couleur()]; 
     
     document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><th>Choix</th><th>Prix</th><th>Loyer</th></tr><tr><td> terrain   </td><td>"+ prix[0] + "</td><td>" + loyer[0] + "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison  </td><td>"+ prix[1] + "</td><td>" + loyer[1] + "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>"+ prix[2] + "</td><td>" + loyer[2] + "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>"+ prix[3] + "</td><td>" + loyer[3] + "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>"+ prix[4] + "</td><td>" + loyer[4] + "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel     </td><td>"+ prix[5] + "</td><td>" + loyer[5] + "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>" + bouton_passer();
-
+    
     detect_passe = document.getElementById("passer");
     detect_passe.addEventListener("click", passer, false);
     
@@ -198,29 +168,32 @@ function payer_loyer()
 //cases du jeu
 function avance()
 {
+    str = "<div>" + joueurs[joueur_actuel].nom +" " + joueurs[joueur_actuel].capital + "<div/>";
     switch(cases[pos_actuelle()])
     {
     case 1:
-	caisse();
+	//caisse
 	break;
     case 2:
-	chance();
+	//chance();
 	break;
     case 3:
-	examen();
+	//examen();
 	break;
     case 4:
-	tranquille();
+	//tranquille();
 	break;
     case 5:
-	crous();
+	//crous();
 	break;
     case 6:
-	achat();
+	//achat();
 	break;
     default :
-	payer_loyer();
+	//payer_loyer();
     }
+    
+    jeu.innerHTML = str;
 }
 
 //condition d'arret et de continuité du jeu
