@@ -14,7 +14,7 @@ var validation = document.getElementById("td_validation");
   5 = Crous; 
   6 = reste; 
   7 = prison;
-  {"proprietaire", "prix"=1(terrain)/2(maison)/3(hotel)}
+  {"proprietaire", "prix"=1(terrain)/2(maison)/3(hotel), "id"}
 */
 
 var detect_passe; // detecter le bouton de passage au joueur suivant
@@ -31,7 +31,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 2;
+    return 7;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -75,7 +75,7 @@ function couleur()
     return 25000 * (0|pos_actuelle()/5 + 1);
 }
 
-function payer_amende(x, message)
+function amende_bonus(x, message)
 {
     jeu.innerHTML = message;
     validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Payer\"/>";
@@ -84,7 +84,7 @@ function payer_amende(x, message)
 				  {
 				      if(joueurs[joueur_actuel].capital > x)
 				      {
-					  joueurs[joueur_actuel].capital -= x;
+					  joueurs[joueur_actuel].capital += x;
 					  passer();
 				      }
 				      else
@@ -162,26 +162,32 @@ function lancer_des()
 }
 
 //cf caisse : 14
-function tirer_chance()
+function tirer_carte(f)
 {
-    jeu.innerHTML = "Tirez une carte Chance.";
+    jeu.innerHTML = "Tirez une carte" + ((f) ? "Chance" : "Communauté") + ".";
     validation.innerHTML = "<input type=\"button\" value=\"Tirer une carte\" id=\"bouton_validation\"/>";
     var v = document.getElementById("bouton_validation");
+    if(f)
+    {
     v.addEventListener("click", chance.bind(this, 1 + (0|Math.random()* 7)), false)
+    }
+    else
+    {
+	v.addEventListener("click", caisse.bind(this, 1 + (0|Math.random()* 14)), false)
+    }
 }
 
 //cf avance : 1 
 function caisse(d, message)
 {
-    d = 14;
     switch(d)
     {
     case 1:
-	return payer_amende(5000,"Recharge de carte pour la cantine : payer a la banque 5.000 Fr");
+	return amende_bonus(-5000,"Recharge de carte pour la cantine : payer a la banque 5.000 Fr");
     case 2:
-	return payer_amende(10000, "Inscription au sport : payer a la banque 10.000 Fr");
+	return amende_bonus(-10000, "Inscription au sport : payer a la banque 10.000 Fr");
     case 3:
-	return payer_amende(20000,"Chantage: Payez 20.000Fr à la banque, ou redoublez");
+	return amende_bonus(-20000,"Chantage: Payez 20.000Fr à la banque, ou redoublez");
     case 4:
 	return aller_a(1 ,"Stage en entreprise: allez a Paris Store");
     case 5:
@@ -203,8 +209,39 @@ function caisse(d, message)
     case 13:
 	return lancer_des();
     case 14:
-	return tirer_chance();
+	return tirer_carte();
     }
+}
+
+// cf chance : 4
+function recoit_terrain()
+{
+    jeu.innerHTML = "Obtention de locaux: vous avez reçu le terrain de Paris I, si ce terrain est deja pris, vous devez payer une amende egale au loyer de Paris I a son propriétaire";
+    if(cases[6] == 6)
+    {
+	jeu.innerHTML += "<p>Il n'y a pas de propriétaire, vous obtenez donc le terrain</p>";
+	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Passer\"/>";
+	cases[6] = {"proprietaire": joueurs[joueur_actuel].nom, "prix": 10000, "id":joueur_actuel};
+    }
+    else
+    {
+	jeu.innerHTML += "<p>Paris I est occupé, vous devez payer "+cases[6].prix+"Fr à "+cases[6].proprietaire+"</p>";
+	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Payer\"/>";
+	joueurs[joueur_actuel].capital -= cases[6].loyer;
+	joueurs[cases[6].id].capital += cases[6].loyer;
+    }
+    var v = document.getElementById("bouton_validation");
+    v.addEventListener("click", passer, false);
+}
+
+// cf chance: 5
+function carte_prison()
+{
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"antiprison\" value=\"Obtenir la dispense\"/>";
+    jeu.innerHTML = "Vous avez décidés de filmer les cours de vos profs, vous avez alors été dispensé d'un projet de votre choix, vous ne pouvez en avoir qu'une seule";
+    joueurs[joueur_actuel].dispence = true;
+    var v = document.getElementById("bouton_validation");
+    v.addEventListener("click", passer, false);
 }
 
 /*
@@ -216,38 +253,23 @@ function caisse(d, message)
 */
 function chance(d)
 {
-    alert("d");
-    d = 4;
+    d = 5;
     switch(d)
     {
     case 1:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"w5000\" value=\"Passer\"/>";
-	return "Disfonctionnement de la recharge de carte pour la cantine : recevez 5.000 Fr";
+	return amende_bonus(5000, "Disfonctionnement de la recharge de carte pour la cantine : recevez 5.000 Fr");
     case 2:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"w10000\" value=\"Passer\"/>";
-	return "La machine a café ne verse plus le café... mais de l'argent, recevez 10.000 Fr";
+	return amende_bonus(10000, "La machine a café ne verse plus le café... mais de l'argent, recevez 10.000 Fr");
     case 3:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"w20000\" value=\"Passer\"/>";
-	return "David doit vous remboursez des repas de cantine impayés, recevez 20.000 Fr";
+	return amende_bonus(20000, "David doit vous remboursez des repas de cantine impayés, recevez 20.000 Fr");
     case 4:	
-	if(cases[6] == 6)
-	{
-	    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"wparis1\" value=\"Passer\"/>";
-	}
-	else
-	{
-	    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"pparis1\" value=\"Payer\"/>";
-	}
-	return "Obtention de locaux: vous avez reçu le terrain de Paris I, si ce terrain est deja pris, vous devez payer un loyer au propriétaire";
+	return recoit_terrain();
     case 5:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"antiprison\" value=\"Obtenir la dispense\"/>";
-	return "Vous avez décidés de filmer les cours de vos profs, vous avez alors été dispensé d'un projet de votre choix";
+	return carte_prison();
     case 6:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"sophiegermain\" value=\"Aller a Sophie-Germain\"/>";
-	return "Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)";
+	aller_a(24 ,"Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)");
     case 7:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"c_ca\" value=\"Tirer une carte\"/>";
-	return "Tirez une carte caisse de communauté";
+	tirer_carte(true);
     }
 }
 
@@ -363,7 +385,6 @@ function payer_loyer()
 //cases du jeu
 function avance()
 {
-    var d   = 1+(0|Math.random()*14);
     var c_p_a = cases[pos_actuelle()];
     //////////////////////////////////////////////
     
@@ -374,10 +395,10 @@ function avance()
     switch(c_p_a)
     {
     case 1:
-	caisse(d);
+	caisse(1 + (0|Math.random() * 14));
 	break;
     case 2:
-	jeu.innerHTML = "<div class=\"carte_chance\">" + chance(d % 7 + 1) + "</div>";
+	chance(1 + (0|Math.random() * 7));
 	break;
     case 3:
 	jeu.innerHTML = "<div class=\"examen\">" + examen() + "</div>";
@@ -476,7 +497,7 @@ function choisir_nom(x)
 	}
 	if(/^\w+$/.test(document.getElementById("j" + i).value))
 	{
-	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs};
+	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false};
 	    nb_joueurs = nb_joueurs + 1;
 	}
     }
