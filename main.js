@@ -31,7 +31,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 2;
+    return 1;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -105,54 +105,60 @@ function aller_a(num_case, message)
     avancer.addEventListener("click", avance, false);
 }
 
+//cf caisse : 7, 8, 9, 10, 11, 12 
 function avancer_reculer(nb_cases, message)
 {
-    alert("marche")
+    jeu.innerHTML        = message ;
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\""+((nb_cases > 0) ? "Avancer" : "Reculer")+"\"/>";
+    joueurs[joueur_actuel].position+=nb_cases;
+    if(joueurs[joueur_actuel].position < 0)
+    {
+	joueurs[joueur_actuel].position = 39;
+    }
+    var bouger = document.getElementById("bouton_validation");
+    bouger.addEventListener("click", avance, false);
 }
 
+//cf caisse : 13
 function lancer_des()
 {
     jeu.innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 10.000) Fr.";
 }
 
+//cf avance : 1 
 function caisse(d, message)
 {
-    d = 5;
+    d = 7;
     switch(d)
     {
     case 1:
-	payer_amende(5000,"Recharge de carte pour la cantine : payer a la banque 5.000 Fr");
-	break;
+	return payer_amende(5000,"Recharge de carte pour la cantine : payer a la banque 5.000 Fr");
     case 2:
-	payer_amende(10000, "Inscription au sport : payer a la banque 10.000 Fr");
-	break;
+	return payer_amende(10000, "Inscription au sport : payer a la banque 10.000 Fr");
     case 3:
-	payer_amende(20000, "Chantage : payer 20.000 Fr à la banque, ou vous ne validerez pas AL5");
-	break;
+	return payer_amende(20000,"Chantage: Payez 20.000Fr à la banque, ou redoublez");
     case 4:
-	aller_a(1 ,"Stage en entreprise: allez a Paris Store");
-	break;
+	return aller_a(1 ,"Stage en entreprise: allez a Paris Store");
     case 5:
-	aller_en_prison(); break;
-    case 6:
-	aller_a(24, "Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)");
-	break;
+	return aller_en_prison();
+    case 6: 
+	return aller_a(24, "Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)");
     case 7:
-	avancer_reculer(-3, "Reculez de 3 cases"); break;
+	return avancer_reculer(-3, "Reculez de 3 cases");
     case 8:
-	avancer_reculer(-2, "Reculez de 2 cases"); break;
+	return avancer_reculer(-2, "Reculez de 2 cases");
     case 9:
-	avancer_reculer(-1, "Reculez de 1 case"); break;
+	return avancer_reculer(-1, "Reculez de 1 case"); 
     case 10:
-	avancer_reculer(1, "Avancez de 1 case"); break;
+	return avancer_reculer(1, "Avancez de 1 case"); 
     case 11:
-	avancer_reculer(2, "Avancez de 2 cases"); break;
+	return avancer_reculer(2, "Avancez de 2 cases");
     case 12:
-	avancer_reculer(3, "Avancez de 3 cases"); break;
+	return avancer_reculer(3, "Avancez de 3 cases");
     case 13:
-	lancer_des(); break;
+	return lancer_des();
     case 14:
-	chance(d % 7 + 1);
+	return chance(d % 7 + 1);
     }
 }
 
@@ -436,7 +442,7 @@ function choisir_nom(x)
     jouer();
 }
 
-for(i = 0; i < 39 ; i++)
+for(i = 0; i < 40 ; i++)
 {
     //caisse
     if(i == 2 || i == 17 || i == 33)
