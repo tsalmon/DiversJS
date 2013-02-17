@@ -31,7 +31,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 1;
+    return 2;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -119,16 +119,61 @@ function avancer_reculer(nb_cases, message)
     bouger.addEventListener("click", avance, false);
 }
 
+function resultat_lancer_des()
+{
+    var d1 = document.getElementById("d1");
+    var d2 = document.getElementById("d2");
+    if( d1.innerHTML == ""  || d2.innerHTML == "")
+    {
+	return ;
+    } 
+    /*
+    var start = new Date().getTime();
+    for( i = 0; i < 1e7; i++)
+    {
+	if((new Date().getTime() - start) > 1000)
+	{
+	    break;
+	}
+    }
+    */
+    document.getElementById("lancement").innerHTML = "Vous devez payer : " + ((0|d1.innerHTML) + (0|d2.innerHTML)) * 500 + "Fr";
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_valide\" value=\"Payer\"/>";
+    
+}
+
 //cf caisse : 13
 function lancer_des()
 {
-    jeu.innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 10.000) Fr.";
+    jeu.innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 500) Fr.<p id=\"lancement\">[<span id=\"d1\"></span>] et [<span id=\"d2\"></span>]</p>";
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_d1\" value=\"t1\"/> <input type=\"button\" id=\"bouton_d2\" value=\"t2\"/>";
+    var td1 = document.getElementById("bouton_d1");
+    td1.addEventListener("click", function(X)
+		       {
+			   document.getElementById("d1").innerHTML = X;
+			   resultat_lancer_des();
+		       }.bind(this, 1 + (0|Math.random()* 12)), false);
+    var td2 = document.getElementById("bouton_d2");
+    td2.addEventListener("click", function(X)
+			 {
+			     document.getElementById("d2").innerHTML = X;
+			     resultat_lancer_des();
+		       }.bind(this, 1 + (0|Math.random()* 12)), false);
+}
+
+//cf caisse : 14
+function tirer_chance()
+{
+    jeu.innerHTML = "Tirez une carte Chance.";
+    validation.innerHTML = "<input type=\"button\" value=\"Tirer une carte\" id=\"bouton_validation\"/>";
+    var v = document.getElementById("bouton_validation");
+    v.addEventListener("click", chance.bind(this, 1 + (0|Math.random()* 7)), false)
 }
 
 //cf avance : 1 
 function caisse(d, message)
 {
-    d = 7;
+    d = 14;
     switch(d)
     {
     case 1:
@@ -158,7 +203,7 @@ function caisse(d, message)
     case 13:
 	return lancer_des();
     case 14:
-	return chance(d % 7 + 1);
+	return tirer_chance();
     }
 }
 
@@ -171,6 +216,7 @@ function caisse(d, message)
 */
 function chance(d)
 {
+    alert("d");
     d = 4;
     switch(d)
     {
