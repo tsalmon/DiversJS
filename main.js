@@ -31,7 +31,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 1;
+    return 2;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -68,65 +68,91 @@ function loyer_hotel(prix)
 
 /***********************************************/
 
+//cf caisse: 1, 2, 3
 // on s'aide des positions des gares
 function couleur()
 {
     return 25000 * (0|pos_actuelle()/5 + 1);
 }
-/*
-  Aller en Prison
-  Payer "M" amende
-  aller a la case : x
-  avancer de y cases
-  reculer de z cases
-*/
-function caisse(d)
+
+function payer_amende(x, message)
 {
+    jeu.innerHTML = message;
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Payer\"/>";
+    var bouton_event = document.getElementById("bouton_validation");
+    bouton_event.addEventListener("click" , function()
+				  {
+				      if(joueurs[joueur_actuel].capital > x)
+				      {
+					  joueurs[joueur_actuel].capital -= x;
+					  passer();
+				      }
+				      else
+				      {
+					  jeu.innerHTML = "Vous n'avez pas assez d'argent, il n'y a qu'un seul endroit pour les gens comme vous : le script";
+					  validation.innerHTML = "<input type=\"button\" value=\"Aller au Script\" id=\"bouton_passe\"/>";
+				      }
+				  }, false);
+}
+
+//cf caisse: 4, 6
+function aller_a(num_case, message)
+{
+    jeu.innerHTML        = message;
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Avancer\"/>";
+    joueurs[joueur_actuel].position = num_case;
+    var avancer = document.getElementById("bouton_validation");
+    avancer.addEventListener("click", avance, false);
+}
+
+function avancer_reculer(nb_cases, message)
+{
+    alert("marche")
+}
+
+function lancer_des()
+{
+    jeu.innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 10.000) Fr.";
+}
+
+function caisse(d, message)
+{
+    d = 5;
     switch(d)
     {
     case 1:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"p5000\" value=\"Payer\"/>";
-	return "Recharge de carte pour la cantine : payer a la banque 5.000 Fr";
+	payer_amende(5000,"Recharge de carte pour la cantine : payer a la banque 5.000 Fr");
+	break;
     case 2:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"p10000\" value=\"Payer\"/>";
-	return "Inscription au sport : payer a la banque 10.000 Fr";
+	payer_amende(10000, "Inscription au sport : payer a la banque 10.000 Fr");
+	break;
     case 3:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"p20000\" value=\"Payer\"/>";
-	return "Chantage : payer 20.000 Fr à la banque, ou vous ne validerez pas AL5";
+	payer_amende(20000, "Chantage : payer 20.000 Fr à la banque, ou vous ne validerez pas AL5");
+	break;
     case 4:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"parisstore\" value=\"Avancer\"/>";
-	return "Stage en entreprise: allez a Paris Store";
+	aller_a(1 ,"Stage en entreprise: allez a Paris Store");
+	break;
     case 5:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"prison\" value=\"Aller au Script\"/>";
-	var l = ["C", "PHP", "Java", "Python", "OCaml"];
-	return "Projet surprise: "+(0|(100+Math.random()*2000))+" lignes de "+ l[0|(Math.random()*l.length)] + " a écrire en 3 jours, par conséquent allez au script";
+	aller_en_prison(); break;
     case 6:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"sophiegermain\" value=\"Avancer\"/>";
-	return "Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)";
+	aller_a(24, "Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)");
+	break;
     case 7:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"r3\" value=\"Reculer\"/>";
-	return "Reculez de 3 cases";
+	avancer_reculer(-3, "Reculez de 3 cases"); break;
     case 8:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"r2\" value=\"Reculer\"/>";
-	return "Reculez de 2 cases";
+	avancer_reculer(-2, "Reculez de 2 cases"); break;
     case 9:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"r1\" value=\"Reculer\"/>";
-	return "Reculez de 1 case";
+	avancer_reculer(-1, "Reculez de 1 case"); break;
     case 10:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"a1\" value=\"Reculer\"/>";
-	return "Avancez de 1 case";
+	avancer_reculer(1, "Avancez de 1 case"); break;
     case 11:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"a2\" value=\"Avancer\"/>";
-	return "Avancez de 2 cases";
+	avancer_reculer(2, "Avancez de 2 cases"); break;
     case 12:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"a3\" value=\"Avancer\"/>";
-	return "Avancez de 3 cases";
+	avancer_reculer(3, "Avancez de 3 cases"); break;
     case 13:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"td\" value=\"Lancer les dés\"/>";
-	return "Lancez les dés, vous devrez payer a la banque (le resultat * 10.000) Fr.";
+	lancer_des(); break;
     case 14:
-	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"c_ch\" value=\"Tirer une carte\"/>";
-	return "Tirez une carte chance";
+	chance(d % 7 + 1);
     }
 }
 
@@ -195,9 +221,21 @@ function tranquille()
     }
 }   
 
-function aller_en_prison(){}
+//cf caisse: 5; cf case 30
+function aller_en_prison()
+{
+    var l = ["Java", "C", "Python", "PHP && co", "Ocaml"];
+    var n = (0|(10*Math.random()))*100 + 100;
+    var j = 0|(1 + Math.random() * 15);
+    var r = l[0|Math.random() * l.length];
+    jeu.innerHTML = "Projet surprise: "+n+" lignes de "+r+" a écrire en "+j+" jour"+((j > 1 )? "s": "")+", par conséquent allez au script";
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_valider\" value = \"Aller au script\">"
+    var go_script = document.getElementById("bouton_valider");
+    joueurs[joueur_actuel].prison = true;
+    go_script.addEventListener("click", passer, false);
+}
 
-function prison(){}
+function prison(){alert("en prison");}
 
 function crous(){}
  
@@ -284,7 +322,7 @@ function avance()
     switch(c_p_a)
     {
     case 1:
-	jeu.innerHTML = "<div class=\"carte_caisse\">" + caisse(d) + "</div>";
+	caisse(d);
 	break;
     case 2:
 	jeu.innerHTML = "<div class=\"carte_chance\">" + chance(d % 7 + 1) + "</div>";
@@ -322,7 +360,6 @@ function passer()
     else
     {
 	joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
-	
 	jouer();
     }
 }
@@ -343,9 +380,9 @@ function jouer()
     }    
 }
 
-/****************************
-         lancement du jeu 
-*********************************/
+/*******************************\
+*        lancement du jeu       *
+\*******************************/
 
 function erreur_init(message)
 {
