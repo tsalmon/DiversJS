@@ -7,6 +7,9 @@ var jeu = document.getElementById("jeu");
 var info = document.getElementById("td_info");
 var validation = document.getElementById("td_validation");
 /*
+  joueurs:
+  {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0]}
+  cases: 
   1 = caisse; 
   2 = chance; 
   3 = exam; 
@@ -15,7 +18,7 @@ var validation = document.getElementById("td_validation");
   6 = reste; 
   7 = prison;
   8 = gare;
-  {"proprietaire", "prix"=1(terrain)/2(maison)/3(hotel), "id"}
+  {"proprietaire", "prix", "id"}
 */
 
 var detect_passe; // detecter le bouton de passage au joueur suivant
@@ -262,9 +265,34 @@ function chance(d)
     }
 }
 
+//cf avance: 8
 function gare()
 {
-    
+    var nom_case = document.getElementById("c" + pos_actuelle() + "_nom").innerHTML;
+    var bouton_commande = "<input type=\"button\" value=\"Commander\" id=\"commande\"/>";
+    var loyer = (joueurs[joueur_actuel].gares == 0) ? 2500 : (joueurs[joueur_actuel].gares) * 2;
+    jeu.innerHTML = "<p><table><tr><th>" + nom_case + "</th></tr><tr><th>Prix</th><th>Loyer</th></tr><td>20.000</td><td>"+loyer+"</td><td>"+bouton_commande+"</td><tr></th></table></p>";
+    bouton_commande = document.getElementById("commande");
+    bouton_commande.addEventListener("click", function(X)
+				     {
+					 if(joueurs[joueur_actuel].capital < X)
+					 {
+					     alert("Pas assez d'argent");
+					 }
+					 else
+					 {
+					     joueurs[joueur_actuel].capital -= X;
+					     alert(joueurs[joueur_actuel].capital);
+					     cases[pos_actuelle()] = {"proprietaire": joueurs[joueur_actuel].nom, "prix": loyer, "id" : joueur_actuel};
+					     joueurs[joueur_actuel].gare += 1;
+					     alert("Commande effectué");
+					     passer();
+					 }
+					 }.bind(this, loyer), false);
+    /*----------------------------*/
+    validation.innerHTML = "<input type=\"button\" id=\"validation\" value=\"Passer\"/>";
+    var bouton_passer = document.getElementById("validation");
+    bouton_passer.addEventListener("click", passer, false);
 }
 
 function examen_crous()
@@ -430,6 +458,7 @@ function avance()
 	break;
     case 8:
 	gare();
+	break;
     default :
 	payer_loyer();
     }    
@@ -509,7 +538,7 @@ function choisir_nom(x)
 	}
 	if(/^\w+$/.test(document.getElementById("j" + i).value))
 	{
-	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false};
+	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0};
 	    nb_joueurs = nb_joueurs + 1;
 	}
     }
