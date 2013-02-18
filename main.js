@@ -14,6 +14,7 @@ var validation = document.getElementById("td_validation");
   5 = Crous; 
   6 = reste; 
   7 = prison;
+  8 = gare;
   {"proprietaire", "prix"=1(terrain)/2(maison)/3(hotel), "id"}
 */
 
@@ -31,7 +32,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 7;
+    return 5;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -127,19 +128,8 @@ function resultat_lancer_des()
     {
 	return ;
     } 
-    /*
-    var start = new Date().getTime();
-    for( i = 0; i < 1e7; i++)
-    {
-	if((new Date().getTime() - start) > 1000)
-	{
-	    break;
-	}
-    }
-    */
     document.getElementById("lancement").innerHTML = "Vous devez payer : " + ((0|d1.innerHTML) + (0|d2.innerHTML)) * 500 + "Fr";
     validation.innerHTML = "<input type=\"button\" id=\"bouton_valide\" value=\"Payer\"/>";
-    
 }
 
 //cf caisse : 13
@@ -253,7 +243,6 @@ function carte_prison()
 */
 function chance(d)
 {
-    d = 5;
     switch(d)
     {
     case 1:
@@ -273,10 +262,34 @@ function chance(d)
     }
 }
 
-function examen()
+function gare()
 {
-    validation.innerHTML = "<input type=\"button\" id = \"prison\" name = \"prison\" value = \"Aller au Script\"/> <input type=\"button\" id = \"payer\" name = \"payer\" value = \"Payer 20.000Fr\"/> ";
-    return "Examen : Vous avez le choix entre reviser à en avoir la chair a vif au Script ou payer 20.000 Fr";
+    
+}
+
+function examen_crous()
+{
+    validation.innerHTML = "<input type=\"button\" id = \"choix_prison\" name = \"prison\" value = \"Aller au Script\"/> <input type=\"button\" id = \"choix_payer\" name = \"payer\" value = \"Payer 10.000Fr\"/> ";
+    if(pos_actuelle() == 4)
+    {
+	jeu.innerHTML = "Examen : Vous avez le choix entre reviser à en avoir la chair a vif au Script ou payer 10.000 Fr";
+    }
+    else
+    {
+	jeu.innerHTML = "Crous : la bourse ou le script c'est toi qui choisit";
+    }
+    var pr = document.getElementById("choix_prison");
+    pr.addEventListener("click", function()
+		       {
+			   joueurs[joueur_actuel].prison = true;
+			   passer();
+		       }, false);
+    var pa = document.getElementById("choix_payer");
+    pa.addEventListener("click", function()
+			{
+			    joueurs[joueur_actuel].capital -= 10000;
+			    passer();
+			}, false);
 }
 
 function tranquille()
@@ -415,12 +428,11 @@ function avance()
     case 7:
 	jeu.innerHTML = aller_en_prison();
 	break;
+    case 8:
+	gare();
     default :
 	payer_loyer();
-    }
-    
-    //////////////////////////////
-   
+    }    
 }
 //condition d'arret et de continuité du jeu
 function passer()
@@ -519,6 +531,10 @@ for(i = 0; i < 40 ; i++)
     else if(i == 7 || i == 22 || i == 36)
     {
 	cases[i] = 2;
+    }
+    else if(i % 5 == 0 && i % 10 != 0)
+    {
+	cases[i] = 8;
     }
     else if(i == 4)
     {
