@@ -259,9 +259,9 @@ function chance(d)
     case 5:
 	return carte_prison();
     case 6:
-	aller_a(24 ,"Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)");
+	return aller_a(24 ,"Allez a Sophie-Germain, vos resultats sont affichés (ou pas en fait)");
     case 7:
-	tirer_carte(true);
+	return tirer_carte(true);
     }
 }
 
@@ -270,26 +270,31 @@ function gare()
 {
     var nom_case = document.getElementById("c" + pos_actuelle() + "_nom").innerHTML;
     var bouton_commande = "<input type=\"button\" value=\"Commander\" id=\"commande\"/>";
-    var loyer = (joueurs[joueur_actuel].gares == 0) ? 2500 : (joueurs[joueur_actuel].gares) * 2;
+    var loyer = (joueurs[joueur_actuel].gares == 0) ? 2500 : (joueurs[joueur_actuel].gares) * 5000;
     jeu.innerHTML = "<p><table><tr><th>" + nom_case + "</th></tr><tr><th>Prix</th><th>Loyer</th></tr><td>20.000</td><td>"+loyer+"</td><td>"+bouton_commande+"</td><tr></th></table></p>";
     bouton_commande = document.getElementById("commande");
     bouton_commande.addEventListener("click", function(X)
 				     {
-					 if(joueurs[joueur_actuel].capital < X)
+					 if(joueurs[joueur_actuel].capital < 20000)
 					 {
 					     alert("Pas assez d'argent");
 					 }
 					 else
 					 {
-					     joueurs[joueur_actuel].capital -= X;
-					     alert(joueurs[joueur_actuel].capital);
+					     joueurs[joueur_actuel].capital -= 20000;
 					     cases[pos_actuelle()] = {"proprietaire": joueurs[joueur_actuel].nom, "prix": loyer, "id" : joueur_actuel};
-					     joueurs[joueur_actuel].gare += 1;
+					     if(joueurs[joueur_actuel].gares > 0)
+					     {
+						 joueurs[joueur_actuel].gares *= 2;
+					     }
+					     else
+					     {
+						 joueurs[joueur_actuel].gares = 1;
+					     }
 					     alert("Commande effectué");
 					     passer();
 					 }
-					 }.bind(this, loyer), false);
-    /*----------------------------*/
+				     }.bind(this, loyer), false);
     validation.innerHTML = "<input type=\"button\" id=\"validation\" value=\"Passer\"/>";
     var bouton_passer = document.getElementById("validation");
     bouton_passer.addEventListener("click", passer, false);
@@ -405,10 +410,14 @@ function payer_loyer()
     else
     {
 	jeu.innerHTML = "<p>Bienvenue chez " + cases[pos_actuelle()].proprietaire + "</p><p><input type=\"button\" value=\"payer\" id=\"payer\"/></p>";
+	if(pos_actuelle() % 5 == 0 && pos_actuelle() % 10 != 0)
+	{
+	    cases[pos_actuelle()].prix = joueurs[cases[pos_actuelle()].id].gares * 2500;
+	}
 	var p = document.getElementById("payer");
 	p.addEventListener("click", function(casa)
 			   {
-			       alert(pos_actuelle());
+			       
 			       if(joueurs[joueur_actuel].capital > casa.prix)
 			       {
 				   joueurs[joueur_actuel].capital -= casa.prix;
