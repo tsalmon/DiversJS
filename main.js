@@ -35,7 +35,7 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 5;
+    return 30;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -330,15 +330,18 @@ function tranquille()
     switch(pos_actuelle())
     {
     case 0:
-	validation.innerHTML = "<input type=\"button\" name=\"depart\" value = \"Passer\">";
-	return "Case départ recevez 20.000 Fr";
+	jeu.innerHTML = "Case départ recevez 20.000 Fr";
+	break;
     case 10:
-	validation.innerHTML = "<input type=\"button\" name=\"sv\" value = \"Passer\">";
-	return "Simple Visite, c'est marrant de regarder les autres bosser quand on a rien a faire, hein ?";
+	jeu.innerHTML = "Simple Visite, c'est marrant de regarder les autres bosser quand on a rien a faire, hein ?";
+	break;
     case 20:
-	validation.innerHTML = "<input type=\"button\" name=\"parc\" value = \"Passer\">";
-	return "Case Parc, on peut se la couler douce";
+	jeu.innerHTML = "Case Parc, on peut se la couler douce";
+	break;
     }
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_valider\" value = \"Passer\">";
+    var v = document.getElementById("bouton_valider");
+    v.addEventListener("click", passer, false);
 }   
 
 //cf caisse: 5; cf case 30
@@ -355,7 +358,11 @@ function aller_en_prison()
     go_script.addEventListener("click", passer, false);
 }
 
-function prison(){alert("en prison");}
+function prison()
+{
+    validation.innerHTML = "";
+    jeu.innerHTML = "en prison";
+}
 
 function crous(){}
  
@@ -454,7 +461,7 @@ function avance()
 	jeu.innerHTML = "<div class=\"examen\">" + examen() + "</div>";
 	break;
     case 4:
-	jeu.innerHTML = "tranquille";
+	tranquille();
 	break;
     case 5:
 	jeu.innerHTML = "crous";
@@ -463,7 +470,7 @@ function avance()
 	achat();
 	break;
     case 7:
-	jeu.innerHTML = aller_en_prison();
+	aller_en_prison();
 	break;
     case 8:
 	gare();
@@ -493,11 +500,13 @@ function jouer()
     // soit le joueur est en prison, soit il peut se deplacer sur le jeu
     if(joueurs[joueur_actuel].prison == true)
     {
+	alert(joueurs[joueur_actuel].nom + " => prison");
 	prison();
     }
     else
     {
 	var d = des();
+	//alert(d);
 	joueurs[joueur_actuel].position = (pos_actuelle() + d) % 40; // % nb de cases
 	avance();
     }    
@@ -559,38 +568,16 @@ function choisir_nom(x)
     jouer();
 }
 
-for(i = 0; i < 40 ; i++)
+// initialisation des cases du jeu
+cases[2] = cases[17] = cases[33] = 1;
+cases[4] = cases[38] = 3;
+cases[5] = cases[15] = cases[25] = cases[35] = 8;
+cases[7] = cases[22] = cases[36] = 2;
+cases[10] = cases[20] = cases[0] = 4;
+cases[30] = 7;
+for(i = 1; i < 40 ; i++)
 {
-    //caisse
-    if(i == 2 || i == 17 || i == 33)
-    {
-	cases[i] = 1;
-    }
-    else if(i == 7 || i == 22 || i == 36)
-    {
-	cases[i] = 2;
-    }
-    else if(i % 5 == 0 && i % 10 != 0)
-    {
-	cases[i] = 8;
-    }
-    else if(i == 4)
-    {
-	cases[i] = 3;
-    }
-    else if(i == 10 || i == 20 || i == 0)
-    {
-	cases[i] = 4;
-    }
-    else if(i == 30)
-    {
-	cases[i] = 7;
-    }
-    else if(i == 38)
-    {
-	cases[i] = 5;
-    }
-    else 
+    if(cases[i] == undefined)
     {
 	cases[i] = 6;
     }
