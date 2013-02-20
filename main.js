@@ -6,6 +6,8 @@ var cases = [];
 var jeu = document.getElementById("jeu");
 var info = document.getElementById("td_info");
 var validation = document.getElementById("td_validation");
+var bouton_proprio_view = "<input type=\"button\" id=\"proprio_view\" value=\"Voir les possessions\"/>";
+var bouton_quitter = "<input type=\"button\" id=\"bouton_quitter\" value=\"Quitter le jeu\"/>";
 /*
   joueurs:
   {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0]}
@@ -35,7 +37,6 @@ Array.prototype.unset = function(val)
 // pour un peu d'elegance
 function des()
 {
-    return 30;
     return (parseInt(Math.random()*12)+1);
 }
 
@@ -302,7 +303,9 @@ function gare()
 
 function examen_crous()
 {
-    validation.innerHTML = "<input type=\"button\" id = \"choix_prison\" name = \"prison\" value = \"Aller au Script\"/> <input type=\"button\" id = \"choix_payer\" name = \"payer\" value = \"Payer 10.000Fr\"/> ";
+    validation.innerHTML = 
+	"<input type=\"button\" id = \"choix_prison\" name = \"prison\" value = \"Aller au Script\"/>"
+	+"<input type=\"button\" id = \"choix_payer\" name = \"payer\" value = \"Payer 10.000Fr\"/> ";
     if(pos_actuelle() == 4)
     {
 	jeu.innerHTML = "Examen : Vous avez le choix entre reviser à en avoir la chair a vif au Script ou payer 10.000 Fr";
@@ -355,17 +358,81 @@ function aller_en_prison()
     validation.innerHTML = "<input type=\"button\" id=\"bouton_valider\" value = \"Aller au script\">"
     var go_script = document.getElementById("bouton_valider");
     joueurs[joueur_actuel].prison = true;
+    joueurs[joueur_actuel].nb_prison = 0;
     go_script.addEventListener("click", passer, false);
+}
+
+function prison_des(num_des)
+{
+    var randy = 0|(Math.random()*12)+1;
+    var rd1 = document.getElementById("d1");
+    var rd2 = document.getElementById("d2");
+    document.getElementById("span_d"+num_des).innerHTML = "<input type=\"button\" value=\""+randy+"\" id=\"d"+num_des+"\"/>"
+    if((num_des == 1 && rd2.value != "d2") || (num_des == 2 && rd1.value != "d1"))
+    {
+	var li = document.getElementById("resultat_des");
+	if((num_des == 1 && randy == rd2.value) || (num_des == 2 && randy == rd1.value))
+	{
+	    li.innerHTML = "Bravo !!! \n<input type=\"button\" id=\"b_s\" value=\"Sortir\">";
+	    joueurs[joueur_actuel].position = 0;
+	    joueurs[joueur_actuel].nb_prison = 0;
+	    var s = document.getElementById("b_s");
+	    joueurs[joueur_actuel].prison = false;
+	    s.addEventListener("click", passer, false);
+	}
+	else
+	{				
+	    li.innerHTML = "<input type=\"button\" id=\"b_p\" value=\"Passer\"/>";
+	    var passe = document.getElementById("b_p");
+	    passe.addEventListener("click", passer,false);
+	}
+    }
 }
 
 function prison()
 {
-    validation.innerHTML = "";
-    jeu.innerHTML = "en prison";
+    joueurs[joueur_actuel].nb_prison += 1;
+    if(joueurs[joueur_actuel].nb_prison == 4)
+    {
+	jeu.innerHTML = "Cela fait maintenant 3 tours que vous etes en prison, vous pouvez maintenant sortir.<input type=\"button\" id=\"sortie_button\" value=\"Sortir de prison\">";
+	var sort = document.getElementById("sortie_button");
+	joueurs[joueur_actuel].prison = false;
+	joueurs[joueur_actuel].position = 0;
+	joueurs[joueur_actuel].nb_prison = 0;
+	sort.addEventListener("click", passer, false);
+    }
+    else
+    {
+	validation.innerHTML = "";
+	jeu.innerHTML = "<p>Vous etes en prison ! pour sortir:</p><ul>"
+	    + "<li>Payez 5.000 Fr<input type=\"button\" id=\"bouton_payer\" value=\"Payer\"></li>" 
+	    + "<li>Faites un double aux dés<span id=\"span_d1\">"
+	    + "<input type=\"button\" value=\"d1\" id=\"d1\"/></span>"
+	    + "<span id=\"span_d2\"><input type=\"button\" value=\"d2\" id=\"d2\"/></span></li> "
+	    + "<li id=\"resultat_des\"</li></ul></p>";
+	var r_amende = document.getElementById("bouton_payer");
+	r_amende.addEventListener("click", function()
+				  {
+				      if(joueurs[joueur_actuel].capital < 5000)
+				      {
+					  alert("pas assez d'argents");
+				      }
+				      else
+				      {
+					  joueurs[joueur_actuel].capital -= 5000;
+					  joueurs[joueur_actuel].prison = false;
+					  joueurs[joueur_actuel].position = 0;
+					  joueurs[joueur_actuel].nb_prison = 0;
+					  passer();
+				      }
+				  }, false);
+	var rd1 = document.getElementById("d1");
+	var rd2 = document.getElementById("d2");
+	rd1.addEventListener("click", function(){ prison_des(1); }, false);
+	rd2.addEventListener("click", function(){ prison_des(2); }, false);
+    }
 }
 
-function crous(){}
- 
 function achat()
 {
     var loyer = parseInt(document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".",""));
@@ -403,11 +470,7 @@ function achat()
 
 function payer_loyer()
 {
-    if(pos_actuelle() == undefined)
-    {
-	alert("indefini : " + joueur_actuel);
-    }
-    else if(cases[pos_actuelle()].id == joueur_actuel)
+    if(cases[pos_actuelle()].id == joueur_actuel)
     {
 	jeu.innerHTML = "vous etes chez vous" + bouton_passer();
 	detect_passe = document.getElementById("passer");
@@ -445,7 +508,6 @@ function avance()
     var c_p_a = cases[pos_actuelle()];
     //////////////////////////////////////////////
     
-    info.innerHTML = joueurs[joueur_actuel].nom +" " + joueurs[joueur_actuel].capital;
     
     //////////////////////////////////////
     
@@ -497,10 +559,14 @@ function passer()
 //deplacement des joueurs
 function jouer()
 {
+    info.innerHTML = joueurs[joueur_actuel].nom +" " + joueurs[joueur_actuel].capital + " " + bouton_proprio_view + " " + bouton_quitter;
+    var proprio_view = document.getElementById("proprio_view");
+    proprio_view.addEventListener("click", function(){ alert("a venir"); }, false);
+    var quitter_jeu = document.getElementById("bouton_quitter");
+    quitter_jeu.addEventListener("click", function(){ alert("a venir"); }, false);
     // soit le joueur est en prison, soit il peut se deplacer sur le jeu
     if(joueurs[joueur_actuel].prison == true)
     {
-	alert(joueurs[joueur_actuel].nom + " => prison");
 	prison();
     }
     else
