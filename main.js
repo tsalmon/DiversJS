@@ -7,7 +7,7 @@ var jeu = document.getElementById("jeu");
 var info = document.getElementById("td_info");
 var validation = document.getElementById("td_validation");
 var bouton_proprio_view = "<input type=\"button\" id=\"proprio_view\" value=\"Voir les possessions\"/>";
-var bouton_quitter = "<input type=\"button\" id=\"bouton_quitter\" value=\"Quitter le jeu\"/>";
+var bouton_quitter = "<input type=\"button\" id=\"quitter_jeu\" value=\"Quitter le jeu\"/>";
 /*
   joueurs:
   {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0]}
@@ -18,26 +18,23 @@ var bouton_quitter = "<input type=\"button\" id=\"bouton_quitter\" value=\"Quitt
   4 = SV/Parc/Depart; 
   5 = Crous; 
   6 = reste; 
-  7 = prison;
+  7 = prison;œ
   8 = gare;
   {"proprietaire", "prix", "id"}
 */
 
-var detect_passe; // detecter le bouton de passage au joueur suivant
-// source : jonathankowalski.fr/blog/2011/12/supprimer-un-element-dans-un-tableau-javascript
-Array.prototype.unset = function(val)
+// source : ejohn.org/blog/javascript-array-remove/
+Array.prototype.unset = function(from, to)
 {
-    var index = this.indexOf(val)
-    if(index > -1)
-    {
-	this.splice(index, -1)
-    }
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
 }
 
 // pour un peu d'elegance
 function des()
 {
-    return (parseInt(Math.random()*12)+1);
+    return (0|(Math.random()*12)+1);
 }
 
 // meme chose qu'en haut
@@ -134,6 +131,8 @@ function resultat_lancer_des()
     } 
     document.getElementById("lancement").innerHTML = "Vous devez payer : " + ((0|d1.innerHTML) + (0|d2.innerHTML)) * 500 + "Fr";
     validation.innerHTML = "<input type=\"button\" id=\"bouton_valide\" value=\"Payer\"/>";
+    var b_p = document.getElementById("bouton_valide");
+    b_p.addEventListener("click", passer, false);
 }
 
 //cf caisse : 13
@@ -520,13 +519,13 @@ function avance()
 	chance(1 + (0|Math.random() * 7));
 	break;
     case 3:
-	jeu.innerHTML = "<div class=\"examen\">" + examen() + "</div>";
+	examen_crous();
 	break;
     case 4:
 	tranquille();
 	break;
     case 5:
-	jeu.innerHTML = "crous";
+	examen_crous();
 	break;
     case 6:
 	achat();
@@ -556,15 +555,81 @@ function passer()
     }
 }
 
+function voir_proprietes()
+{
+    var str = "<table>";
+    var k   = 0;
+    for(i = 1; i < 40; i++)
+    {
+	if( typeof cases[i] == "object" && cases[i].id == joueur_actuel)
+	{
+	    var nom_case = document.getElementById("c"+i+"_nom").innerHTML;
+	    str += "<tr><td>"
+		+ nom_case 
+		+"</td><td>"
+		+ cases[i].prix 
+		+"<td><input type=\"button\" value=\"Hypothequer\" id=\"h"+(k)+"\"></td></tr>";
+	    k++;
+	}
+    }
+    if( k > 0)
+    {
+	jeu.innerHTML = str + "</table>";
+	var t = [];
+	for(i = 0 ; i < k ; i++)
+	{
+	    t[i] = document.getElementById("h"+i);
+	    t[i].addEventListener("click", function()
+				  {
+				      if(confirm("Etes vous sur d'hypothequer cette maison?"))
+				      {
+					  joueurs[joueur_actuel].capital += 5 * cases[i].prix;
+					  cases[i] = 6;
+				      }
+				  },false);
+	}
+    }
+    else
+    {
+	jeu.innerHTML = "Vous ne possedez aucuns titres de propriétés, clodo ! ";
+    }
+    validation.innerHTML = "<input type=\"button\" id=\"bouton_retour\" value=\"Retour au jeu\"/>";
+    var b_v = document.getElementById("bouton_retour");
+    b_v.addEventListener("click", avance, false);
+}
+
+function quitter_jeu()
+{
+    if(confirm("Etes vous sur de quitter le jeu?") == false)
+    {
+	// pour savoir si on doit donner les terrains a un joueur(vrai) ou a la banque(faux)
+	var give = typeof cases[pos_actuelle()] == "object" && cases[pos_actuelle()].id != joueur_actuel;
+	for(i = 1; i < 40; i++)
+	{
+	    if(i != pos_actuelle() && typeof cases[i] == "object")
+ 	    {
+		if(give)
+		{
+		    aux.nom = cases[pos_actuelle()].nom;
+		    aux.id = cases[pos_actuelle()].id;
+		}
+		else
+		{
+		    aux = 6;
+		}
+	    }
+	}
+    }
+}
+
 //deplacement des joueurs
 function jouer()
 {
     info.innerHTML = joueurs[joueur_actuel].nom +" " + joueurs[joueur_actuel].capital + " " + bouton_proprio_view + " " + bouton_quitter;
     var proprio_view = document.getElementById("proprio_view");
-    proprio_view.addEventListener("click", function(){ alert("a venir"); }, false);
-    var quitter_jeu = document.getElementById("bouton_quitter");
-    quitter_jeu.addEventListener("click", function(){ alert("a venir"); }, false);
-    // soit le joueur est en prison, soit il peut se deplacer sur le jeu
+    proprio_view.addEventListener("click", voir_proprietes, false);
+    var q_jeu = document.getElementById("quitter_jeu");
+    q_jeu.addEventListener("click", quitter_jeu, false);    // soit le joueur est en prison, soit il peut se deplacer sur le jeu
     if(joueurs[joueur_actuel].prison == true)
     {
 	prison();
@@ -572,8 +637,12 @@ function jouer()
     else
     {
 	var d = des();
-	//alert(d);
+	if(d + joueurs[joueur_actuel].position > 39)
+	{
+	    joueurs[joueur_actuel].capital += 20000; // bonus case depart
+	}
 	joueurs[joueur_actuel].position = (pos_actuelle() + d) % 40; // % nb de cases
+	alert(joueurs[joueur_actuel].position);
 	avance();
     }    
 }
