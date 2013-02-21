@@ -1,16 +1,20 @@
 var joueurs = [];
-var nb_joueurs = 0; 
-//cette variable permet de savoir quel est le joueur qui est actuellement en train de jouer
-var joueur_actuel = 0;
 var cases = []; 
+
+var nb_joueurs = 0; 
+var joueur_actuel = 0;
+var des_actuel = 0;
+
 var jeu = document.getElementById("jeu");
 var info = document.getElementById("td_info");
 var validation = document.getElementById("td_validation");
+
 var bouton_proprio_view = "<input type=\"button\" id=\"proprio_view\" value=\"Voir les possessions\"/>";
 var bouton_quitter = "<input type=\"button\" id=\"quitter_jeu\" value=\"Quitter le jeu\"/>";
+var bouton_passer = "<input type=\"button\" id=\"bouton_passer\" value=\"Passer\"/>";
 /*
   joueurs:
-  {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0]}
+  {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0], "compagnies"[=0]}
   cases: 
   1 = caisse; 
   2 = chance; 
@@ -18,9 +22,10 @@ var bouton_quitter = "<input type=\"button\" id=\"quitter_jeu\" value=\"Quitter 
   4 = SV/Parc/Depart; 
   5 = Crous; 
   6 = reste; 
-  7 = prison;œ
+  7 = prison;
   8 = gare;
-  {"proprietaire", "prix", "id"}
+  9 = compagnie;
+  {"proprietaire", "prix", "id", "compagnie"}
 */
 
 // source : ejohn.org/blog/javascript-array-remove/
@@ -34,6 +39,7 @@ Array.prototype.unset = function(from, to)
 // pour un peu d'elegance
 function des()
 {
+    return 12;
     return (0|(Math.random()*12)+1);
 }
 
@@ -296,8 +302,8 @@ function gare()
 					 }
 				     }.bind(this, loyer), false);
     validation.innerHTML = "<input type=\"button\" id=\"validation\" value=\"Passer\"/>";
-    var bouton_passer = document.getElementById("validation");
-    bouton_passer.addEventListener("click", passer, false);
+    var b_p = document.getElementById("validation");
+    b_p.addEventListener("click", passer, false);
 }
 
 function examen_crous()
@@ -438,7 +444,7 @@ function achat()
     loyer = [loyer, loyer_1maison(loyer), loyer_2maisons(loyer), loyer_3maisons(loyer), loyer_4maisons(loyer), loyer_hotel(loyer)];
     var prix = [ loyer[0], loyer[0] + couleur(), 2 * (loyer[0] + couleur()), 3 * ( loyer[0] + couleur()), 4 * (loyer[0] + couleur()), 2 * 3 * 4 * loyer[0] + couleur()]; 
     
-    jeu.innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><th>Choix</th><th>Prix</th><th>Loyer</th></tr><tr><td> terrain   </td><td>"+ prix[0] + "</td><td>" + loyer[0] + "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison  </td><td>"+ prix[1] + "</td><td>" + loyer[1] + "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>"+ prix[2] + "</td><td>" + loyer[2] + "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>"+ prix[3] + "</td><td>" + loyer[3] + "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>"+ prix[4] + "</td><td>" + loyer[4] + "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel     </td><td>"+ prix[5] + "</td><td>" + loyer[5] + "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>";
+    jeu.innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">"+ document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><th>Choix</th><th>Prix</th><th>Loyer</th></tr><tr><td> terrain</td><td>"	+ prix[0]+ "</td><td>"+ loyer[0]+ "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison  </td><td>" + prix[1] + "</td><td>"+ loyer[1]+ "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>"+ prix[2] + "</td><td>" + loyer[2]+ "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>"+ prix[3] 	+ "</td><td>" + loyer[3]+ "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>" + prix[4] + "</td><td>"+ loyer[4]+ "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>"+ prix[5] + "</td><td>" + loyer[5]+ "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>";
 
     validation.innerHTML = "<input type=\"button\" id=\"passer\" value=\"Passer\"/>";
     detect_passe = document.getElementById("passer");
@@ -453,7 +459,7 @@ function achat()
 				    if(joueurs[joueur_actuel].capital > p)
 				    {
 					joueurs[joueur_actuel].capital -= p ;
-					cases[pos_actuelle()] = {"id":joueur_actuel, "proprietaire":joueurs[joueur_actuel].nom, "prix":l};
+					cases[pos_actuelle()] = {"id":joueur_actuel, "proprietaire":joueurs[joueur_actuel].nom, "prix":l, "compagnie": false};
 					alert("Achat effectué " + p);
 					passer();
 				    }
@@ -471,7 +477,8 @@ function payer_loyer()
 {
     if(cases[pos_actuelle()].id == joueur_actuel)
     {
-	jeu.innerHTML = "vous etes chez vous" + bouton_passer();
+	jeu.innerHTML = "vous etes chez vous"
+	validation.innerHTML = bouton_passer;
 	detect_passe = document.getElementById("passer");
 	detect_passe.addEventListener("click", passer, false);
 	
@@ -501,6 +508,57 @@ function payer_loyer()
 			   }.bind(this, cases[pos_actuelle()]), false);
     }
 }
+
+//cf avance : 9
+function compagnie_acheter()
+{
+    jeu.innerHTML = "<p>" + document.getElementById("c"+pos_actuelle()+"_nom").innerHTML + "</p>" + "<p> <input type=\"button\"  id=\"bouton_acheter\" value=\"Acheter\"/></p>";
+    validation.innerHTML = bouton_passer;
+    
+    var b_p = document.getElementById("bouton_passer");
+    b_p.addEventListener("click", passer,false);
+    
+    var b_a = document.getElementById("bouton_acheter");
+    b_a.addEventListener("click", function()
+			 {
+			     if(joueurs[joueur_actuel].capital > 15000)
+			     {
+				 cases[pos_actuelle()] = {"compagnie" : true, "nom": joueurs[joueur_actuel].nom, "id": joueur_actuel};
+				 joueurs[joueur_actuel].compagnies += 1;
+				 joueurs[joueur_actuel].capital -= 15000;
+				 passer();
+			     }
+			     else
+			     {
+				 alert("pas assez d'argent");
+			     }
+			     
+			 },false);
+}
+
+//cf avance default /else
+function compagnie_loyer()
+{
+    if(cases[pos_actuelle()].id == joueur_actuel)
+    {
+	jeu.innerHTML = "Vous etes chez vous";
+	validation.innerHTML = bouton_passer;
+	var b_p = document.getElementById("bouton_passer");
+	b_p.addEventListener("click", passer, false);
+    }
+    else
+    {
+	jeu.innerHTML = ""
+	alert(des_actuel + " -> " + joueurs[cases[pos_actuelle()].id].compagnies);
+	validation.innerHTML = "<input type=\"button\" id=\"bouton_loyer\" value=\"payer\"/>";
+	b_l = document.getElementById("bouton_loyer");
+	b_l.addEventListener("click", function()
+			     {
+				 alert("a venir");
+			     }, false);
+    }
+}
+
 //cases du jeu
 function avance()
 {
@@ -536,8 +594,18 @@ function avance()
     case 8:
 	gare();
 	break;
+    case 9:
+	compagnie_acheter();
+	break;
     default :
-	payer_loyer();
+	if(c_p_a.compagnie == false)
+	{
+	    payer_loyer();
+	}
+	else
+	{
+	    compagnie_loyer();
+	}
     }    
 }
 //condition d'arret et de continuité du jeu
@@ -600,7 +668,7 @@ function voir_proprietes()
 
 function quitter_jeu()
 {
-    if(confirm("Etes vous sur de quitter le jeu?") == false)
+    if(confirm("Etes vous sur de quitter le jeu?"))
     {
 	// pour savoir si on doit donner les terrains a un joueur(vrai) ou a la banque(faux)
 	var give = typeof cases[pos_actuelle()] == "object" && cases[pos_actuelle()].id != joueur_actuel;
@@ -619,6 +687,8 @@ function quitter_jeu()
 		}
 	    }
 	}
+	joueurs.unset(joueur_actuel);
+	alert(joueurs.length);
     }
 }
 
@@ -636,12 +706,12 @@ function jouer()
     }
     else
     {
-	var d = des();
-	if(d + joueurs[joueur_actuel].position > 39)
+	des_actuel = des();
+	if(des_actuel + joueurs[joueur_actuel].position > 39)
 	{
 	    joueurs[joueur_actuel].capital += 20000; // bonus case depart
 	}
-	joueurs[joueur_actuel].position = (pos_actuelle() + d) % 40; // % nb de cases
+	joueurs[joueur_actuel].position = (pos_actuelle() + des_actuel) % 40; // % nb de cases
 	alert(joueurs[joueur_actuel].position);
 	avance();
     }    
@@ -691,7 +761,7 @@ function choisir_nom(x)
 	}
 	if(/^\w+$/.test(document.getElementById("j" + i).value))
 	{
-	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0};
+	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0, "compagnies" :0};
 	    nb_joueurs = nb_joueurs + 1;
 	}
     }
@@ -704,11 +774,12 @@ function choisir_nom(x)
 }
 
 // initialisation des cases du jeu
-cases[2] = cases[17] = cases[33] = 1;
-cases[4] = cases[38] = 3;
-cases[5] = cases[15] = cases[25] = cases[35] = 8;
-cases[7] = cases[22] = cases[36] = 2;
+cases[2 ] = cases[17] = cases[33] = 1;
+cases[4 ] = cases[38] = 3;
+cases[5 ] = cases[15] = cases[25] = cases[35] = 8;
+cases[7 ] = cases[22] = cases[36] = 2;
 cases[10] = cases[20] = cases[0] = 4;
+cases[12] = cases[28] = 9
 cases[30] = 7;
 for(i = 1; i < 40 ; i++)
 {
