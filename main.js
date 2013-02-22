@@ -39,7 +39,7 @@ Array.prototype.unset = function(from, to)
 // pour un peu d'elegance
 function des()
 {
-    return 12;
+   
     return (0|(Math.random()*12)+1);
 }
 
@@ -97,7 +97,7 @@ function amende_bonus(x, message)
 				      }
 				      else
 				      {
-					  jeu.innerHTML = "Vous n'avez pas assez d'argent, il n'y a qu'un seul endroit pour les gens comme vous : le script";
+					  document.getElementById("jeu").innerHTML = "Vous n'avez pas assez d'argent, il n'y a qu'un seul endroit pour les gens comme vous : le script";
 					  validation.innerHTML = "<input type=\"button\" value=\"Aller au Script\" id=\"bouton_passe\"/>";
 				      }
 				  }, false);
@@ -106,7 +106,7 @@ function amende_bonus(x, message)
 //cf caisse: 4, 6
 function aller_a(num_case, message)
 {
-    jeu.innerHTML        = message;
+    document.getElementById("jeu").innerHTML        = message;
     validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Avancer\"/>";
     joueurs[joueur_actuel].position = num_case;
     var avancer = document.getElementById("bouton_validation");
@@ -116,7 +116,7 @@ function aller_a(num_case, message)
 //cf caisse : 7, 8, 9, 10, 11, 12 
 function avancer_reculer(nb_cases, message)
 {
-    jeu.innerHTML        = message ;
+    document.getElementById("jeu").innerHTML        = message ;
     validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\""+((nb_cases > 0) ? "Avancer" : "Reculer")+"\"/>";
     joueurs[joueur_actuel].position+=nb_cases;
     if(joueurs[joueur_actuel].position < 0)
@@ -144,7 +144,7 @@ function resultat_lancer_des()
 //cf caisse : 13
 function lancer_des()
 {
-    jeu.innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 500) Fr.<p id=\"lancement\">[<span id=\"d1\"></span>] et [<span id=\"d2\"></span>]</p>";
+    document.getElementById("jeu").innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 500) Fr.<p id=\"lancement\">[<span id=\"d1\"></span>] et [<span id=\"d2\"></span>]</p>";
     validation.innerHTML = "<input type=\"button\" id=\"bouton_d1\" value=\"t1\"/> <input type=\"button\" id=\"bouton_d2\" value=\"t2\"/>";
     var td1 = document.getElementById("bouton_d1");
     td1.addEventListener("click", function(X)
@@ -163,7 +163,7 @@ function lancer_des()
 //cf caisse : 14
 function tirer_carte(f)
 {
-    jeu.innerHTML = "Tirez une carte" + ((f) ? "Chance" : "Communauté") + ".";
+    document.getElementById("jeu").innerHTML = "Tirez une carte" + ((f) ? "Chance" : "Communauté") + ".";
     validation.innerHTML = "<input type=\"button\" value=\"Tirer une carte\" id=\"bouton_validation\"/>";
     var v = document.getElementById("bouton_validation");
     if(f)
@@ -215,16 +215,16 @@ function caisse(d, message)
 // cf chance : 4
 function recoit_terrain()
 {
-    jeu.innerHTML = "Obtention de locaux: vous avez reçu le terrain de Paris I, si ce terrain est deja pris, vous devez payer une amende egale au loyer de Paris I a son propriétaire";
+    document.getElementById("jeu").innerHTML = "Obtention de locaux: vous avez reçu le terrain de Paris I, si ce terrain est deja pris, vous devez payer une amende egale au loyer de Paris I a son propriétaire";
     if(cases[6] == 6)
     {
-	jeu.innerHTML += "<p>Il n'y a pas de propriétaire, vous obtenez donc le terrain</p>";
+	document.getElementById("jeu").innerHTML += "<p>Il n'y a pas de propriétaire, vous obtenez donc le terrain</p>";
 	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Passer\"/>";
 	cases[6] = {"proprietaire": joueurs[joueur_actuel].nom, "prix": 10000, "id":joueur_actuel};
     }
     else
     {
-	jeu.innerHTML += "<p>Paris I est occupé, vous devez payer "+cases[6].prix+"Fr à "+cases[6].proprietaire+"</p>";
+	document.getElementById("jeu").innerHTML += "<p>Paris I est occupé, vous devez payer "+cases[6].prix+"Fr à "+cases[6].proprietaire+"</p>";
 	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Payer\"/>";
 	joueurs[joueur_actuel].capital -= cases[6].loyer;
 	joueurs[cases[6].id].capital += cases[6].loyer;
@@ -237,7 +237,7 @@ function recoit_terrain()
 function carte_prison()
 {
     validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" name=\"antiprison\" value=\"Obtenir la dispense\"/>";
-    jeu.innerHTML = "Vous avez décidés de filmer les cours de vos profs, vous avez alors été dispensé d'un projet de votre choix, vous ne pouvez en avoir qu'une seule";
+    document.getElementById("jeu").innerHTML = "Vous avez décidés de filmer les cours de vos profs, vous avez alors été dispensé d'un projet de votre choix, vous ne pouvez en avoir qu'une seule";
     joueurs[joueur_actuel].dispence = true;
     var v = document.getElementById("bouton_validation");
     v.addEventListener("click", passer, false);
@@ -277,7 +277,7 @@ function gare()
     var nom_case = document.getElementById("c" + pos_actuelle() + "_nom").innerHTML;
     var bouton_commande = "<input type=\"button\" value=\"Commander\" id=\"commande\"/>";
     var loyer = (joueurs[joueur_actuel].gares == 0) ? 2500 : (joueurs[joueur_actuel].gares) * 5000;
-    jeu.innerHTML = "<p><table><tr><th>" + nom_case + "</th></tr><tr><th>Prix</th><th>Loyer</th></tr><td>20.000</td><td>"+loyer+"</td><td>"+bouton_commande+"</td><tr></th></table></p>";
+    document.getElementById("jeu").innerHTML = "<p><table><tr><th>" + nom_case + "</th></tr><tr><th>Prix</th><th>Loyer</th></tr><td>20.000</td><td>"+loyer+"</td><td>"+bouton_commande+"</td><tr></th></table></p>";
     bouton_commande = document.getElementById("commande");
     bouton_commande.addEventListener("click", function(X)
 				     {
@@ -313,11 +313,11 @@ function examen_crous()
 	+"<input type=\"button\" id = \"choix_payer\" name = \"payer\" value = \"Payer 10.000Fr\"/> ";
     if(pos_actuelle() == 4)
     {
-	jeu.innerHTML = "Examen : Vous avez le choix entre reviser à en avoir la chair a vif au Script ou payer 10.000 Fr";
+	document.getElementById("jeu").innerHTML = "Examen : Vous avez le choix entre reviser à en avoir la chair a vif au Script ou payer 10.000 Fr";
     }
     else
     {
-	jeu.innerHTML = "Crous : la bourse ou le script c'est toi qui choisit";
+	document.getElementById("jeu").innerHTML = "Crous : la bourse ou le script c'est toi qui choisit";
     }
     var pr = document.getElementById("choix_prison");
     pr.addEventListener("click", function()
@@ -338,13 +338,13 @@ function tranquille()
     switch(pos_actuelle())
     {
     case 0:
-	jeu.innerHTML = "Case départ recevez 20.000 Fr";
+	document.getElementById("jeu").innerHTML = "Case départ recevez 20.000 Fr";
 	break;
     case 10:
-	jeu.innerHTML = "Simple Visite, c'est marrant de regarder les autres bosser quand on a rien a faire, hein ?";
+	document.getElementById("jeu").innerHTML = "Simple Visite, c'est marrant de regarder les autres bosser quand on a rien a faire, hein ?";
 	break;
     case 20:
-	jeu.innerHTML = "Case Parc, on peut se la couler douce";
+	document.getElementById("jeu").innerHTML = "Case Parc, on peut se la couler douce";
 	break;
     }
     validation.innerHTML = "<input type=\"button\" id=\"bouton_valider\" value = \"Passer\">";
@@ -359,7 +359,7 @@ function aller_en_prison()
     var n = (0|(10*Math.random()))*100 + 100;
     var j = 0|(1 + Math.random() * 15);
     var r = l[0|Math.random() * l.length];
-    jeu.innerHTML = "Projet surprise: "+n+" lignes de "+r+" a écrire en "+j+" jour"+((j > 1 )? "s": "")+", par conséquent allez au script";
+    document.getElementById("jeu").innerHTML = "Projet surprise: "+n+" lignes de "+r+" a écrire en "+j+" jour"+((j > 1 )? "s": "")+", par conséquent allez au script";
     validation.innerHTML = "<input type=\"button\" id=\"bouton_valider\" value = \"Aller au script\">"
     var go_script = document.getElementById("bouton_valider");
     joueurs[joueur_actuel].prison = true;
@@ -399,7 +399,7 @@ function prison()
     joueurs[joueur_actuel].nb_prison += 1;
     if(joueurs[joueur_actuel].nb_prison == 4)
     {
-	jeu.innerHTML = "Cela fait maintenant 3 tours que vous etes en prison, vous pouvez maintenant sortir.<input type=\"button\" id=\"sortie_button\" value=\"Sortir de prison\">";
+	document.getElementById("jeu").innerHTML = "Cela fait maintenant 3 tours que vous etes en prison, vous pouvez maintenant sortir.<input type=\"button\" id=\"sortie_button\" value=\"Sortir de prison\">";
 	var sort = document.getElementById("sortie_button");
 	joueurs[joueur_actuel].prison = false;
 	joueurs[joueur_actuel].position = 0;
@@ -409,7 +409,7 @@ function prison()
     else
     {
 	validation.innerHTML = "";
-	jeu.innerHTML = "<p>Vous etes en prison ! pour sortir:</p><ul>"
+	document.getElementById("jeu").innerHTML = "<p>Vous etes en prison ! pour sortir:</p><ul>"
 	    + "<li>Payez 5.000 Fr<input type=\"button\" id=\"bouton_payer\" value=\"Payer\"></li>" 
 	    + "<li>Faites un double aux dés<span id=\"span_d1\">"
 	    + "<input type=\"button\" value=\"d1\" id=\"d1\"/></span>"
@@ -444,7 +444,7 @@ function achat()
     loyer = [loyer, loyer_1maison(loyer), loyer_2maisons(loyer), loyer_3maisons(loyer), loyer_4maisons(loyer), loyer_hotel(loyer)];
     var prix = [ loyer[0], loyer[0] + couleur(), 2 * (loyer[0] + couleur()), 3 * ( loyer[0] + couleur()), 4 * (loyer[0] + couleur()), 2 * 3 * 4 * loyer[0] + couleur()]; 
     
-    jeu.innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">"+ document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><th>Choix</th><th>Prix</th><th>Loyer</th></tr><tr><td> terrain</td><td>"	+ prix[0]+ "</td><td>"+ loyer[0]+ "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison  </td><td>" + prix[1] + "</td><td>"+ loyer[1]+ "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>"+ prix[2] + "</td><td>" + loyer[2]+ "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>"+ prix[3] 	+ "</td><td>" + loyer[3]+ "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>" + prix[4] + "</td><td>"+ loyer[4]+ "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>"+ prix[5] + "</td><td>" + loyer[5]+ "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>";
+    document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">"+ document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><th>Choix</th><th>Prix</th><th>Loyer</th></tr><tr><td> terrain</td><td>"	+ prix[0]+ "</td><td>"+ loyer[0]+ "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison  </td><td>" + prix[1] + "</td><td>"+ loyer[1]+ "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>"+ prix[2] + "</td><td>" + loyer[2]+ "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>"+ prix[3] 	+ "</td><td>" + loyer[3]+ "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>" + prix[4] + "</td><td>"+ loyer[4]+ "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>"+ prix[5] + "</td><td>" + loyer[5]+ "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>";
 
     validation.innerHTML = "<input type=\"button\" id=\"passer\" value=\"Passer\"/>";
     detect_passe = document.getElementById("passer");
@@ -477,7 +477,7 @@ function payer_loyer()
 {
     if(cases[pos_actuelle()].id == joueur_actuel)
     {
-	jeu.innerHTML = "vous etes chez vous"
+	document.getElementById("jeu").innerHTML = "vous etes chez vous"
 	validation.innerHTML = bouton_passer;
 	detect_passe = document.getElementById("passer");
 	detect_passe.addEventListener("click", passer, false);
@@ -485,7 +485,7 @@ function payer_loyer()
     }
     else
     {
-	jeu.innerHTML = "<p>Bienvenue chez " + cases[pos_actuelle()].proprietaire + "</p><p><input type=\"button\" value=\"payer\" id=\"payer\"/></p>";
+	document.getElementById("jeu").innerHTML = "<p>Bienvenue chez " + cases[pos_actuelle()].proprietaire + "</p><p><input type=\"button\" value=\"payer\" id=\"payer\"/></p>";
 	if(pos_actuelle() % 5 == 0 && pos_actuelle() % 10 != 0)
 	{
 	    cases[pos_actuelle()].prix = joueurs[cases[pos_actuelle()].id].gares * 2500;
@@ -512,7 +512,8 @@ function payer_loyer()
 //cf avance : 9
 function compagnie_acheter()
 {
-    jeu.innerHTML = "<p>" + document.getElementById("c"+pos_actuelle()+"_nom").innerHTML + "</p>" + "<p> <input type=\"button\"  id=\"bouton_acheter\" value=\"Acheter\"/></p>";
+    
+    document.getElementById("jeu").innerHTML = "<p>" + document.getElementById("c"+pos_actuelle()+"_nom").innerHTML + "</p>" + "<p> <input type=\"button\"  id=\"bouton_acheter\" value=\"Acheter\"/></p>";
     validation.innerHTML = bouton_passer;
     
     var b_p = document.getElementById("bouton_passer");
@@ -541,14 +542,14 @@ function compagnie_loyer()
 {
     if(cases[pos_actuelle()].id == joueur_actuel)
     {
-	jeu.innerHTML = "Vous etes chez vous";
+	document.getElementById("jeu").innerHTML = "Vous etes chez vous";
 	validation.innerHTML = bouton_passer;
 	var b_p = document.getElementById("bouton_passer");
 	b_p.addEventListener("click", passer, false);
     }
     else
     {
-	jeu.innerHTML = ""
+	document.getElementById("jeu").innerHTML = ""
 	alert(des_actuel + " -> " + joueurs[cases[pos_actuelle()].id].compagnies);
 	validation.innerHTML = "<input type=\"button\" id=\"bouton_loyer\" value=\"payer\"/>";
 	b_l = document.getElementById("bouton_loyer");
@@ -608,19 +609,21 @@ function avance()
 	}
     }    
 }
+
 //condition d'arret et de continuité du jeu
 function passer()
 {
+    //rafraichir_plateau();
     if(nb_joueurs == 1)
     {
 	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
-	jeu.innerHTML = "<p>Fin de la partie !!! " + winner.nom + " a gagné !!!<p>";
+	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + winner.nom + " a gagné !!!<p>";
 	validation.innerHTML = "";
     }
     else
     {
 	joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
-	alert(joueur_actuel);
+	//alert(joueur_actuel);
 	jouer();
     }
 }
@@ -644,7 +647,7 @@ function voir_proprietes()
     }
     if( k > 0)
     {
-	jeu.innerHTML = str + "</table>";
+	document.getElementById("jeu").innerHTML = str + "</table>";
 	var t = [];
 	for(i = 0 ; i < k ; i++)
 	{
@@ -661,7 +664,7 @@ function voir_proprietes()
     }
     else
     {
-	jeu.innerHTML = "Vous ne possedez aucuns titres de propriétés, clodo ! ";
+	document.getElementById("jeu").innerHTML = "Vous ne possedez aucuns titres de propriétés, clodo ! ";
     }
     validation.innerHTML = "<input type=\"button\" id=\"bouton_retour\" value=\"Retour au jeu\"/>";
     var b_v = document.getElementById("bouton_retour");
@@ -699,7 +702,7 @@ function quitter_jeu()
 //deplacement des joueurs
 function jouer()
 {
-    info.innerHTML = joueurs[joueur_actuel].nom +" " + joueurs[joueur_actuel].capital + " " + bouton_proprio_view + " " + bouton_quitter;
+    info.innerHTML = joueurs[joueur_actuel].nom +" " + joueurs[joueur_actuel].position + " "+  joueurs[joueur_actuel].capital + " " + bouton_proprio_view + " " + bouton_quitter;
     var proprio_view = document.getElementById("proprio_view");
     proprio_view.addEventListener("click", voir_proprietes, false);
     var q_jeu = document.getElementById("quitter_jeu");
@@ -715,8 +718,9 @@ function jouer()
 	{
 	    joueurs[joueur_actuel].capital += 20000; // bonus case depart
 	}
+	alert(joueurs[joueur_actuel].position + " + " + des_actuel)
 	joueurs[joueur_actuel].position = (pos_actuelle() + des_actuel) % 40; // % nb de cases
-	alert(joueurs[joueur_actuel].position);
+	//alert(joueurs[joueur_actuel].position);
 	avance();
     }    
 }

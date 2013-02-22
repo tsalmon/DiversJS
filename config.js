@@ -3,6 +3,23 @@ var radio_defaut = document.getElementById("radio_defaut");
 var radio_joueurs = document.getElementById("radio_joueurs");
 var radio_proprietes = document.getElementById("radio_proprietes");
 
+function rafraichir_plateau()
+{
+    if(radio_defaut.checked)
+    {
+	affichage_defaut();
+    }
+    else if(radio_joueurs.checked)
+    {
+	affichage_joueurs();
+    }
+    else 
+    {
+	affichage_proprietes();
+    }
+    jeu = document.getElementById("jeu");
+}
+
 //enleve la classe de background d'une case
 function removeBG(x)
 {
@@ -24,17 +41,17 @@ function couleur_joueur(x)
     switch(x)
     {
     case 1:
-	return "blue";
+	return "bleu";
     case 2:
-	return "red";
+	return "rouge";
     case 3:
-	return "green";
+	return "vert";
     case 4:
-	return "yellow";
+	return "jaune";
     case 5:
 	return "cyan";
     case 6:
-	return "purple"
+	return "violet";
     }
 }
 

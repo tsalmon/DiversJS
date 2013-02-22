@@ -1,10 +1,12 @@
 .haut, .bas
 {
     width: 75px;   
+    height: 50px;
 }
 
 .droite, .gauche
 {
+    width: 75px;
     height: 50px;
 }
 
@@ -30,6 +32,11 @@
 .bleu_fonce
 {
     background: blue;
+}
+
+.cyan
+{
+    background: cyan;
 }
 
 .violet
@@ -76,7 +83,15 @@ body
     margin-left:-0.5px;
 }
 
-td
+td, th
 {
     border: 5px black solid;
+}
+
+.config_joueur
+{
+    padding: 5px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 50px;
 }
