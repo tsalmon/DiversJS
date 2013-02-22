@@ -597,7 +597,7 @@ function avance()
     case 9:
 	compagnie_acheter();
 	break;
-    default :
+    default:
 	if(c_p_a.compagnie == false)
 	{
 	    payer_loyer();
@@ -614,11 +614,13 @@ function passer()
     if(nb_joueurs == 1)
     {
 	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
-	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + winner + " a gagné <p>";
+	jeu.innerHTML = "<p>Fin de la partie !!! " + winner.nom + " a gagné !!!<p>";
+	validation.innerHTML = "";
     }
     else
     {
 	joueur_actuel = (joueur_actuel + 1) % nb_joueurs;
+	alert(joueur_actuel);
 	jouer();
     }
 }
@@ -688,7 +690,9 @@ function quitter_jeu()
 	    }
 	}
 	joueurs.unset(joueur_actuel);
-	alert(joueurs.length);
+	nb_joueurs--;
+	joueur_actuel--;
+	passer();
     }
 }
 
