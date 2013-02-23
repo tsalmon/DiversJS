@@ -12,6 +12,8 @@ var validation = document.getElementById("td_validation");
 var bouton_proprio_view = "<input type=\"button\" id=\"proprio_view\" value=\"Voir les possessions\"/>";
 var bouton_quitter = "<input type=\"button\" id=\"quitter_jeu\" value=\"Quitter le jeu\"/>";
 var bouton_passer = "<input type=\"button\" id=\"bouton_passer\" value=\"Passer\"/>";
+var bouton_payer = "<input type=\"button\" id=\"bouton_payer\" value=\"Payer\"/>";
+var bouton_prison = "<input type=\"button\" id=\"bouton_prison\" value=\"Allez au script\" />";
 /*
   joueurs:
   {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0], "compagnies"[=0]}
@@ -39,7 +41,7 @@ Array.prototype.unset = function(from, to)
 // pour un peu d'elegance
 function des()
 {
-   
+    return 12;
     return (0|(Math.random()*12)+1);
 }
 
@@ -537,6 +539,33 @@ function compagnie_acheter()
 			 },false);
 }
 
+
+//quand on doit payer
+function need_money(dette)
+{
+    if(joueurs[joueur_actuel].capital > dette)
+    {
+	joueurs[joueur_actuel].capital -= dette;
+	passer();
+    }
+    else
+    {
+	alert("pas assez d'argent");
+	validation.innerHTML = bouton_payer + " " + bouton_prison;
+	var b_p = document.getElementById("bouton_payer");
+	b_p.addEventListener("click", function(x)
+			     {
+				 need_money(x);
+			     }.bind(this, dette), false);
+	var b_s = document.getElementById("bouton_prison");
+	b_s.addEventListener("click", function()
+			     {
+				 joueurs[joueur_actuel].prison = true;
+				 passer();
+			     }, false);
+    }
+}
+
 //cf avance default /else
 function compagnie_loyer()
 {
@@ -549,14 +578,12 @@ function compagnie_loyer()
     }
     else
     {
-	document.getElementById("jeu").innerHTML = ""
-	alert(des_actuel + " -> " + joueurs[cases[pos_actuelle()].id].compagnies);
+	var dette = 
+	    document.getElementById("jeu").innerHTML = des_actuel * ((joueurs[cases[pos_actuelle()].id].compagnies == 1) ? 4 : 10) * 100;
+	jeu.innerHTML = "Vous etes chez la compagnie de " + cases[pos_actuelle()].nom + ", vous devez payer " + dette + ".";
 	validation.innerHTML = "<input type=\"button\" id=\"bouton_loyer\" value=\"payer\"/>";
 	b_l = document.getElementById("bouton_loyer");
-	b_l.addEventListener("click", function()
-			     {
-				 alert("a venir");
-			     }, false);
+	b_l.addEventListener("click", need_money.bind(this, dette), false);
     }
 }
 
@@ -702,7 +729,13 @@ function quitter_jeu()
 //deplacement des joueurs
 function jouer()
 {
-    info.innerHTML = joueurs[joueur_actuel].nom +" " + joueurs[joueur_actuel].position + " "+  joueurs[joueur_actuel].capital + " " + bouton_proprio_view + " " + bouton_quitter;
+    info.innerHTML = "<ul id=\"barre_joueur\">" 
+	+ "<li>" + joueurs[joueur_actuel].nom + "</il>" 
+	+ "<li>" + joueurs[joueur_actuel].position + "</li>"
+	+ "<li>" + joueurs[joueur_actuel].capital + "</li>" 
+	+ "<li>" + bouton_proprio_view + "</li>" 
+	+ "<li>" + bouton_quitter + "</li>"
+	+ "</ul>";
     var proprio_view = document.getElementById("proprio_view");
     proprio_view.addEventListener("click", voir_proprietes, false);
     var q_jeu = document.getElementById("quitter_jeu");
@@ -769,8 +802,16 @@ function choisir_nom(x)
 	}
 	if(/^\w+$/.test(document.getElementById("j" + i).value))
 	{
-	    joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0, "compagnies" :0};
-	    nb_joueurs = nb_joueurs + 1;
+	    if(i != 2)
+	    {
+		joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0, "compagnies" :0};
+		nb_joueurs = nb_joueurs + 1;
+	    }
+	    else
+	    {
+		joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 15,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0, "compagnies" :0};
+		nb_joueurs = nb_joueurs + 1;
+	    }
 	}
     }
     if(nb_joueurs < 2)
@@ -781,7 +822,7 @@ function choisir_nom(x)
     jouer();
 }
 
-// initialisation des cases du jeu
+    // initialisation des cases du jeu
 cases[2 ] = cases[17] = cases[33] = 1;
 cases[4 ] = cases[38] = 3;
 cases[5 ] = cases[15] = cases[25] = cases[35] = 8;

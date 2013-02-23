@@ -1,3 +1,13 @@
+<!-- Fera l'objet d'une future mise a jour,
+     Note: config.js n'est pas inclu dans la page, voir plus bas
+     <td id="td_configuration" colspan="9">
+       <label for="radio_defaut">Affichage par defaut</label>
+       <input type="radio" value="defaut" name="choix_config" id="radio_defaut" checked="checked"/>
+       <label for="radio_joueurs">Affichage des joueurs</label>
+       <input type="radio" value="joueurs" name="choix_config" id="radio_joueurs"/>
+       <label for="radio_proprietes">Affichage Proprietes</label>
+       <input type="radio" value="proprietes" name="choix_config" id="radio_proprietes"/>
+       -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,43 +16,43 @@
     <link rel="stylesheet" href="index.css"/>
   </head>
   <body>
-    <table>
+    <table id="plateau" border="1">
       <td id="c20" class="coin" id="coin_haut_gauche">
 	Parc Gratuit
       </td>
-      <td id="c21" class="rouge haut">
+      <td id="c21" class="rouge td_horizontal">
 	<div id="c21_nom">Voltaire</div>
 	<div id="c21_prix" class="prix">22.000</div>
       </td>
-      <td id="c22" class="chance haut">
+      <td id="c22" class="chance td_horizontal">
 	Chance
 	<div class="prix">&nbsp;</div>
       </td>
-      <td id="c23" class="rouge haut">
+      <td id="c23" class="rouge td_horizontal">
 	<div id="c23_nom">Olympiade</div> 
 	<div id="c23_prix" class="prix">22.000</div>
       </td>
-      <td id="c24" class="rouge haut">
+      <td id="c24" class="rouge td_horizontal">
 	<div id="c24_nom">Sophie-Germain</div> 
 	<div id="c24_prix" class="prix">24.000</div>
       </td>
-      <td id="c25" class="gare haut">
+      <td id="c25" class="gare td_horizontal">
 	<div id="c25_nom">arrêt de bus Watt</div> 
 	<div id="c25_prix" class="prix">20.000</div>
       </td>
-      <td id="c26" class="jaune haut">
+      <td id="c26" class="jaune td_horizontal">
 	<div id="c26_nom">Berler</div>
 	<div id="c26_prix" class="prix">26.000</div>
       </td>
-      <td id="c27" class="jaune haut">
+      <td id="c27" class="jaune td_horizontal">
 	<div id="c27_nom">Watt BioPark</div>
 	<div id="c27_prix" class="prix">26.000</div>
       </td>
-      <td id="c28" class="compagnie haut">
+      <td id="c28" class="compagnie td_horizontal">
 	<div id="c28_nom">Club échecs</div> 
 	<div class="prix">15.000</div>
       </td>
-      <td id="c29" class="jaune haut">
+      <td id="c29" class="jaune td_horizontal">
 	<div id="c29_nom">Lavoisier</div>
 	<div id="c39_prix" class="prix">28.000</div>
       </td>
@@ -50,19 +60,19 @@
 	Allez au Script
       </td>
       <tr>
-	<td id="c19" class="orange gauche">
+	<td id="c19" class="orange td_vertical">
 	  <div id="c19_nom">Bichat</div> 
 	  <div id="c19_prix" class="prix">20.000</div>
 	</td>
 	<td id="td_info" colspan="9"> 
 	</td>
-	<td id="c31" class="vert droite">
+	<td id="c31" class="vert td_vertical">
 	  <div id="c31_nom">Lamarck</div> 
 	  <div id="c31_prix" class="prix">30.000</div>
 	</td>
       </tr>
       <tr>
-	<td id="c18" class="orange gauche">
+	<td id="c18" class="orange td_vertical">
 	  <div id="c18_nom">Olympe de Gouges</div> 
 	  <div id="c18_prix" class="prix">18.000</div>
 	</td>
@@ -92,85 +102,76 @@
 	    <input id="j6" type="text">
 	  </p>
 	</td>
-	<td id="c32" class="vert droite">
+	<td id="c32" class="vert td_vertical">
 	  <div id="c32_nom">Buffon</div>
 	  <div id="c32_prix" class="prix">30.000</div>
 	</td>
       </tr>
       <tr>
-	<td id="c17" class="caisse gauche">
+	<td id="c17" class="caisse td_vertical">
+	  &nbsp;
 	</td>
-	<td id="c33" class="caisse droite">
+	<td id="c33" class="caisse td_vertical">
+	  &nbsp;
 	</td>
       </tr>
       <tr>
-	<td id="c16" class="orange gauche">
+	<td id="c16" class="orange td_vertical">
 	  <div id="c16_nom" >Chevaleret</div>
 	  <div id="c16_prix" class="prix">18.000</div>
 	</td>
-	<td id="c34" class="vert droite">
+	<td id="c34" class="vert td_vertical">
 	  <div id="c34_nom"> Condorcet</div> 
 	  <div id="c34_prix" class="prix">32.000</div>
 	</td>
       </tr>
       <tr>
-	<td id="c15" class="gare gauche">
+	<td id="c15" class="gare td_vertical">
 	  <div id="c15_nom">arrêt de bus Mittérand</div> 
 	  <div id="c15_prix" class="prix">20.000</div>
 	</td>
-	<td id="c35" class="gare droite">
+	<td id="c35" class="gare td_vertical">
 	  <div id="c35_nom">Tramway T3</div> 
 	  <div id="c35_prix" class="prix">20.000</div>
 	</td>
       </tr>
       <tr>
-	<td id="c14" class="violet_claire gauche">
+	<td id="c14" class="violet_claire td_vertical">
 	  <div id="c14_nom">Gibert Joseph</div> 
 	  <div id="c14_prix" class="prix">16.000</div>
 	</td>
-	<td id="c36" class="chance droite">
+	<td id="c36" class="chance td_vertical">
 	  Chance
 	</td>
       </tr>
       <tr>
-	<td id="c13" class="violet_claire gauche">
+	<td id="c13" class="violet_claire td_vertical">
 	  <div id="c13_nom">Indiana Café</div> 
 	  <div id="c13_prix" class="prix">14.000</div>
 	</td>
-	<td id="c37" class="bleu_fonce droite">
+	<td id="c37" class="bleu_fonce td_vertical">
 	  <div id="c37_nom">Halle aux Farines</div> 
 	  <div id="c37_prix" class="prix">35.000</div>
 	</td>
       </tr>
       <tr>
-	<td id="c12" class="compagnie gauche">
+	<td id="c12" class="compagnie td_vertical">
 	  <div id="c12_nom">Bêton Salon</div> 
 	  <div class="prix" id="c12_prix">15.000</div>
 	</td>
-	<td id="c38" class="taxe droite">
+	<td id="c38" class="taxe td_vertical">
 	  Crous
 	  <div class="prix">10.000</div>
 	</td>
       </tr>
       <tr>
-	<td id="c11" class="violet_claire gauche">
+	<td id="c11" class="violet_claire td_vertical">
 	  <div id="c11_nom">Kremlin-Bicêtre</div> 
 	  <div id="c11_prix" class="prix">14.000</div>
 	</td>
 	<td id="td_validation" colspan="9">
 	</td>
-	<!-- Fera l'objet d'une future mise a jour,
-	     Note: config.js n'est pas inclu dans la page, voir plus bas
-	    <td id="td_configuration" colspan="9">
-	      <label for="radio_defaut">Affichage par defaut</label>
-	      <input type="radio" value="defaut" name="choix_config" id="radio_defaut" checked="checked"/>
-	      <label for="radio_joueurs">Affichage des joueurs</label>
-	      <input type="radio" value="joueurs" name="choix_config" id="radio_joueurs"/>
-	      <label for="radio_proprietes">Affichage Proprietes</label>
-	      <input type="radio" value="proprietes" name="choix_config" id="radio_proprietes"/>
-	  -->
-	</td>
-	<td id="c39" class="bleu_fonce droite">
+	<td id="c39" class="bleu_fonce td_vertical">
 	  <div id="c39_nom">Grands Moulins</div> 
 	  <div id="c39_prix"class="prix">40.000</div>
 	</td>
@@ -180,35 +181,36 @@
 	  <div id="prison">Script</div>
 	  Simple Visite
 	</td>
-	<td id="c9" class="bleu bas">
+	<td id="c9" class="bleu td_horizontal">
 	  <div id="c9_nom">Bibliothèque François Mittérand</div> 
 	  <div id="c9_prix" class="prix">12.000</div>
 	</td>
-	<td id="c8" class="bleu bas">
+	<td id="c8" class="bleu td_horizontal">
 	  <div id="c8_nom">Médiathèque Jean-Pierre Melville</div> 
 	  <div id="c8_prix" class="prix">10.000</div>
 	</td>
-	<td id="c7" class="chance bas">
+	<td id="c7" class="chance td_horizontal">
 	  Chance
 	</td>
-	<td id="c6" class="bleu bas">
+	<td id="c6" class="bleu td_horizontal">
 	  <div id="c6_nom">Paris I</div>
 	  <div id="c6_prix" class="prix">10.000</div>
 	</td>
-	<td id="c5" class="gare bas">
+	<td id="c5" class="gare td_horizontal">
 	  <div id="c5_nom" >Métro Mittérand</div>
 	  <div id="c5_prix" class="prix">20.000</div>
 	</td>
-	<td id="c4" class="impot bas">
+	<td id="c4" class="impot td_horizontal">
 	  <span title="payez 10% de votre capital ou 20.000Fr">Examen</span> 
 	</td>
-	<td id="c3" class="violet bas">
+	<td id="c3" class="violet td_horizontal">
 	  <div id="c3_nom">Tang Freres</div>
 	  <div id="c3_prix" class="prix">6.000</div>
 	</td>
-	<td id="c2" class="caisse bas">
+	<td id="c2" class="caisse td_horizontal">
+	  &nbsp;
 	</td>
-	<td  id="c1" class="violet bas">
+	<td  id="c1" class="violet td_horizontal">
 	  <div id="c1_nom">Paris Store</div>
 	  <div id="c1_prix" class="prix">6.000</div>
 	</td> 
@@ -216,11 +218,16 @@
 	  Départ
 	</td>
       </tr>
-      
     </table>
+    <script>
+      /*
+      document.getElementById("plateau").style.width = (window.innerWidth) + "px";
+      document.getElementById("plateau").style.heigt = (window.innerHeight) + "px";
+      */
+    </script>
     <script src="main.js"></script>
     <!--
 	<script src="config.js"></script>
 	-->
-</body>
+  </body>
 </html>

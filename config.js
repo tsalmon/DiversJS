@@ -3,6 +3,9 @@ var radio_defaut = document.getElementById("radio_defaut");
 var radio_joueurs = document.getElementById("radio_joueurs");
 var radio_proprietes = document.getElementById("radio_proprietes");
 
+document.getElementById("plateau").style.width = document.body.ClientWidth;
+document.getElementById("plateau").style.height = document.body.ClientHeight;
+
 function rafraichir_plateau()
 {
     if(radio_defaut.checked)

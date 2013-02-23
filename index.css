@@ -1,58 +1,12 @@
-.haut, .bas
-{
-    width: 75px;   
-    height: 50px;
-}
-
-.droite, .gauche
-{
-    width: 75px;
-    height: 50px;
-}
-
-.rouge
-{
-    background: red;
-}
-
-.jaune
-{
-    background: yellow;
-}
-.orange
-{
-    background: orange;
-}
-
-.bleu
-{
-    background: #7093DB;
-}
-
-.bleu_fonce
-{
-    background: blue;
-}
-
-.cyan
-{
-    background: cyan;
-}
-
-.violet
-{
-    background: purple;
-}
-
-.violet_claire
-{
-    background: #9F5F9F;
-}
-
-.vert
-{
-    background: green;
-}
+.rouge{ background: red; }
+.jaune{ background: yellow;}
+.orange{ background: orange;}
+.bleu{ background: #7093DB;}
+.bleu_fonce{ background: blue;}
+.cyan{ background: cyan;}
+.violet{ background: purple;}
+.violet_claire{ background: #9F5F9F;}
+.vert{ background: green;}
 
 #prison
 {
@@ -69,7 +23,31 @@ table
 {
     text-align:center;
     font-family: "Arial";
+    border-collapse: collapse;
+    border-color: black;
     font-size:11px;
+}
+
+.td_vertical, .coin
+{
+    width: 75px;
+    height: 50px; 
+    border-left-width: 5px;
+    border-right-width: 5px;
+}
+
+.td_horizontal, .coin
+{
+    width: 100px;
+    height: 25px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+}
+
+.coin
+{
+    width: 50px;
+    height: 50px;
 }
 
 #jeu
@@ -77,15 +55,19 @@ table
     font-size:15px;
 }
 
+
 body
 {
-    margin-top: -0.5px;
-    margin-left:-0.5px;
+    margin-top: 2px;
+    margin-left:2px;
 }
 
-td, th
+
+#barre_joueur li
 {
-    border: 5px black solid;
+    display: inline;
+    padding: 30px;
+    font-weight: 100;
 }
 
 .config_joueur
