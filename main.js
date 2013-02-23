@@ -514,7 +514,6 @@ function payer_loyer()
 //cf avance : 9
 function compagnie_acheter()
 {
-    
     document.getElementById("jeu").innerHTML = "<p>" + document.getElementById("c"+pos_actuelle()+"_nom").innerHTML + "</p>" + "<p> <input type=\"button\"  id=\"bouton_acheter\" value=\"Acheter\"/></p>";
     validation.innerHTML = bouton_passer;
     
@@ -523,7 +522,7 @@ function compagnie_acheter()
     
     var b_a = document.getElementById("bouton_acheter");
     b_a.addEventListener("click", function()
-			 {
+			  {
 			     if(joueurs[joueur_actuel].capital > 15000)
 			     {
 				 cases[pos_actuelle()] = {"compagnie" : true, "nom": joueurs[joueur_actuel].nom, "id": joueur_actuel};
@@ -644,8 +643,9 @@ function passer()
     if(nb_joueurs == 1)
     {
 	var winner = joueurs[(joueur_actuel + 1) % nb_joueurs] ;
-	document.getElementById("jeu").innerHTML = "<p>Fin de la partie !!! " + winner.nom + " a gagné !!!<p>";
+	jeu.innerHTML = "<p>Fin de la partie !!! " + winner.nom + " a gagné !!!<p>";
 	validation.innerHTML = "";
+	info.innerHTML = "";
     }
     else
     {
@@ -751,7 +751,6 @@ function jouer()
 	{
 	    joueurs[joueur_actuel].capital += 20000; // bonus case depart
 	}
-	alert(joueurs[joueur_actuel].position + " + " + des_actuel)
 	joueurs[joueur_actuel].position = (pos_actuelle() + des_actuel) % 40; // % nb de cases
 	//alert(joueurs[joueur_actuel].position);
 	avance();
