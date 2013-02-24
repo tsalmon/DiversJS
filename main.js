@@ -41,7 +41,7 @@ Array.prototype.unset = function(from, to)
 // pour un peu d'elegance
 function des()
 {
-    return 12;
+    return 1;
     return (0|(Math.random()*12)+1);
 }
 
@@ -53,27 +53,27 @@ function pos_actuelle()
 
 function loyer_1maison(prix)
 {
-    return parseInt(2 * prix + prix/2);
+    return prix * 0.30;
 }
 
 function loyer_2maisons(prix)
 {
-    return parseInt(3 * prix + 2 * prix / 3);
+    return prix * 0.5;
 }
 
 function loyer_3maisons(prix)
 {
-    return parseInt(5 * prix + 4 * prix / 5);
+    return prix * 0.75;
 }
 
 function loyer_4maisons(prix)
 {
-    return parseInt(8 * prix + 7 * prix / 8);
+    return prix;
 }
 
 function loyer_hotel(prix)
 {
-    return parseInt(12 * prix + 11 * prix / 12);
+    return prix * 1.3;
 }
 
 /***********************************************/
@@ -440,19 +440,43 @@ function prison()
     }
 }
 
+// cf achat
+function achat_choix(x)
+{
+    switch(x)
+    {
+    case 0:
+	return "terrain";
+    case 1:
+	return "une maison";
+    case 2:
+	return "deux maisons";
+    case 3:
+	return "trois maisons";
+    case 4:
+	return "quatres maisons";
+    case 5:
+	return "hotel";
+    }
+}
+
+//cf  avancer
 function achat()
 {
     var loyer = parseInt(document.getElementById("c" + pos_actuelle() + "_prix").innerHTML.replace(".",""));
-    loyer = [loyer, loyer_1maison(loyer), loyer_2maisons(loyer), loyer_3maisons(loyer), loyer_4maisons(loyer), loyer_hotel(loyer)];
-    var prix = [ loyer[0], loyer[0] + couleur(), 2 * (loyer[0] + couleur()), 3 * ( loyer[0] + couleur()), 4 * (loyer[0] + couleur()), 2 * 3 * 4 * loyer[0] + couleur()]; 
-    
-    document.getElementById("jeu").innerHTML = "<table style=\"margin:auto\"><tr><td colspan=\"3\">"+ document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</td></tr><tr><th>Choix</th><th>Prix</th><th>Loyer</th></tr><tr><td> terrain</td><td>"	+ prix[0]+ "</td><td>"+ loyer[0]+ "</td><td><input type=\"button\" id=\"c1\" value=\"commander\" /></td></tr><tr><td> 1 maison  </td><td>" + prix[1] + "</td><td>"+ loyer[1]+ "</td><td><input type=\"button\" id=\"c2\" value=\"commander\" /></td></tr><tr><td> 2 maisons </td><td>"+ prix[2] + "</td><td>" + loyer[2]+ "</td><td><input type=\"button\" id=\"c3\" value=\"commander\" /></td></tr><tr><td> 3 maisons </td><td>"+ prix[3] 	+ "</td><td>" + loyer[3]+ "</td><td><input type=\"button\" id=\"c4\" value=\"commander\" /></td></tr><tr><td> 4 maisons </td><td>" + prix[4] + "</td><td>"+ loyer[4]+ "</td><td><input type=\"button\" id=\"c5\" value=\"commander\" /></td></tr><tr><td> hotel </td><td>"+ prix[5] + "</td><td>" + loyer[5]+ "</td><td><input type=\"button\" id=\"c6\" value=\"commander\" /></td></tr></table>";
-
+    var c = [];
+    var commander = "";
+    loyer = [0|(loyer * 0.15), 0|(loyer * 0.30), 0|(loyer * 0.50), 0|(loyer * 0.75), 0|(loyer), 0|(loyer * 1.3)];
+    for(i = 0; i < 6; i++)
+    {
+	commander += "<tr><td>"+ achat_choix(i) +"</td><td>" + (0|(loyer[i] * (i+1))) + "</td><td>"+ loyer[i]+ "</td><td>"+ (0|((loyer[i]*0.1) * Math.log(loyer[i]))) +"</td><td><input type=\"button\" id=\"c"+(i+1)+"\" value=\"commander\" /></td></tr>";
+    }
+    document.getElementById("jeu").innerHTML = "<table id=\"tableau_achat\" border=\"1\">"
+	+ "<caption><h1>" + document.getElementById("c" + pos_actuelle() + "_nom").innerHTML + "</h1></caption>"
+	+ "<tr><th>Choix</th><th>Prix</th><th>Loyer</th><th> Hypotheque </th></tr>" + commander + "</table>";
     validation.innerHTML = "<input type=\"button\" id=\"passer\" value=\"Passer\"/>";
     detect_passe = document.getElementById("passer");
     detect_passe.addEventListener("click", passer, false);
-    
-    var c = [];
     for(i = 1; i < 7; i++)
     {
 	c[i-1] = document.getElementById("c" + i);
@@ -462,7 +486,7 @@ function achat()
 				    {
 					joueurs[joueur_actuel].capital -= p ;
 					cases[pos_actuelle()] = {"id":joueur_actuel, "proprietaire":joueurs[joueur_actuel].nom, "prix":l, "compagnie": false};
-					alert("Achat effectué " + p);
+					alert("Achat effectué");
 					passer();
 				    }
 				    else
@@ -470,7 +494,7 @@ function achat()
 					alert("pas assez d'argent " + p);
 				    }
 				    
-				}.bind(this, loyer[i-1], prix[i-1]), false);
+				}.bind(this, loyer[i-1], 0|(loyer[i-1])* i), false);
     }
     return "";
 }
@@ -504,7 +528,7 @@ function payer_loyer()
 			       }
 			       else
 			       {
-				   alert("pas assez d'argent");
+				   need_money(casa.prix);
 			       }
 			       
 			   }.bind(this, cases[pos_actuelle()]), false);
@@ -514,7 +538,7 @@ function payer_loyer()
 //cf avance : 9
 function compagnie_acheter()
 {
-    document.getElementById("jeu").innerHTML = "<p>" + document.getElementById("c"+pos_actuelle()+"_nom").innerHTML + "</p>" + "<p> <input type=\"button\"  id=\"bouton_acheter\" value=\"Acheter\"/></p>";
+    document.getElementById("jeu").innerHTML = "<h1>" + document.getElementById("c"+pos_actuelle()+"_nom").innerHTML + "</h1>" + "<p> <input type=\"button\"  id=\"bouton_acheter\" value=\"Acheter\"/></p>";
     validation.innerHTML = bouton_passer;
     
     var b_p = document.getElementById("bouton_passer");
@@ -657,17 +681,19 @@ function passer()
 
 function voir_proprietes()
 {
-    var str = "<table>";
+    var str = "<table style=\"margin:auto;\">";
+    var loyer = [];
     var k   = 0;
     for(i = 1; i < 40; i++)
     {
 	if( typeof cases[i] == "object" && cases[i].id == joueur_actuel)
 	{
 	    var nom_case = document.getElementById("c"+i+"_nom").innerHTML;
+	    loyer[k] = 0|( cases[i].prix * 0.1 * Math.log(cases[i].prix))
 	    str += "<tr><td>"
 		+ nom_case 
 		+"</td><td>"
-		+ cases[i].prix 
+		+ loyer[k]
 		+"<td><input type=\"button\" value=\"Hypothequer\" id=\"h"+(k)+"\"></td></tr>";
 	    k++;
 	}
@@ -679,14 +705,14 @@ function voir_proprietes()
 	for(i = 0 ; i < k ; i++)
 	{
 	    t[i] = document.getElementById("h"+i);
-	    t[i].addEventListener("click", function()
+	    t[i].addEventListener("click", function(x)
 				  {
 				      if(confirm("Etes vous sur d'hypothequer cette maison?"))
 				      {
-					  joueurs[joueur_actuel].capital += 5 * cases[i].prix;
+					  joueurs[joueur_actuel].capital += x;
 					  cases[i] = 6;
 				      }
-				  },false);
+				  }.bind(this, loyer[i]),false);
 	}
     }
     else
@@ -731,7 +757,6 @@ function jouer()
 {
     info.innerHTML = "<ul id=\"barre_joueur\">" 
 	+ "<li>" + joueurs[joueur_actuel].nom + "</il>" 
-	+ "<li>" + joueurs[joueur_actuel].position + "</li>"
 	+ "<li>" + joueurs[joueur_actuel].capital + "</li>" 
 	+ "<li>" + bouton_proprio_view + "</li>" 
 	+ "<li>" + bouton_quitter + "</li>"

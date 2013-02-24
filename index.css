@@ -1,11 +1,11 @@
 .rouge{ background: red; }
 .jaune{ background: yellow;}
 .orange{ background: orange;}
-.bleu{ background: #7093DB;}
-.bleu_fonce{ background: blue;}
+.bleu{ background: #34aaea;}
+.bleu_fonce{ background: #394ac7;}
 .cyan{ background: cyan;}
-.violet{ background: purple;}
-.violet_claire{ background: #9F5F9F;}
+.violet{ background: #af0cee;}
+.violet_claire{ background: #c272e1;}
 .vert{ background: green;}
 
 #prison
@@ -46,6 +46,7 @@ table
 
 .coin
 {
+    font-weight: bold;
     width: 50px;
     height: 50px;
 }
@@ -56,6 +57,11 @@ table
 }
 
 
+#plateau
+{
+    background: #3ccb59;
+}
+
 body
 {
     margin-top: 2px;
@@ -63,11 +69,23 @@ body
 }
 
 
+
 #barre_joueur li
 {
     display: inline;
-    padding: 30px;
-    font-weight: 100;
+    padding: 20px;
+}
+
+#tableau_achat
+{
+    font-weight: 10;
+    margin: auto;
+    font-size: 15px;
+}
+
+#tableau_achat td
+{
+    padding: 10px;
 }
 
 .config_joueur
