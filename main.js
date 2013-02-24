@@ -1,3 +1,5 @@
+function monopoly()
+{
 var joueurs = [];
 var cases = []; 
 
@@ -41,7 +43,6 @@ Array.prototype.unset = function(from, to)
 // pour un peu d'elegance
 function des()
 {
-    return 1;
     return (0|(Math.random()*12)+1);
 }
 
@@ -614,9 +615,6 @@ function compagnie_loyer()
 function avance()
 {
     var c_p_a = cases[pos_actuelle()];
-    //////////////////////////////////////////////
-    
-    
     //////////////////////////////////////
     
     switch(c_p_a)
@@ -826,16 +824,8 @@ function choisir_nom(x)
 	}
 	if(/^\w+$/.test(document.getElementById("j" + i).value))
 	{
-	    if(i != 2)
-	    {
-		joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0, "compagnies" :0};
-		nb_joueurs = nb_joueurs + 1;
-	    }
-	    else
-	    {
 		joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 15,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0, "compagnies" :0};
 		nb_joueurs = nb_joueurs + 1;
-	    }
 	}
     }
     if(nb_joueurs < 2)
@@ -863,3 +853,7 @@ for(i = 1; i < 40 ; i++)
 }
 
 initialise();
+
+}
+
+monopoly();
