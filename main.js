@@ -1,156 +1,156 @@
 function monopoly()
 {
-var joueurs = [];
-var cases = []; 
+    var joueurs = [];
+    var cases = []; 
     
-var nb_joueurs = 0; 
-var joueur_actuel = 0;
-var des_actuel = 0;
-
-var jeu = document.getElementById("jeu");
-var info = document.getElementById("td_info");
-var validation = document.getElementById("td_validation");
-
-var bouton_proprio_view = "<input type=\"button\" id=\"proprio_view\" value=\"Voir les possessions\"/>";
-var bouton_quitter = "<input type=\"button\" id=\"quitter_jeu\" value=\"Quitter le jeu\"/>";
-var bouton_passer = "<input type=\"button\" id=\"bouton_passer\" value=\"Passer\"/>";
-var bouton_payer = "<input type=\"button\" id=\"bouton_payer\" value=\"Payer\"/>";
-var bouton_prison = "<input type=\"button\" id=\"bouton_prison\" value=\"Allez au script\" />";
-/*
-  joueurs:
-  {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0], "compagnies"[=0]}
-  cases: 
-  1 = caisse; 
-  2 = chance; 
-  3 = exam; 
-  4 = SV/Parc/Depart; 
-  5 = Crous; 
-  6 = reste; 
-  7 = prison;
-  8 = gare;
-  9 = compagnie;
-  {"proprietaire", "prix", "id", "compagnie"}
-*/
-
-// source : ejohn.org/blog/javascript-array-remove/
-Array.prototype.unset = function(from, to)
-{
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from : from;
-    return this.push.apply(this, rest);
-}
-
-// pour un peu d'elegance
-function des()
-{
-    return (0|(Math.random()*12)+1);
-}
-
-// meme chose qu'en haut
-function pos_actuelle()
-{
-    return (joueurs[joueur_actuel].position);
-}
-
-function loyer_1maison(prix)
-{
-    return prix * 0.30;
-}
-
-function loyer_2maisons(prix)
-{
-    return prix * 0.5;
-}
-
-function loyer_3maisons(prix)
-{
-    return prix * 0.75;
-}
-
-function loyer_4maisons(prix)
-{
-    return prix;
-}
-
-function loyer_hotel(prix)
-{
-    return prix * 1.3;
-}
-
-/***********************************************/
-
-//cf caisse: 1, 2, 3
-// on s'aide des positions des gares
-function couleur()
-{
-    return 25000 * (0|pos_actuelle()/5 + 1);
-}
-
-function amende_bonus(x, message)
-{
-    jeu.innerHTML = message;
-    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Payer\"/>";
-    var bouton_event = document.getElementById("bouton_validation");
-    bouton_event.addEventListener("click" , function()
-				  {
-				      if(joueurs[joueur_actuel].capital > x)
-				      {
-					  joueurs[joueur_actuel].capital += x;
-					  passer();
-				      }
-				      else
-				      {
-					  document.getElementById("jeu").innerHTML = "Vous n'avez pas assez d'argent, il n'y a qu'un seul endroit pour les gens comme vous : le script";
-					  validation.innerHTML = "<input type=\"button\" value=\"Aller au Script\" id=\"bouton_passe\"/>";
-				      }
-				  }, false);
-}
-
-//cf caisse: 4, 6
-function aller_a(num_case, message)
-{
-    document.getElementById("jeu").innerHTML        = message;
-    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Avancer\"/>";
-    joueurs[joueur_actuel].position = num_case;
-    var avancer = document.getElementById("bouton_validation");
-    avancer.addEventListener("click", avance, false);
-}
-
-//cf caisse : 7, 8, 9, 10, 11, 12 
-function avancer_reculer(nb_cases, message)
-{
-    document.getElementById("jeu").innerHTML        = message ;
-    validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\""+((nb_cases > 0) ? "Avancer" : "Reculer")+"\"/>";
-    joueurs[joueur_actuel].position+=nb_cases;
-    if(joueurs[joueur_actuel].position < 0)
+    var nb_joueurs = 0; 
+    var joueur_actuel = 0;
+    var des_actuel = 0;
+    
+    var jeu = document.getElementById("jeu");
+    var info = document.getElementById("td_info");
+    var validation = document.getElementById("td_validation");
+    
+    var bouton_proprio_view = "<input type=\"button\" id=\"proprio_view\" value=\"Voir les possessions\"/>";
+    var bouton_quitter = "<input type=\"button\" id=\"quitter_jeu\" value=\"Quitter le jeu\"/>";
+    var bouton_passer = "<input type=\"button\" id=\"bouton_passer\" value=\"Passer\"/>";
+    var bouton_payer = "<input type=\"button\" id=\"bouton_payer\" value=\"Payer\"/>";
+    var bouton_prison = "<input type=\"button\" id=\"bouton_prison\" value=\"Allez au script\" />";
+    /*
+      joueurs:
+      {"nom", "capital"[=150k], "position"[=0], "prison"[=false], "id", "dispense"[=false], "gares"[=0], "compagnies"[=0]}
+      cases: 
+      1 = caisse; 
+      2 = chance; 
+      3 = exam; 
+      4 = SV/Parc/Depart; 
+      5 = Crous; 
+      6 = reste; 
+      7 = prison;
+      8 = gare;
+      9 = compagnie;
+      {"proprietaire", "prix", "id", "compagnie"}
+    */
+    
+    // source : ejohn.org/blog/javascript-array-remove/
+    Array.prototype.unset = function(from, to)
     {
-	joueurs[joueur_actuel].position = 39;
+	var rest = this.slice((to || from) + 1 || this.length);
+	this.length = from < 0 ? this.length + from : from;
+	return this.push.apply(this, rest);
     }
-    var bouger = document.getElementById("bouton_validation");
-    bouger.addEventListener("click", avance, false);
-}
-
-function resultat_lancer_des()
-{
-    var d1 = document.getElementById("d1");
-    var d2 = document.getElementById("d2");
-    if( d1.innerHTML == ""  || d2.innerHTML == "")
+    
+    // pour un peu d'elegance
+    function des()
     {
-	return ;
-    } 
-    document.getElementById("lancement").innerHTML = "Vous devez payer : " + ((0|d1.innerHTML) + (0|d2.innerHTML)) * 500 + "Fr";
+	return (0|(Math.random()*12)+1);
+    }
+    
+    // meme chose qu'en haut
+    function pos_actuelle()
+    {
+	return (joueurs[joueur_actuel].position);
+    }
+    
+    function loyer_1maison(prix)
+    {
+	return prix * 0.30;
+    }
+    
+    function loyer_2maisons(prix)
+    {
+	return prix * 0.5;
+    }
+    
+    function loyer_3maisons(prix)
+    {
+	return prix * 0.75;
+    }
+    
+    function loyer_4maisons(prix)
+    {
+	return prix;
+    }
+    
+    function loyer_hotel(prix)
+    {
+	return prix * 1.3;
+    }
+    
+    /***********************************************/
+    
+    //cf caisse: 1, 2, 3
+    // on s'aide des positions des gares
+    function couleur()
+    {
+	return 25000 * (0|pos_actuelle()/5 + 1);
+    }
+    
+    function amende_bonus(x, message)
+    {
+	jeu.innerHTML = message;
+	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Payer\"/>";
+	var bouton_event = document.getElementById("bouton_validation");
+	bouton_event.addEventListener("click" , function()
+				      {
+					  if(joueurs[joueur_actuel].capital > x)
+					  {
+					      joueurs[joueur_actuel].capital += x;
+					      passer();
+					  }
+					  else
+					  {
+					      document.getElementById("jeu").innerHTML = "Vous n'avez pas assez d'argent, il n'y a qu'un seul endroit pour les gens comme vous : le script";
+					      validation.innerHTML = "<input type=\"button\" value=\"Aller au Script\" id=\"bouton_passe\"/>";
+					  }
+				      }, false);
+    }
+    
+    //cf caisse: 4, 6
+    function aller_a(num_case, message)
+    {
+	document.getElementById("jeu").innerHTML        = message;
+	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\"Avancer\"/>";
+	joueurs[joueur_actuel].position = num_case;
+	var avancer = document.getElementById("bouton_validation");
+	avancer.addEventListener("click", avance, false);
+    }
+    
+    //cf caisse : 7, 8, 9, 10, 11, 12 
+    function avancer_reculer(nb_cases, message)
+    {
+	document.getElementById("jeu").innerHTML        = message ;
+	validation.innerHTML = "<input type=\"button\" id=\"bouton_validation\" value=\""+((nb_cases > 0) ? "Avancer" : "Reculer")+"\"/>";
+	joueurs[joueur_actuel].position+=nb_cases;
+	if(joueurs[joueur_actuel].position < 0)
+	{
+	    joueurs[joueur_actuel].position = 39;
+	}
+	var bouger = document.getElementById("bouton_validation");
+	bouger.addEventListener("click", avance, false);
+    }
+    
+    function resultat_lancer_des()
+    {
+	var d1 = document.getElementById("d1");
+	var d2 = document.getElementById("d2");
+	if( d1.innerHTML == ""  || d2.innerHTML == "")
+	{
+	    return ;
+	} 
+	document.getElementById("lancement").innerHTML = "Vous devez payer : " + ((0|d1.innerHTML) + (0|d2.innerHTML)) * 500 + "Fr";
     validation.innerHTML = "<input type=\"button\" id=\"bouton_valide\" value=\"Payer\"/>";
-    var b_p = document.getElementById("bouton_valide");
-    b_p.addEventListener("click", passer, false);
-}
-
-//cf caisse : 13
-function lancer_des()
-{
-    document.getElementById("jeu").innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 500) Fr.<p id=\"lancement\">[<span id=\"d1\"></span>] et [<span id=\"d2\"></span>]</p>";
-    validation.innerHTML = "<input type=\"button\" id=\"bouton_d1\" value=\"t1\"/> <input type=\"button\" id=\"bouton_d2\" value=\"t2\"/>";
-    var td1 = document.getElementById("bouton_d1");
-    td1.addEventListener("click", function(X)
+	var b_p = document.getElementById("bouton_valide");
+	b_p.addEventListener("click", passer, false);
+    }
+    
+    //cf caisse : 13
+    function lancer_des()
+    {
+	document.getElementById("jeu").innerHTML = "Lancez les dés, vous devrez payer a la banque (le resultat * 500) Fr.<p id=\"lancement\">[<span id=\"d1\"></span>] et [<span id=\"d2\"></span>]</p>";
+	validation.innerHTML = "<input type=\"button\" id=\"bouton_d1\" value=\"t1\"/> <input type=\"button\" id=\"bouton_d2\" value=\"t2\"/>";
+	var td1 = document.getElementById("bouton_d1");
+	td1.addEventListener("click", function(X)
 		       {
 			   document.getElementById("d1").innerHTML = X;
 			   resultat_lancer_des();
@@ -783,16 +783,16 @@ function jouer()
 /*******************************\
 *        lancement du jeu       *
 \*******************************/
-
-function erreur_init(message)
-{
-    alert(message);
-    initialise();
-    nb_joueurs = 0;
-}
-
-function initialise()
-{
+    
+    function erreur_init(message)
+    {
+	alert(message);
+	initialise();
+	nb_joueurs = 0;
+    }
+    
+    function initialise()
+    {
     for(i = 1; i < 7; i++)
     {
 	joueurs[i-1] = document.getElementById("j"+i);
@@ -800,36 +800,36 @@ function initialise()
 	document.getElementById("j" + i).value = "";
     }
 }
-
-function choisir_nom(x)
-{ 
-    if(x.keyCode != 13)
-    {
-	return ;
-    }
     
-    var k = 0; 
-    
-    for( i = 1; i < 7; i++)
-    {
-	if(joueurs.indexOf(document.getElementById("j" + i).value) != -1)
+    function choisir_nom(x)
+    { 
+	if(x.keyCode != 13)
 	{
-	    erreur_init("Au moins deux joueurs ont le même nom.");
 	    return ;
 	}
-	if(document.getElementById("j" + i).value.length > 10)
+	
+	var k = 0; 
+	
+	for( i = 1; i < 7; i++)
 	{
-	    erreur_init("Les noms ne doivent pas exceder 10 char.");
-	    return ;
-	}
-	if(/^\w+$/.test(document.getElementById("j" + i).value))
-	{
+	    if(joueurs.indexOf(document.getElementById("j" + i).value) != -1)
+	    {
+		erreur_init("Au moins deux joueurs ont le même nom.");
+		return ;
+	    }
+	    if(document.getElementById("j" + i).value.length > 10)
+	    {
+		erreur_init("Les noms ne doivent pas exceder 10 char.");
+		return ;
+	    }
+	    if(/^\w+$/.test(document.getElementById("j" + i).value))
+	    {
 		joueurs[nb_joueurs] = {"nom":document.getElementById("j" + i).value,"capital": 150000,"position":0, "prison":false, "id":nb_joueurs, "dispence": false, "gares": 0, "compagnies" :0};
 		nb_joueurs = nb_joueurs + 1;
+	    }
 	}
-    }
-    if(nb_joueurs < 2)
-    {
+	if(nb_joueurs < 2)
+	{
 	erreur_init("Pas assez de joueurs");
 	return ;
     }
