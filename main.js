@@ -455,7 +455,7 @@ function achat_choix(x)
     case 3:
 	return "trois maisons";
     case 4:
-	return "quatres maisons";
+	return "quatre maisons";
     case 5:
 	return "hotel";
     }
@@ -837,22 +837,22 @@ function jouer()
 }
 
     // initialisation des cases du jeu
-cases[2 ] = cases[17] = cases[33] = 1;
-cases[4 ] = cases[38] = 3;
-cases[5 ] = cases[15] = cases[25] = cases[35] = 8;
-cases[7 ] = cases[22] = cases[36] = 2;
-cases[10] = cases[20] = cases[0] = 4;
-cases[12] = cases[28] = 9
-cases[30] = 7;
-for(i = 1; i < 40 ; i++)
-{
-    if(cases[i] == undefined)
+    cases[2 ] = cases[17] = cases[33] = 1;
+    cases[4 ] = cases[38] = 3;
+    cases[5 ] = cases[15] = cases[25] = cases[35] = 8;
+    cases[7 ] = cases[22] = cases[36] = 2;
+    cases[10] = cases[20] = cases[0] = 4;
+    cases[12] = cases[28] = 9
+    cases[30] = 7;
+    for(i = 1; i < 40 ; i++)
     {
-	cases[i] = 6;
+	if(cases[i] == undefined)
+	{
+	    cases[i] = 6;
+	}
     }
-}
-
-initialise();
+    
+    initialise();
 
 }
 
