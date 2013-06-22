@@ -1,0 +1,185 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>monopoly</title>
+    <link rel="stylesheet" href="index.css"/>
+  </head>
+  <body>
+    <table width="100%" border="1" cellspacing="0" cellpadding="1" style="border:1px solid black;background-color:#EEFFCC;font-size:75%;line-height:1.4;vertical-align:middle;text-align:center">
+      <caption style="font-size:small"><b>Édition française du Monopoly</b></caption>
+      <tbody><tr align="center">
+	  <td width="14%" colspan="3" style="border:1px solid black;border-bottom:0 none"><big><b>DÉPART ⇒</b></big></td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Boulevard_de_Belleville" title="Boulevard de Belleville">Bd de Belleville</a><br>
+	    —<br>
+	    6&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="3" style="border:1px solid black">Caisse de<br>
+	    Communauté</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Rue_Lecourbe" title="Rue Lecourbe">Rue Lecourbe</a><br>
+	    —<br>
+	    6&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="3" style="border:1px solid black">Impôt sur le revenu<br>
+	    —<br>
+	    payez 10&nbsp;% ou<br>
+	    20&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="3" style="border:1px solid black"><a href="/wiki/Gare_de_Paris-Montparnasse" title="Gare de Paris-Montparnasse">Gare Montparnasse</a><br>
+	    —<br>
+	    20&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Rue_de_Vaugirard" title="Rue de Vaugirard">Rue de Vaugirard</a><br>
+	    —<br>
+	    10&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="3" style="border:1px solid black">Chance</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Rue_de_Courcelles" title="Rue de Courcelles">Rue de Courcelles</a><br>
+	    —<br>
+	    10&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Avenue_de_la_R%C3%A9publique" title="Avenue de la République">Avenue de la République</a><br>
+	    —<br>
+	    12&nbsp;000&nbsp;F</td>
+	  <td width="10%" colspan="2" style="border:1px solid black;border-right:0 none;border-bottom:0 none;line-height:1"><small>SIMPLE</small></td>
+	  <td width="4%" style="border:1px solid black;border-left:0 none;border-bottom:0 none">&nbsp;</td>
+	</tr>
+	<tr align="center">
+	  <td width="14%" colspan="3" style="border:1px solid black;border-top:0 none;border-bottom:0 none">Recevez 20&nbsp;000&nbsp;F chaque fois que vous passez ici.</td>
+	  <td width="10%" rowspan="2" colspan="2" style="border:1px solid black;border-top-width:2px;border-right-width:2px" bgcolor="#FF0000">EN<br>
+	    <a href="/wiki/Prison" title="Prison">PRISON</a></td>
+	  <td width="4%" rowspan="2" style="border:1px solid black;border-top:0 none;border-left:0 none;line-height:1"><small>V<br>
+	      I<br>
+	      S<br>
+	      I<br>
+	      T<br>
+	      E</small></td>
+	</tr>
+	<tr align="center">
+	  <td width="14%" colspan="3" style="border:1px solid black;border-top:0 none">&nbsp;</td>
+	  <td width="8%" style="border:1px solid black;width:2em" bgcolor="#993399">&nbsp;</td>
+	  <td width="8%" style="border:1px solid black;width:2em" bgcolor="#993399">&nbsp;</td>
+	  <td width="8%" style="border:1px solid black;width:2em" bgcolor="#AACCFF">&nbsp;</td>
+	  <td width="8%" style="border:1px solid black;width:2em" bgcolor="#AACCFF">&nbsp;</td>
+	  <td width="8%" style="border:1px solid black;width:2em" bgcolor="#AACCFF">&nbsp;</td>
+	</tr>
+	<tr align="center">
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Rue_de_la_Paix_(Paris)" title="Rue de la Paix (Paris)">Rue de la Paix</a><br>
+	    —<br>
+	    40&nbsp;000&nbsp;F</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#3333FF">&nbsp;</td>
+	  <td width="72%" rowspan="9" colspan="9" style="border:1px solid black;font-size:xx-large">Monopoly</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#EE44DD">&nbsp;</td>
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Boulevard_de_la_Villette" title="Boulevard de la Villette">Bd de la Villette</a><br>
+	    —<br>
+	    14&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="14%" colspan="3" style="border:1px solid black">Taxe de luxe<br>
+	    —<br>
+	    10&nbsp;000&nbsp;F</td>
+	  <td width="14%" colspan="3" style="border:1px solid black">Compagnie d’<a href="/wiki/%C3%89lectricit%C3%A9" title="Électricité">Électricité</a><br>
+	    —<br>
+	    15&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Avenue_des_Champs-%C3%89lys%C3%A9es" title="Avenue des Champs-Élysées">Champs-Élysées</a><br>
+	    —<br>
+	    35&nbsp;000&nbsp;F</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#3333FF">&nbsp;</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#EE44DD">&nbsp;</td>
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Avenue_de_Neuilly" title="Avenue de Neuilly">Avenue de Neuilly</a><br>
+	    —<br>
+	    14&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="14%" colspan="3" style="border:1px solid black">Chance</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#EE44DD">&nbsp;</td>
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Rue_de_Paradis" title="Rue de Paradis">Rue de Paradis</a><br>
+	    —<br>
+	    16&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="14%" colspan="3" style="border:1px solid black"><a href="/wiki/Gare_de_Paris-Saint-Lazare" title="Gare de Paris-Saint-Lazare">Gare Saint-Lazare</a><br>
+	    —<br>
+	    20&nbsp;000&nbsp;F</td>
+	  <td width="14%" colspan="3" style="border:1px solid black"><a href="/wiki/Gare_de_Paris-Lyon" title="Gare de Paris-Lyon" class="mw-redirect">Gare de Lyon</a><br>
+	    —<br>
+	    20&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Boulevard_des_Capucines" title="Boulevard des Capucines">Bd des Capucines</a><br>
+	    —<br>
+	    32&nbsp;000&nbsp;F</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#008000">&nbsp;</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#FF6600">&nbsp;</td>
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Avenue_Mozart" title="Avenue Mozart">Avenue Mozart</a><br>
+	    —<br>
+	    18&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="14%" colspan="3" style="border:1px solid black">Caisse de<br>
+	    Communauté</td>
+	  <td width="14%" colspan="3" style="border:1px solid black">Caisse de<br>
+	    Communauté</td>
+	</tr>
+	<tr align="center">
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Avenue_Foch" title="Avenue Foch">Avenue Foch</a><br>
+	    —<br>
+	    30&nbsp;000&nbsp;F</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#008000">&nbsp;</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#FF6600">&nbsp;</td>
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Boulevard_Saint-Michel_(Paris)" title="Boulevard Saint-Michel (Paris)">Bd Saint-Michel</a><br>
+	    —<br>
+	    18&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Avenue_de_Breteuil" title="Avenue de Breteuil">Avenue de Breteuil</a><br>
+	    —<br>
+	    30&nbsp;000&nbsp;F</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#008000">&nbsp;</td>
+	  <td width="4%" style="border:1px solid black;width:2em" bgcolor="#FF6600">&nbsp;</td>
+	  <td width="10%" colspan="2" style="border:1px solid black"><a href="/wiki/Place_Pigalle" title="Place Pigalle">Place Pigalle</a><br>
+	    —<br>
+	    20&nbsp;000&nbsp;F</td>
+	</tr>
+	<tr align="center">
+	  <td width="4%" rowspan="2" style="border:1px solid black;border-right:0 none">&nbsp;</td>
+	  <td width="6%" rowspan="2" style="border:1px solid black;border-right:0 none;border-left:0 none">ALLEZ EN<br>
+	    PRISON</td>
+	  <td width="4%" rowspan="2" style="border:1px solid black;border-left:0 none">&nbsp;</td>
+	  <td width="8%" bgcolor="#FFFF00" style="border:1px solid black">&nbsp;</td>
+	  <td width="8%" rowspan="3" style="border:1px solid black">Compagnie des Eaux<br>
+	    —<br>
+	    15&nbsp;000&nbsp;F</td>
+	  <td width="8%" bgcolor="#FFFF00" style="border:1px solid black">&nbsp;</td>
+	  <td width="8%" bgcolor="#FFFF00" style="border:1px solid black">&nbsp;</td>
+	  <td width="8%" rowspan="3" style="border:1px solid black"><a href="/wiki/Gare_de_Paris-Nord" title="Gare de Paris-Nord">Gare du Nord</a><br>
+	    —<br>
+	    20&nbsp;000&nbsp;F</td>
+	  <td width="8%" bgcolor="#FF0000" style="border:1px solid black">&nbsp;</td>
+	  <td width="8%" bgcolor="#FF0000" style="border:1px solid black">&nbsp;</td>
+	  <td width="8%" rowspan="3" style="border:1px solid black">Chance</td>
+	  <td width="8%" bgcolor="#FF0000" style="border:1px solid black">&nbsp;</td>
+	  <td width="4%" rowspan="2" style="border:1px solid black;border-right:0 none">&nbsp;</td>
+	  <td width="6%" rowspan="2" style="border:1px solid black;border-right:0 none;border-left:0 none"><a href="/wiki/Parking" title="Parking">PARC</a><br>
+	    GRATUIT</td>
+	  <td width="4%" rowspan="2" style="border:1px solid black;border-left:0 none">&nbsp;</td>
+	</tr>
+	<tr align="center">
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Rue_La_Fayette" title="Rue La Fayette">Rue La Fayette</a><br>
+	    —<br>
+	    28&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Place_de_la_Bourse_(Paris)" title="Place de la Bourse (Paris)">Place de la Bourse</a><br>
+	    —<br>
+	    26&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Rue_du_Faubourg-Saint-Honor%C3%A9" title="Rue du Faubourg-Saint-Honoré">Faubourg Saint-Honoré</a><br>
+	    —<br>
+	    26&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Avenue_Henri-Martin" title="Avenue Henri-Martin">Avenue Henri-Martin</a><br>
+	    —<br>
+	    24&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Boulevard_Malesherbes" title="Boulevard Malesherbes">Bd Malesherbes</a><br>
+	    —<br>
+	    22&nbsp;000&nbsp;F</td>
+	  <td width="8%" rowspan="2" style="border:1px solid black"><a href="/wiki/Avenue_Matignon" title="Avenue Matignon">Avenue Matignon</a><br>
+	    —<br>
+	    22&nbsp;000&nbsp;F</td>
+	</tr>
+    </tbody></table>
+    <script src="main.js"></script>
+  </body>
+</html>

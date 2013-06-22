@@ -2,7 +2,7 @@ function monopoly()
 {
 var joueurs = [];
 var cases = []; 
-
+    
 var nb_joueurs = 0; 
 var joueur_actuel = 0;
 var des_actuel = 0;
