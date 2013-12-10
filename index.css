@@ -1,0 +1,98 @@
+
+.rouge{ background: red; }
+.jaune{ background: yellow;}
+.orange{ background: orange;}
+.bleu{ background: #34aaea;}
+.bleu_fonce{ background: #394ac7;}
+.cyan{ background: cyan;}
+.violet{ background: #af0cee;}
+.violet_claire{ background: #c272e1;}
+.vert{ background: green;}
+
+#prison
+{
+    text-align: top;
+}
+
+.caisse
+{
+    background-image: url("caisse.jpeg"), url("fond.jpeg");
+    background-repeat: no-repeat, repeat; 
+}
+
+table
+{
+    text-align:center;
+    font-family: "Arial";
+    border-collapse: collapse;
+    border-color: black;
+    font-size:11px;
+}
+
+.td_vertical, .coin
+{
+    width: 75px;
+    height: 50px; 
+    border-left-width: 5px;
+    border-right-width: 5px;
+}
+
+.td_horizontal, .coin
+{
+    width: 100px;
+    height: 25px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+}
+
+.coin
+{
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+}
+
+#jeu
+{
+    font-size:15px;
+}
+
+
+#plateau
+{
+    background: #3ccb59;
+}
+
+body
+{
+    margin-top: 2px;
+    margin-left:2px;
+}
+
+
+
+#barre_joueur li
+{
+    display: inline;
+    padding: 20px;
+}
+
+#tableau_achat
+{
+    font-weight: 10;
+    margin: auto;
+    font-size: 15px;
+}
+
+#tableau_achat td
+{
+    padding: 10px;
+}
+
+.config_joueur
+{
+    padding: 5px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 50px;
+}
