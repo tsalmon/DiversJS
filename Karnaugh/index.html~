@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css"/>
+  </head>
+  <body>
+    <table>
+      <tr>
+	<td>
+	  <input type="checkbox">
+	</td>
+	<td>
+	  <input type="checkbox">
+	</td>
+	<td>
+	  <input type="checkbox">
+	</td>
+	<td>
+	  <input type="checkbox">
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <input type="checkbox">
+	</td>
+	<td>
+	  <input type="checkbox">
+	</td>
+	<td>
+	  <input type="checkbox">
+	</td>
+	<td>
+	  <input type="checkbox">
+	</td>
+      </tr>
+    </table>
+    <script src="main.js"></script>
+  </body>
+</html>
